@@ -76,10 +76,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Line Stack — CDR-native developer rails for Story testnet" },
+      { title: "Cipherline — CDR-native developer rails for Story testnet" },
       { name: "description", content: "Vaultline and Queryline: private data licensing and confidential query rails for Story builders." },
-      { name: "author", content: "Line Stack" },
-      { property: "og:title", content: "Line Stack — CDR-native rails on Story" },
+      { name: "author", content: "Cipherline" },
+      { property: "og:title", content: "Cipherline — CDR-native rails on Story" },
       { property: "og:description", content: "Vaultline + Queryline: private data licensing and confidential query rails for Story testnet builders." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -91,7 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap",
       },
     ],
   }),
