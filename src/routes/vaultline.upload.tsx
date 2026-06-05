@@ -617,7 +617,7 @@ function Page() {
                     <Link
                       to="/vaultline/unlock"
                       search={{ vaultId, fileId: f.id }}
-                      className="text-[#F26522] font-medium hover:underline mt-1 inline-block"
+                      className="text-[#4f46e5] font-medium hover:underline mt-1 inline-block"
                     >
                       Unlock →
                     </Link>

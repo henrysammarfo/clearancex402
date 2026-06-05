@@ -246,7 +246,7 @@ function ArchitecturePage() {
         {/* Product rails */}
         <div className="mt-12 grid md:grid-cols-2 gap-6">
           <RailCard
-            accent="bg-[#F26522]"
+            accent="bg-[#4f46e5]"
             title="Vaultline"
             subtitle="Steps 1–8 for files"
             copy="Upload → encrypt → Story IP → listing → license → conditional decrypt."

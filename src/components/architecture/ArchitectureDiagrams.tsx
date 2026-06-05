@@ -214,8 +214,8 @@ export function ProductSplitDiagram() {
         ↓
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
-        <div className="rounded-xl border border-[#F26522]/50 p-4">
-          <p className="text-[10px] uppercase tracking-wider text-[#F26522] mb-3">Vaultline</p>
+        <div className="rounded-xl border border-[#4f46e5]/50 p-4">
+          <p className="text-[10px] uppercase tracking-wider text-[#4f46e5] mb-3">Vaultline</p>
           <div className="flex flex-wrap items-center gap-2">
             <FlowBox label="encrypt file" />
             <span className="text-zinc-500">→</span>

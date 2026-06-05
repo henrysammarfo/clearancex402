@@ -104,7 +104,7 @@ export function McpInstallPanel({ className }: { className?: string }) {
             className={cn(
               "text-[11px] font-medium px-3 py-1.5 rounded-full transition-colors border",
               client === c.id
-                ? "bg-[#F26522] text-white border-[#F26522]"
+                ? "bg-[#4f46e5] text-white border-[#4f46e5]"
                 : "text-zinc-600 border-zinc-200 bg-white hover:border-zinc-300 hover:text-zinc-900",
             )}
           >
@@ -114,11 +114,11 @@ export function McpInstallPanel({ className }: { className?: string }) {
       </div>
       <div className="flex flex-wrap items-center gap-2 px-3 py-2 border-b border-zinc-200 bg-white text-[11px] text-zinc-500">
         <span>LINESTACK_ENV_FILE:</span>
-        <button type="button" onClick={() => setOs("win")} className={cn(os === "win" && "text-[#F26522] font-semibold")}>
+        <button type="button" onClick={() => setOs("win")} className={cn(os === "win" && "text-[#4f46e5] font-semibold")}>
           Windows
         </button>
         <span className="text-zinc-300">·</span>
-        <button type="button" onClick={() => setOs("unix")} className={cn(os === "unix" && "text-[#F26522] font-semibold")}>
+        <button type="button" onClick={() => setOs("unix")} className={cn(os === "unix" && "text-[#4f46e5] font-semibold")}>
           macOS / Linux
         </button>
       </div>
