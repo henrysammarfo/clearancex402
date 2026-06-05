@@ -74,7 +74,7 @@ export function SiteFooter() {
           </video>
           <div className="relative z-10 flex items-center gap-2.5">
             <div className="size-8 rounded-lg bg-white/15 border-[1.5px] border-white/85 flex items-center justify-center text-white text-[16px] font-bold tracking-tight">
-              L
+              C
             </div>
             <span className="text-[22px] font-bold text-white tracking-tight">Cipherline</span>
           </div>
@@ -122,7 +122,7 @@ export function SiteFooter() {
                 className="text-[42px] font-bold text-white leading-none"
                 style={{ letterSpacing: "-0.04em", transform: "rotate(10deg)", textShadow: "0 3px 6px rgba(0,0,0,0.25)" }}
               >
-                L
+                C
               </span>
             </div>
             <div className="flex gap-1.5 items-center" style={{ transform: "rotate(-4deg)", marginTop: 4 }}>
