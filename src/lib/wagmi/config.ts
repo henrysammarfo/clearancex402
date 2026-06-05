@@ -9,7 +9,7 @@ function buildTransports(rpcUrl: string) {
   } as const;
 }
 
-const APP_NAME = "Line Stack";
+const APP_NAME = "Cipherline";
 
 /**
  * RainbowKit wallet picker (MetaMask, Rainbow; full list with WalletConnect project id).

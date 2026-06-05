@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/mcp")({
   head: () => ({
     meta: [
-      { title: "Line Stack · MCP tools" },
+      { title: "Cipherline · MCP tools" },
       { name: "description", content: "MCP tool reference for @line-stack/mcp-server — Vaultline & Queryline on Story Aeneid." },
     ],
   }),

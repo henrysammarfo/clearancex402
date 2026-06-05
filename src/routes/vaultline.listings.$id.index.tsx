@@ -41,7 +41,7 @@ function Page() {
   if (!ready) {
     return (
       <AppShell product="vaultline" title="Listing" description="Loading shared registry…">
-        <EmptyState title="Loading" description="Fetching listings from the Line Stack registry." />
+        <EmptyState title="Loading" description="Fetching listings from the Cipherline registry." />
       </AppShell>
     );
   }

@@ -61,7 +61,7 @@ function Page() {
     <AppShell
       product="vaultline"
       title="Vaultline dashboard"
-      description="Your vaults and files on the shared Line Stack registry — connect the same wallet on any device to see your data. Buyers browse all listings."
+      description="Your vaults and files on the shared Cipherline registry — connect the same wallet on any device to see your data. Buyers browse all listings."
       actions={
         <>
           <DashboardWalletActions />

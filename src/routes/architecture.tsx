@@ -12,11 +12,11 @@ import {
 export const Route = createFileRoute("/architecture")({
   head: () => ({
     meta: [
-      { title: "Line Stack · Architecture — Programmable IP on CDR" },
+      { title: "Cipherline · Architecture — Programmable IP on CDR" },
       {
         name: "description",
         content:
-          "Status Quo vs CDR + Story marketplace architecture. Eight-step mapping to Vaultline and Queryline on Line Stack.",
+          "Status Quo vs CDR + Story marketplace architecture. Eight-step mapping to Vaultline and Queryline on Cipherline.",
       },
     ],
   }),
@@ -103,7 +103,7 @@ function ArchitecturePage() {
     <div className="min-h-screen bg-[#EFEFEF]">
       <SiteHeader />
       <section className="mx-auto max-w-[1280px] px-5 sm:px-8 py-10 sm:py-14">
-        <p className="text-[13px] font-medium text-zinc-500 mb-2">Line Stack · Story Aeneid · CDR</p>
+        <p className="text-[13px] font-medium text-zinc-500 mb-2">Cipherline · Story Aeneid · CDR</p>
         <h1
           className="font-medium tracking-tight text-zinc-900 max-w-3xl"
           style={{ fontSize: "clamp(1.75rem, 5vw, 3rem)" }}
@@ -111,7 +111,7 @@ function ArchitecturePage() {
           Turn Data into Programmable IP
         </h1>
         <p className="text-zinc-600 mt-4 max-w-2xl text-[15px] leading-relaxed">
-          How Line Stack replaces one-time payouts and lost control with <strong>recurring, programmable IP</strong> on
+          How Cipherline replaces one-time payouts and lost control with <strong>recurring, programmable IP</strong> on
           Story: contributors earn, buyers get audited access, and the chain sees real licenses and unlocks.{" "}
           <strong>Vaultline</strong> covers licensed files; <strong>Queryline</strong> covers licensed answers — eight
           steps, live on Aeneid (1315).
@@ -154,7 +154,7 @@ function ArchitecturePage() {
           <div>
             <div className="rounded-t-2xl bg-[#1e3a5f] text-white px-6 py-4">
               <h2 className="text-lg sm:text-xl font-semibold">New Model</h2>
-              <p className="text-sm text-blue-100 mt-1">CDR &amp; Story Powered Marketplace — Line Stack</p>
+              <p className="text-sm text-blue-100 mt-1">CDR &amp; Story Powered Marketplace — Cipherline</p>
             </div>
 
             <p className="text-xs font-semibold uppercase tracking-wider text-[#1e3a5f] px-1 py-2">
@@ -317,7 +317,7 @@ function StepCard({
       </div>
       <p className="text-xs text-zinc-700 leading-relaxed flex-1">{body}</p>
       <div className="mt-3 pt-3 border-t border-zinc-900/10">
-        <p className="text-[10px] uppercase tracking-wide text-zinc-600 mb-1">Line Stack</p>
+        <p className="text-[10px] uppercase tracking-wide text-zinc-600 mb-1">Cipherline</p>
         <p className="text-xs font-medium text-zinc-900 leading-snug">{linestack}</p>
         <div className="flex flex-wrap gap-1 mt-2">
           {routes.map((r) => (

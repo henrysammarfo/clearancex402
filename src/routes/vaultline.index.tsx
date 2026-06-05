@@ -12,7 +12,7 @@ export const Route = createFileRoute("/vaultline/")({
         content:
           "Monetize reports, datasets, and creator packs: encrypt, register as Story IP, sell licenses, buyers unlock with real CDR decrypt.",
       },
-      { property: "og:title", content: "Vaultline — Line Stack" },
+      { property: "og:title", content: "Vaultline — Cipherline" },
       { property: "og:description", content: "Pay-to-unlock private files on Story Aeneid — for creators, analysts, and buyers." },
     ],
   }),

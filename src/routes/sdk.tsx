@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
 
 export const Route = createFileRoute("/sdk")({
-  head: () => ({ meta: [{ title: "Line Stack · SDK" }] }),
+  head: () => ({ meta: [{ title: "Cipherline · SDK" }] }),
   component: () => (
     <div className="min-h-screen bg-[#EFEFEF]">
       <SiteHeader />

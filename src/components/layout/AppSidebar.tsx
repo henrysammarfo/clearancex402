@@ -83,7 +83,7 @@ export function AppSidebar({ product }: { product: "vaultline" | "queryline" }) 
         <Link to="/" className="flex items-center gap-2 px-2 py-2 min-w-0">
           <LineStackLogo size={32} className="shrink-0" />
           <span className="font-semibold tracking-tight whitespace-nowrap group-data-[collapsible=icon]:hidden">
-            Line Stack
+            Cipherline
           </span>
         </Link>
       </SidebarHeader>
