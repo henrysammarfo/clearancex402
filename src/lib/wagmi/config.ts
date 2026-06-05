@@ -20,14 +20,17 @@ export function createWagmiConfig() {
   const transports = buildTransports(storyRpcUrl);
 
   if (!walletConnectProjectId) {
-    throw new Error(
-      "VITE_WALLETCONNECT_PROJECT_ID is required. Create a project at https://cloud.walletconnect.com",
+    console.warn(
+      "[Cipherline] VITE_WALLETCONNECT_PROJECT_ID is not set. Injected wallets (e.g. MetaMask) work, " +
+        "but the full WalletConnect modal and mobile WC are disabled. Add a project id from " +
+        "https://cloud.walletconnect.com to enable them.",
     );
   }
 
   return getDefaultConfig({
     appName: APP_NAME,
-    projectId: walletConnectProjectId,
+    // RainbowKit requires a non-empty string; use a placeholder when none is configured.
+    projectId: walletConnectProjectId || "00000000000000000000000000000000",
     chains: [storyAeneid],
     transports,
     ssr: true,
