@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "linestack": {
+      "command": "npx",
+      "args": ["-y", "@line-stack/mcp-server"],
+      "env": {
+        "LINESTACK_ENV_FILE": "C:/Users/YOU/.linestack/.env"
+      }
+    }
+  }
+}

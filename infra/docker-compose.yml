@@ -1,0 +1,49 @@
+# Line Stack IPFS node — run on a VPS (Vultr/Azure), not on Vercel.
+# API binds to localhost; use ipfs-proxy for authenticated remote access.
+services:
+  ipfs:
+    image: ipfs/kubo:v0.32.1
+    restart: unless-stopped
+    environment:
+      IPFS_PROFILE: server
+    volumes:
+      - ipfs_data:/data/ipfs
+    ports:
+      - "127.0.0.1:5001:5001"
+      - "8080:8080"
+
+  ipfs-proxy:
+    image: node:22-alpine
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./ipfs-proxy:/app:ro
+    environment:
+      IPFS_PROXY_SECRET: ${IPFS_PROXY_SECRET}
+      IPFS_API_URL: http://ipfs:5001
+      IPFS_GATEWAY_URL: http://ipfs:8080/ipfs
+      PORT: "8787"
+    ports:
+      - "8787:8787"
+    command: ["node", "server.mjs"]
+    depends_on:
+      - ipfs
+
+  registry-api:
+    image: node:22-alpine
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./registry-api:/app:ro
+      - registry_data:/data
+    environment:
+      REGISTRY_PROXY_SECRET: ${REGISTRY_PROXY_SECRET:-${IPFS_PROXY_SECRET}}
+      REGISTRY_DATA_FILE: /data/registry.json
+      PORT: "8788"
+    ports:
+      - "8788:8788"
+    command: ["node", "server.mjs"]
+
+volumes:
+  ipfs_data:
+  registry_data:

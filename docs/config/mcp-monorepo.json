@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "linestack": {
+      "command": "node",
+      "args": ["<REPO_ROOT>/packages/mcp-server/dist/index.js"],
+      "env": {
+        "LINESTACK_ENV_FILE": "C:/Users/YOU/.linestack/.env"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "chainId": 1315,
+  "deployedAt": "2026-05-31T15:46:48.429Z",
+  "deployer": "0xB883e76A4f6841E72cAF1C28ba00f78df974f448",
+  "datasetRegistry": "0x176018c6c8c445807fe3688f463487e4b01c8ae3",
+  "templateRegistry": "0xe39d684dede7d04c063121878c6c52a223b82e0c",
+  "publisherWriteCondition": "0xcfe325f00cf0e3b727680f7727b81aaa1c4dcfe0",
+  "buyerReadCondition": "0xcd3a4992c0de81ceb78cf9b58bd76c31bcf08792",
+  "merkleAllowlistReadCondition": "0x0e872eb23deb91da38e5f53a042cf1818cf4bc11"
+}

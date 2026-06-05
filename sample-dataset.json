@@ -1,0 +1,8 @@
+{
+  "rows": [
+    { "region": "EU", "value": 42 },
+    { "region": "US", "value": 37 },
+    { "region": "EU", "value": 18 }
+  ],
+  "seededFor": "linestack-beta"
+}

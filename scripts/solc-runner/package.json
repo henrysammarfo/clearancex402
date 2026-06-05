@@ -1,0 +1,7 @@
+{
+  "name": "linestack-solc-runner",
+  "private": true,
+  "dependencies": {
+    "solc": "0.8.23"
+  }
+}

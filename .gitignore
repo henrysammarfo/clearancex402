@@ -1,0 +1,59 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+.output
+.vercel/output
+.vinxi
+.tanstack/**
+.nitro
+*.local
+.env
+.env.local
+.env.*.local
+.buyer-wallet.generated.json
+.automata-demo-last.json
+.tmp-automata/
+vercel.import.env.tmp
+.ssh/
+packages/*/dist
+
+# Local MCP config (may contain paths); use .cursor/mcp.json.example
+.cursor/mcp.json
+
+.lovable/
+.git-rewrite/
+assets/
+
+# Local / generated (never commit)
+.vercel.import.env
+buyer-wallet.generated.json
+
+# Personal draft messages (copy-paste locally; do not publish)
+docs/JACOB-FEEDBACK-DM.md
+docs/E2E-TESTING-PLAYBOOK.md
+docs/DEMO-VIDEO-VOICEOVER.md
+fixtures/demo/
+
+# Legacy Cloudflare (ignored if present locally)
+.wrangler/
+.dev.vars
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

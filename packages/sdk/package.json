@@ -1,0 +1,47 @@
+{
+  "name": "@line-stack/sdk",
+  "version": "0.1.1",
+  "description": "Line Stack SDK — Vaultline & Queryline on Story CDR (Aeneid)",
+  "type": "module",
+  "license": "MIT",
+  "author": "Line Stack",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henrysammarfo/linestack.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": "https://github.com/henrysammarfo/linestack/issues",
+  "homepage": "https://github.com/henrysammarfo/linestack/tree/main/packages/sdk#readme",
+  "keywords": ["story", "cdr", "vaultline", "queryline", "sdk", "linestack"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && node ../../scripts/verify-npm-package.mjs ."
+  },
+  "dependencies": {
+    "@line-stack/cdr-core": "^0.1.1",
+    "@storacha/client": "^1.8.26",
+    "@story-protocol/core-sdk": "^1.4.4",
+    "viem": "^2.47.6"
+  },
+  "devDependencies": {
+    "@line-stack/cdr-core": "file:../cdr-core",
+    "@types/node": "^22.16.5",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
