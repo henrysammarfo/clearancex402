@@ -6,7 +6,7 @@ import { StatusChip } from "@/components/states";
 export const Route = createFileRoute("/agent-runbook")({
   head: () => ({
     meta: [
-      { title: "Line Stack · Agent runbook" },
+      { title: "Cipherline · Agent runbook" },
       { name: "description", content: "Agent workflows for Vaultline and Queryline via MCP / CLI on Story Aeneid." },
     ],
   }),

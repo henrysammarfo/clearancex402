@@ -36,7 +36,7 @@ function scrollToSection(id: SectionId) {
 function StepCard({ n, title, children }: { n: string; title: string; children: ReactNode }) {
   return (
     <div className="rounded-2xl border border-zinc-200 bg-white p-4 flex gap-3 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-      <span className="text-[#F26522] font-mono text-sm font-semibold shrink-0">{n}</span>
+      <span className="text-[#4f46e5] font-mono text-sm font-semibold shrink-0">{n}</span>
       <div>
         <p className="font-medium text-sm text-zinc-900">{title}</p>
         <p className="text-xs text-zinc-600 mt-1 leading-relaxed">{children}</p>
@@ -97,7 +97,7 @@ export function DocsPage() {
                       className={cn(
                         "w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm transition-colors border",
                         active === item.id
-                          ? "bg-[#F26522] text-white border-[#F26522] shadow-sm"
+                          ? "bg-[#4f46e5] text-white border-[#4f46e5] shadow-sm"
                           : "bg-white text-zinc-600 border-zinc-200 hover:text-zinc-900 hover:border-zinc-300",
                       )}
                     >
@@ -108,14 +108,14 @@ export function DocsPage() {
                 </nav>
               </div>
             ))}
-            <Link to="/mcp" className="block text-sm font-medium text-[#F26522] hover:underline pt-2">
+            <Link to="/mcp" className="block text-sm font-medium text-[#4f46e5] hover:underline pt-2">
               Open MCP tools page →
             </Link>
           </aside>
 
           <article className="min-w-0 space-y-14 scroll-mt-24">
             <header>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#F26522] mb-2">Line Stack</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5] mb-2">Cipherline</p>
               <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Documentation</h1>
               <p className="text-zinc-600 mt-3 max-w-2xl text-[15px] leading-relaxed">
                 Interactive MCP setup — pick your client, copy one block. Same registry and txs as{" "}
@@ -127,8 +127,8 @@ export function DocsPage() {
             </header>
 
             <section id="install-mcp" className="scroll-mt-24 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#F26522]">Getting started</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Line Stack MCP</h2>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Getting started</p>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Cipherline MCP</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 17 on-chain tools over stdio via npm. Create <code className="text-zinc-800 bg-zinc-100 px-1 rounded">~/.linestack/.env</code> first
                 (Configuration below).
@@ -185,7 +185,7 @@ USE_AUTOMATA_DCAP_FIXTURE=1`}
                 Vaultline: allocate → upload → IP → list → license → unlock. Queryline: dataset vault (publisher-only) +
                 per-buyer result vault.
               </p>
-              <Link to="/architecture" className="text-[#F26522] text-sm font-medium underline">
+              <Link to="/architecture" className="text-[#4f46e5] text-sm font-medium underline">
                 Architecture diagrams →
               </Link>
             </section>
@@ -210,7 +210,7 @@ USE_AUTOMATA_DCAP_FIXTURE=1`}
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Fulfill attestation</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 EIP-712 + Automata <code>verifyAndAttestOnChain</code> on fulfill. See{" "}
-                <Link to="/agent-runbook" className="text-[#F26522] font-medium underline">
+                <Link to="/agent-runbook" className="text-[#4f46e5] font-medium underline">
                   agent runbook
                 </Link>
                 .

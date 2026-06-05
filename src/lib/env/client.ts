@@ -49,7 +49,7 @@ export function getClientEnv() {
 
   if (chainId !== AENEID_CHAIN_ID) {
     console.warn(
-      `[Line Stack] VITE_STORY_CHAIN_ID=${chainId} does not match Aeneid (${AENEID_CHAIN_ID}).`,
+      `[Cipherline] VITE_STORY_CHAIN_ID=${chainId} does not match Aeneid (${AENEID_CHAIN_ID}).`,
     );
   }
 

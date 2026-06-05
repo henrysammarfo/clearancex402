@@ -7,13 +7,13 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Line Stack — Sell private data and licensed answers on Story" },
+      { title: "Cipherline — Sell private data and licensed answers on Story" },
       {
         name: "description",
         content:
           "Confidential data marketplace on Story Aeneid: Vaultline for licensed files, Queryline for answers without exposing raw datasets. Real CDR + PIL txs.",
       },
-      { property: "og:title", content: "Line Stack" },
+      { property: "og:title", content: "Cipherline" },
       {
         property: "og:description",
         content: "Monetize private files and dataset insights on Story — with on-chain licenses and audit proof.",
@@ -35,7 +35,7 @@ function Landing() {
         <div className="flex-1" />
         <div className="relative z-20 mx-auto max-w-[1440px] w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16 lg:pb-20">
           <p className="text-[13px] sm:text-[14px] tracking-wide text-zinc-900 mb-5 sm:mb-8">
-            Line Stack · Story Aeneid · Confidential data marketplace
+            Cipherline · Story Aeneid · Confidential data marketplace
           </p>
           <h1
             className="font-medium leading-[1.08] tracking-[-0.03em] text-zinc-900"
@@ -55,13 +55,13 @@ function Landing() {
           <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5">
             <Link
               to="/vaultline"
-              className="group bg-[#F26522] hover:bg-[#e05a1a] text-white text-[13px] sm:text-[14px] rounded-full pl-5 sm:pl-6 pr-2 py-2 inline-flex items-center gap-2 self-start"
+              className="group bg-[#4f46e5] hover:bg-[#4338ca] text-white text-[13px] sm:text-[14px] rounded-full pl-5 sm:pl-6 pr-2 py-2 inline-flex items-center gap-2 self-start"
             >
               <span className="overflow-hidden h-[20px] flex flex-col items-start">
                 <span className="block transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">Explore Vaultline</span>
                 <span className="block">Explore Vaultline</span>
               </span>
-              <span className="size-7 sm:size-8 rounded-full bg-white text-[#F26522] flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
+              <span className="size-7 sm:size-8 rounded-full bg-white text-[#4f46e5] flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
                 <ArrowRight className="size-4" />
               </span>
             </Link>
@@ -98,7 +98,7 @@ function Landing() {
             <span className="sm:hidden"> </span>from private data.
           </h2>
           <p className="text-zinc-600 max-w-3xl text-[15px] leading-relaxed mb-12 sm:mb-16">
-            High-value data is stuck in DMs and trust-based file shares. Line Stack turns it into programmable IP:
+            High-value data is stuck in DMs and trust-based file shares. Cipherline turns it into programmable IP:
             pay-to-unlock files, or pay-for-answers without handing over the full dataset — with on-chain proof when
             access succeeds or fails.
           </p>
@@ -106,7 +106,7 @@ function Landing() {
           <div className="grid lg:grid-cols-2 gap-6">
             <ProductCard
               icon={<Vault className="size-5" />}
-              accent="bg-[#F26522]"
+              accent="bg-[#4f46e5]"
               eyebrow="Vaultline · sell files"
               title="License reports, datasets, and creator packs."
               copy="For creators, analysts, and teams selling CSVs, PDFs, or research. Encrypt → Story IP → buyer mints a license → CDR decrypts only for them. You earn; they get proof, not a leaky link."

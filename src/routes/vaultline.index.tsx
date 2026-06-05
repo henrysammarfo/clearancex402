@@ -12,7 +12,7 @@ export const Route = createFileRoute("/vaultline/")({
         content:
           "Monetize reports, datasets, and creator packs: encrypt, register as Story IP, sell licenses, buyers unlock with real CDR decrypt.",
       },
-      { property: "og:title", content: "Vaultline — Line Stack" },
+      { property: "og:title", content: "Vaultline — Cipherline" },
       { property: "og:description", content: "Pay-to-unlock private files on Story Aeneid — for creators, analysts, and buyers." },
     ],
   }),
@@ -25,7 +25,7 @@ function VaultlineLanding() {
       <SiteHeader />
       <section className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12 pt-10 pb-20">
         <div className="flex items-center gap-3 mb-6">
-          <span className="size-9 rounded-xl bg-[#F26522] text-white flex items-center justify-center"><Vault className="size-5" /></span>
+          <span className="size-9 rounded-xl bg-[#4f46e5] text-white flex items-center justify-center"><Vault className="size-5" /></span>
           <span className="text-[13px] font-medium text-zinc-600">Vaultline</span>
         </div>
         <h1 className="font-medium leading-[1.06] tracking-[-0.03em] text-zinc-900 max-w-4xl" style={{ fontSize: "clamp(2rem, 6vw, 4rem)" }}>

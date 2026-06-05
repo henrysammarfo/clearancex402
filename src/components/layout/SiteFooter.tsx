@@ -74,9 +74,9 @@ export function SiteFooter() {
           </video>
           <div className="relative z-10 flex items-center gap-2.5">
             <div className="size-8 rounded-lg bg-white/15 border-[1.5px] border-white/85 flex items-center justify-center text-white text-[16px] font-bold tracking-tight">
-              L
+              C
             </div>
-            <span className="text-[22px] font-bold text-white tracking-tight">Line Stack</span>
+            <span className="text-[22px] font-bold text-white tracking-tight">Cipherline</span>
           </div>
           <div className="relative z-10 mt-auto mb-7">
             <p className="text-[19px] text-white leading-[1.45]">
@@ -122,7 +122,7 @@ export function SiteFooter() {
                 className="text-[42px] font-bold text-white leading-none"
                 style={{ letterSpacing: "-0.04em", transform: "rotate(10deg)", textShadow: "0 3px 6px rgba(0,0,0,0.25)" }}
               >
-                L
+                C
               </span>
             </div>
             <div className="flex gap-1.5 items-center" style={{ transform: "rotate(-4deg)", marginTop: 4 }}>
@@ -149,7 +149,7 @@ export function SiteFooter() {
           </div>
 
           <div className="mt-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-            <p className="text-[12.5px] font-medium text-zinc-400">© 2026 Line Stack. All rights reserved.</p>
+            <p className="text-[12.5px] font-medium text-zinc-400">© 2026 Cipherline. All rights reserved.</p>
             <div className="flex flex-col gap-3.5">
               <h4 className="text-[15px] text-zinc-500 leading-[1.45]">
                 Live on Story Aeneid (1315).
@@ -181,7 +181,7 @@ export function SiteFooter() {
             fontSize="320"
             style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, letterSpacing: "-0.03em", fill: "rgba(0,0,0,0.04)" }}
           >
-            Line Stack
+            Cipherline
           </text>
         </svg>
       </div>
