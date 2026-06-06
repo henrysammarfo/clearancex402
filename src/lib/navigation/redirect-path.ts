@@ -10,7 +10,7 @@ export function buildRedirectPath(pathname: string, searchStr?: string): string 
 function parseRedirect(redirect: string): { pathname: string; search: Record<string, string> } {
   const trimmed = redirect.trim();
   if (!trimmed.startsWith("/")) {
-    return { pathname: "/vaultline/dashboard", search: {} };
+    return { pathname: "/dashboard", search: {} };
   }
   const qIndex = trimmed.indexOf("?");
   const pathname = qIndex === -1 ? trimmed : trimmed.slice(0, qIndex);
