@@ -76,10 +76,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Cipherline — CDR-native developer rails for Story testnet" },
+      { title: "Clearance402 — CDR-native developer rails for Story testnet" },
       { name: "description", content: "Vaultline and Queryline: private data licensing and confidential query rails for Story builders." },
-      { name: "author", content: "Cipherline" },
-      { property: "og:title", content: "Cipherline — CDR-native rails on Story" },
+      { name: "author", content: "Clearance402" },
+      { property: "og:title", content: "Clearance402 — CDR-native rails on Story" },
       { property: "og:description", content: "Vaultline + Queryline: private data licensing and confidential query rails for Story testnet builders." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

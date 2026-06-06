@@ -14,7 +14,7 @@ export const Route = createFileRoute("/login")({
   validateSearch: (search: Record<string, unknown>) => ({
     redirect: typeof search.redirect === "string" ? search.redirect : "/vaultline/dashboard",
   }),
-  head: () => ({ meta: [{ title: "Connect wallet · Cipherline" }] }),
+  head: () => ({ meta: [{ title: "Connect wallet · Clearance402" }] }),
   component: ConnectPage,
 });
 
@@ -35,11 +35,11 @@ function ConnectPage() {
       <section className="flex-1 mx-auto max-w-[460px] w-full px-5 sm:px-8 py-12">
         <div className="rounded-3xl border bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
           <div className="flex items-center gap-2 text-[12px] font-medium text-zinc-500 mb-4">
-            <Wallet className="size-3.5" /> Cipherline · Story Aeneid
+            <Wallet className="size-3.5" /> Clearance402 · Story Aeneid
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">Connect your wallet</h1>
           <p className="text-sm text-zinc-600 mt-1.5">
-            Cipherline uses your wallet on Story Aeneid (chain {AENEID_CHAIN_ID}) for CDR vaults, licenses, and queries.
+            Clearance402 uses your wallet on Story Aeneid (chain {AENEID_CHAIN_ID}) for CDR vaults, licenses, and queries.
             No workspace API key is required for testnet flows.
           </p>
 

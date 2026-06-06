@@ -115,7 +115,7 @@ export function DocsPage() {
 
           <article className="min-w-0 space-y-14 scroll-mt-24">
             <header>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5] mb-2">Cipherline</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5] mb-2">Clearance402</p>
               <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Documentation</h1>
               <p className="text-zinc-600 mt-3 max-w-2xl text-[15px] leading-relaxed">
                 Interactive MCP setup — pick your client, copy one block. Same registry and txs as{" "}
@@ -128,7 +128,7 @@ export function DocsPage() {
 
             <section id="install-mcp" className="scroll-mt-24 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Getting started</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Cipherline MCP</h2>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Clearance402 MCP</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 17 on-chain tools over stdio via npm. Create <code className="text-zinc-800 bg-zinc-100 px-1 rounded">~/.linestack/.env</code> first
                 (Configuration below).

@@ -173,7 +173,7 @@ export function FullStackDiagram() {
 
   return (
     <DiagramShell
-      title="Cipherline — full stack"
+      title="Clearance402 — full stack"
       footnote="One marketplace state (registry) across web, CLI, SDK, and MCP — every critical path uses real Story/CDR txs on testnet."
     >
       <div className="space-y-2">
@@ -205,7 +205,7 @@ export function ProductSplitDiagram() {
   return (
     <DiagramShell
       title="Product split on shared CDR"
-      footnote="Not two backends — one Cipherline core (cdr-core, registry, conditions) with two user-facing products."
+      footnote="Not two backends — one Clearance402 core (cdr-core, registry, conditions) with two user-facing products."
     >
       <div className="flex justify-center mb-3">
         <FlowBox label="Story Aeneid + CDR + registry" wide />

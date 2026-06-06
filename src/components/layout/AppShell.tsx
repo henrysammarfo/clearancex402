@@ -45,7 +45,7 @@ export function AppShell({
             <header className="h-14 border-b flex items-center gap-3 px-3 sm:px-5">
               <SidebarTrigger />
               <div className="text-sm text-muted-foreground whitespace-nowrap min-w-0 truncate">
-                <Link to="/" className="hover:text-foreground">Cipherline</Link>
+                <Link to="/" className="hover:text-foreground">Clearance402</Link>
                 <span className="mx-1.5">/</span>
                 <Link to={product === "vaultline" ? "/vaultline" : "/queryline"} className="hover:text-foreground capitalize">
                   {product}

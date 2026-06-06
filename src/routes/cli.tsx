@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
 
 export const Route = createFileRoute("/cli")({
-  head: () => ({ meta: [{ title: "Cipherline · CLI" }] }),
+  head: () => ({ meta: [{ title: "Clearance402 · CLI" }] }),
   component: () => (
     <div className="min-h-screen bg-[#EFEFEF]">
       <SiteHeader />

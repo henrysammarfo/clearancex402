@@ -605,7 +605,7 @@ function Page() {
             <div className="rounded-2xl border bg-card p-5">
               <h4 className="text-sm font-semibold mb-2">Saved in registry</h4>
               <p className="text-xs text-muted-foreground mb-3">
-                Persists across refresh — shared Cipherline registry.
+                Persists across refresh — shared Clearance402 registry.
               </p>
               <ul className="space-y-2">
                 {vaultFiles.map((f) => (

@@ -7,13 +7,13 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Cipherline — Sell private data and licensed answers on Story" },
+      { title: "Clearance402 — Sell private data and licensed answers on Story" },
       {
         name: "description",
         content:
           "Confidential data marketplace on Story Aeneid: Vaultline for licensed files, Queryline for answers without exposing raw datasets. Real CDR + PIL txs.",
       },
-      { property: "og:title", content: "Cipherline" },
+      { property: "og:title", content: "Clearance402" },
       {
         property: "og:description",
         content: "Monetize private files and dataset insights on Story — with on-chain licenses and audit proof.",
@@ -35,7 +35,7 @@ function Landing() {
         <div className="flex-1" />
         <div className="relative z-20 mx-auto max-w-[1440px] w-full px-5 sm:px-8 lg:px-12 pb-14 sm:pb-16 lg:pb-20">
           <p className="text-[13px] sm:text-[14px] tracking-wide text-zinc-900 mb-5 sm:mb-8">
-            Cipherline · Story Aeneid · Confidential data marketplace
+            Clearance402 · Story Aeneid · Confidential data marketplace
           </p>
           <h1
             className="font-medium leading-[1.08] tracking-[-0.03em] text-zinc-900"
@@ -98,7 +98,7 @@ function Landing() {
             <span className="sm:hidden"> </span>from private data.
           </h2>
           <p className="text-zinc-600 max-w-3xl text-[15px] leading-relaxed mb-12 sm:mb-16">
-            High-value data is stuck in DMs and trust-based file shares. Cipherline turns it into programmable IP:
+            High-value data is stuck in DMs and trust-based file shares. Clearance402 turns it into programmable IP:
             pay-to-unlock files, or pay-for-answers without handing over the full dataset — with on-chain proof when
             access succeeds or fails.
           </p>
