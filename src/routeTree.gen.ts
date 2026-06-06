@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VaultlineRouteImport } from './routes/vaultline'
+import { Route as ToolOnboardingRouteImport } from './routes/tool-onboarding'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SdkRouteImport } from './routes/sdk'
@@ -20,8 +21,10 @@ import { Route as DocsRouteImport } from './routes/docs'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CliRouteImport } from './routes/cli'
 import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentRunbookRouteImport } from './routes/agent-runbook'
+import { Route as AgentClearanceRouteImport } from './routes/agent-clearance'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultlineIndexRouteImport } from './routes/vaultline.index'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
@@ -68,6 +71,11 @@ import { Route as ApiIpfsGetCidRouteImport } from './routes/api.ipfs.get.$cid'
 const VaultlineRoute = VaultlineRouteImport.update({
   id: '/vaultline',
   path: '/vaultline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolOnboardingRoute = ToolOnboardingRouteImport.update({
+  id: '/tool-onboarding',
+  path: '/tool-onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StatusRoute = StatusRouteImport.update({
@@ -120,6 +128,11 @@ const ChangelogRoute = ChangelogRouteImport.update({
   path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArchitectureRoute = ArchitectureRouteImport.update({
   id: '/architecture',
   path: '/architecture',
@@ -128,6 +141,11 @@ const ArchitectureRoute = ArchitectureRouteImport.update({
 const AgentRunbookRoute = AgentRunbookRouteImport.update({
   id: '/agent-runbook',
   path: '/agent-runbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentClearanceRoute = AgentClearanceRouteImport.update({
+  id: '/agent-clearance',
+  path: '/agent-clearance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -346,8 +364,10 @@ const ApiIpfsGetCidRoute = ApiIpfsGetCidRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
+  '/audit': typeof AuditRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
   '/dashboard': typeof DashboardRoute
@@ -358,6 +378,7 @@ export interface FileRoutesByFullPath {
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
+  '/tool-onboarding': typeof ToolOnboardingRoute
   '/vaultline': typeof VaultlineRouteWithChildren
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
@@ -403,8 +424,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
+  '/audit': typeof AuditRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
   '/dashboard': typeof DashboardRoute
@@ -414,6 +437,7 @@ export interface FileRoutesByTo {
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
+  '/tool-onboarding': typeof ToolOnboardingRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -455,8 +479,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
+  '/audit': typeof AuditRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
   '/dashboard': typeof DashboardRoute
@@ -467,6 +493,7 @@ export interface FileRoutesById {
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
+  '/tool-onboarding': typeof ToolOnboardingRoute
   '/vaultline': typeof VaultlineRouteWithChildren
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
@@ -514,8 +541,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
+    | '/audit'
     | '/changelog'
     | '/cli'
     | '/dashboard'
@@ -526,6 +555,7 @@ export interface FileRouteTypes {
     | '/sdk'
     | '/settings'
     | '/status'
+    | '/tool-onboarding'
     | '/vaultline'
     | '/api/registry'
     | '/queryline/audit'
@@ -571,8 +601,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
+    | '/audit'
     | '/changelog'
     | '/cli'
     | '/dashboard'
@@ -582,6 +614,7 @@ export interface FileRouteTypes {
     | '/sdk'
     | '/settings'
     | '/status'
+    | '/tool-onboarding'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -622,8 +655,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
+    | '/audit'
     | '/changelog'
     | '/cli'
     | '/dashboard'
@@ -634,6 +669,7 @@ export interface FileRouteTypes {
     | '/sdk'
     | '/settings'
     | '/status'
+    | '/tool-onboarding'
     | '/vaultline'
     | '/api/registry'
     | '/queryline/audit'
@@ -680,8 +716,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentClearanceRoute: typeof AgentClearanceRoute
   AgentRunbookRoute: typeof AgentRunbookRoute
   ArchitectureRoute: typeof ArchitectureRoute
+  AuditRoute: typeof AuditRoute
   ChangelogRoute: typeof ChangelogRoute
   CliRoute: typeof CliRoute
   DashboardRoute: typeof DashboardRoute
@@ -692,6 +730,7 @@ export interface RootRouteChildren {
   SdkRoute: typeof SdkRoute
   SettingsRoute: typeof SettingsRoute
   StatusRoute: typeof StatusRoute
+  ToolOnboardingRoute: typeof ToolOnboardingRoute
   VaultlineRoute: typeof VaultlineRouteWithChildren
   ApiRegistryRoute: typeof ApiRegistryRouteWithChildren
   ToolsIdRoute: typeof ToolsIdRoute
@@ -714,6 +753,13 @@ declare module '@tanstack/react-router' {
       path: '/vaultline'
       fullPath: '/vaultline'
       preLoaderRoute: typeof VaultlineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tool-onboarding': {
+      id: '/tool-onboarding'
+      path: '/tool-onboarding'
+      fullPath: '/tool-onboarding'
+      preLoaderRoute: typeof ToolOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/status': {
@@ -786,6 +832,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/architecture': {
       id: '/architecture'
       path: '/architecture'
@@ -798,6 +851,13 @@ declare module '@tanstack/react-router' {
       path: '/agent-runbook'
       fullPath: '/agent-runbook'
       preLoaderRoute: typeof AgentRunbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent-clearance': {
+      id: '/agent-clearance'
+      path: '/agent-clearance'
+      fullPath: '/agent-clearance'
+      preLoaderRoute: typeof AgentClearanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -1223,8 +1283,10 @@ const ApiRegistryRouteWithChildren = ApiRegistryRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentClearanceRoute: AgentClearanceRoute,
   AgentRunbookRoute: AgentRunbookRoute,
   ArchitectureRoute: ArchitectureRoute,
+  AuditRoute: AuditRoute,
   ChangelogRoute: ChangelogRoute,
   CliRoute: CliRoute,
   DashboardRoute: DashboardRoute,
@@ -1235,6 +1297,7 @@ const rootRouteChildren: RootRouteChildren = {
   SdkRoute: SdkRoute,
   SettingsRoute: SettingsRoute,
   StatusRoute: StatusRoute,
+  ToolOnboardingRoute: ToolOnboardingRoute,
   VaultlineRoute: VaultlineRouteWithChildren,
   ApiRegistryRoute: ApiRegistryRouteWithChildren,
   ToolsIdRoute: ToolsIdRoute,
