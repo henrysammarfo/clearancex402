@@ -15,7 +15,9 @@ import { Route as ToolOnboardingRouteImport } from './routes/tool-onboarding'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SdkRouteImport } from './routes/sdk'
+import { Route as RelayerRouteImport } from './routes/relayer'
 import { Route as QuerylineRouteImport } from './routes/queryline'
+import { Route as PermissionsRouteImport } from './routes/permissions'
 import { Route as PaymentLabRouteImport } from './routes/payment-lab'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
@@ -101,9 +103,19 @@ const SdkRoute = SdkRouteImport.update({
   path: '/sdk',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelayerRoute = RelayerRouteImport.update({
+  id: '/relayer',
+  path: '/relayer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuerylineRoute = QuerylineRouteImport.update({
   id: '/queryline',
   path: '/queryline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PermissionsRoute = PermissionsRouteImport.update({
+  id: '/permissions',
+  path: '/permissions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaymentLabRoute = PaymentLabRouteImport.update({
@@ -394,7 +406,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/payment-lab': typeof PaymentLabRoute
+  '/permissions': typeof PermissionsRoute
   '/queryline': typeof QuerylineRouteWithChildren
+  '/relayer': typeof RelayerRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
@@ -457,6 +471,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/payment-lab': typeof PaymentLabRoute
+  '/permissions': typeof PermissionsRoute
+  '/relayer': typeof RelayerRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
@@ -515,7 +531,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/payment-lab': typeof PaymentLabRoute
+  '/permissions': typeof PermissionsRoute
   '/queryline': typeof QuerylineRouteWithChildren
+  '/relayer': typeof RelayerRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
@@ -580,7 +598,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/mcp'
     | '/payment-lab'
+    | '/permissions'
     | '/queryline'
+    | '/relayer'
     | '/sdk'
     | '/settings'
     | '/status'
@@ -643,6 +663,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/mcp'
     | '/payment-lab'
+    | '/permissions'
+    | '/relayer'
     | '/sdk'
     | '/settings'
     | '/status'
@@ -700,7 +722,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/mcp'
     | '/payment-lab'
+    | '/permissions'
     | '/queryline'
+    | '/relayer'
     | '/sdk'
     | '/settings'
     | '/status'
@@ -764,7 +788,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
   PaymentLabRoute: typeof PaymentLabRoute
+  PermissionsRoute: typeof PermissionsRoute
   QuerylineRoute: typeof QuerylineRouteWithChildren
+  RelayerRoute: typeof RelayerRoute
   SdkRoute: typeof SdkRoute
   SettingsRoute: typeof SettingsRoute
   StatusRoute: typeof StatusRoute
@@ -829,11 +855,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SdkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/relayer': {
+      id: '/relayer'
+      path: '/relayer'
+      fullPath: '/relayer'
+      preLoaderRoute: typeof RelayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/queryline': {
       id: '/queryline'
       path: '/queryline'
       fullPath: '/queryline'
       preLoaderRoute: typeof QuerylineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/permissions': {
+      id: '/permissions'
+      path: '/permissions'
+      fullPath: '/permissions'
+      preLoaderRoute: typeof PermissionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/payment-lab': {
@@ -1355,7 +1395,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
   PaymentLabRoute: PaymentLabRoute,
+  PermissionsRoute: PermissionsRoute,
   QuerylineRoute: QuerylineRouteWithChildren,
+  RelayerRoute: RelayerRoute,
   SdkRoute: SdkRoute,
   SettingsRoute: SettingsRoute,
   StatusRoute: StatusRoute,

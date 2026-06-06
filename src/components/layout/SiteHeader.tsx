@@ -9,9 +9,9 @@ import { WalletConnect } from "@/components/wallet/WalletConnect";
 import { LineStackLogo } from "@/components/brand/LineStackLogo";
 
 const NAV = [
-  { to: "/vaultline", label: "Vaultline" },
-  { to: "/queryline", label: "Queryline" },
-  { to: "/architecture", label: "Architecture" },
+  { to: "/tools", label: "Tools" },
+  { to: "/agent-clearance", label: "Agent clearance" },
+  { to: "/payment-lab", label: "Payment lab" },
   { to: "/docs", label: "Docs" },
   { to: "/mcp", label: "MCP" },
 ];
@@ -104,7 +104,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           </div>
 
           <div className="hidden md:flex items-center gap-4 pr-1">
-            <span className="hidden lg:inline text-[13px] text-zinc-600">Story testnet · CDR-native</span>
+            <span className="hidden lg:inline text-[13px] text-zinc-600">x402 · MCP · agent-native</span>
             <div className="hidden lg:inline-flex items-center gap-1.5 text-zinc-600">
               <Clock className="size-3.5" />
               <LondonClock />
@@ -118,27 +118,26 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
             {!onConnectPage && !walletConnected && (
               <Link
                 to="/login"
+                search={{ redirect: "/dashboard" }}
                 className="rounded-full bg-zinc-900 text-white text-[13px] font-medium px-4 py-2 hover:bg-zinc-800"
               >
                 Connect wallet
               </Link>
             )}
-            {canOpenConsole && (
-              <Link
-                to="/vaultline/dashboard"
-                className="group bg-zinc-900 text-white text-[13px] font-medium rounded-full pl-5 pr-2 py-2 flex items-center gap-2 shrink-0"
-              >
-                <span className="overflow-hidden h-[20px] flex flex-col items-start">
-                  <span className="block transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">
-                    Open console
-                  </span>
-                  <span className="block">Open console</span>
+            <Link
+              to="/dashboard"
+              className="group bg-zinc-900 text-white text-[13px] font-medium rounded-full pl-5 pr-2 py-2 flex items-center gap-2 shrink-0"
+            >
+              <span className="overflow-hidden h-[20px] flex flex-col items-start">
+                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">
+                  Open console
                 </span>
-                <span className="size-6 rounded-full bg-white text-zinc-900 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
-                  <ArrowRight className="size-3.5" />
-                </span>
-              </Link>
-            )}
+                <span className="block">Open console</span>
+              </span>
+              <span className="size-6 rounded-full bg-white text-zinc-900 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
+                <ArrowRight className="size-3.5" />
+              </span>
+            </Link>
           </div>
 
           <button
@@ -174,6 +173,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
               ) : (
                 <Link
                   to="/login"
+                  search={{ redirect: "/dashboard" }}
                   onClick={close}
                   className="inline-flex w-full justify-center rounded-full bg-zinc-900 text-white text-[13px] font-medium px-4 py-2.5"
                 >
@@ -192,18 +192,16 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
               {n.label}
             </Link>
           ))}
-          {canOpenConsole && (
-            <Link
-              to="/vaultline/dashboard"
-              onClick={close}
-              className="mt-4 inline-flex items-center justify-between bg-zinc-900 text-white rounded-full pl-5 pr-2 py-2"
-            >
-              <span className="text-[13px] font-medium">Open console</span>
-              <span className="size-7 rounded-full bg-white text-zinc-900 flex items-center justify-center">
-                <ArrowRight className="size-3.5" />
-              </span>
-            </Link>
-          )}
+          <Link
+            to="/dashboard"
+            onClick={close}
+            className="mt-4 inline-flex items-center justify-between bg-zinc-900 text-white rounded-full pl-5 pr-2 py-2"
+          >
+            <span className="text-[13px] font-medium">Open console</span>
+            <span className="size-7 rounded-full bg-white text-zinc-900 flex items-center justify-center">
+              <ArrowRight className="size-3.5" />
+            </span>
+          </Link>
         </div>
       </MobileNavSheet>
     </div>
