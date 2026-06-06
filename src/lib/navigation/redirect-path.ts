@@ -28,7 +28,7 @@ function parseRedirect(redirect: string): { pathname: string; search: Record<str
 export function navigateToRedirect(navigate: AppNavigate, redirect: string): void {
   const { pathname, search } = parseRedirect(redirect);
   navigate({
-    to: pathname,
+    to: pathname as NavigateOptions["to"],
     ...(Object.keys(search).length > 0 ? { search } : {}),
   });
 }
