@@ -24,6 +24,7 @@ import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentRunbookRouteImport } from './routes/agent-runbook'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultlineIndexRouteImport } from './routes/vaultline.index'
+import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as QuerylineIndexRouteImport } from './routes/queryline.index'
 import { Route as VaultlineUploadRouteImport } from './routes/vaultline.upload'
 import { Route as VaultlineUnlockRouteImport } from './routes/vaultline.unlock'
@@ -33,6 +34,7 @@ import { Route as VaultlineDeveloperConsoleRouteImport } from './routes/vaultlin
 import { Route as VaultlineDashboardRouteImport } from './routes/vaultline.dashboard'
 import { Route as VaultlineCreateVaultRouteImport } from './routes/vaultline.create-vault'
 import { Route as VaultlineAuditRouteImport } from './routes/vaultline.audit'
+import { Route as ToolsIdRouteImport } from './routes/tools.$id'
 import { Route as QuerylineResultsRouteImport } from './routes/queryline.results'
 import { Route as QuerylineRequestQueryRouteImport } from './routes/queryline.request-query'
 import { Route as QuerylineQueryTemplatesRouteImport } from './routes/queryline.query-templates'
@@ -138,6 +140,11 @@ const VaultlineIndexRoute = VaultlineIndexRouteImport.update({
   path: '/',
   getParentRoute: () => VaultlineRoute,
 } as any)
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuerylineIndexRoute = QuerylineIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -183,6 +190,11 @@ const VaultlineAuditRoute = VaultlineAuditRouteImport.update({
   id: '/audit',
   path: '/audit',
   getParentRoute: () => VaultlineRoute,
+} as any)
+const ToolsIdRoute = ToolsIdRouteImport.update({
+  id: '/tools/$id',
+  path: '/tools/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QuerylineResultsRoute = QuerylineResultsRouteImport.update({
   id: '/results',
@@ -356,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/queryline/query-templates': typeof QuerylineQueryTemplatesRoute
   '/queryline/request-query': typeof QuerylineRequestQueryRoute
   '/queryline/results': typeof QuerylineResultsRouteWithChildren
+  '/tools/$id': typeof ToolsIdRoute
   '/vaultline/audit': typeof VaultlineAuditRoute
   '/vaultline/create-vault': typeof VaultlineCreateVaultRoute
   '/vaultline/dashboard': typeof VaultlineDashboardRoute
@@ -365,6 +378,7 @@ export interface FileRoutesByFullPath {
   '/vaultline/unlock': typeof VaultlineUnlockRoute
   '/vaultline/upload': typeof VaultlineUploadRoute
   '/queryline/': typeof QuerylineIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/vaultline/': typeof VaultlineIndexRoute
   '/api/automata/quote': typeof ApiAutomataQuoteRoute
   '/api/ipfs/pin': typeof ApiIpfsPinRoute
@@ -407,6 +421,7 @@ export interface FileRoutesByTo {
   '/queryline/developer-console': typeof QuerylineDeveloperConsoleRoute
   '/queryline/query-templates': typeof QuerylineQueryTemplatesRoute
   '/queryline/request-query': typeof QuerylineRequestQueryRoute
+  '/tools/$id': typeof ToolsIdRoute
   '/vaultline/audit': typeof VaultlineAuditRoute
   '/vaultline/create-vault': typeof VaultlineCreateVaultRoute
   '/vaultline/dashboard': typeof VaultlineDashboardRoute
@@ -415,6 +430,7 @@ export interface FileRoutesByTo {
   '/vaultline/unlock': typeof VaultlineUnlockRoute
   '/vaultline/upload': typeof VaultlineUploadRoute
   '/queryline': typeof QuerylineIndexRoute
+  '/tools': typeof ToolsIndexRoute
   '/vaultline': typeof VaultlineIndexRoute
   '/api/automata/quote': typeof ApiAutomataQuoteRoute
   '/api/ipfs/pin': typeof ApiIpfsPinRoute
@@ -461,6 +477,7 @@ export interface FileRoutesById {
   '/queryline/query-templates': typeof QuerylineQueryTemplatesRoute
   '/queryline/request-query': typeof QuerylineRequestQueryRoute
   '/queryline/results': typeof QuerylineResultsRouteWithChildren
+  '/tools/$id': typeof ToolsIdRoute
   '/vaultline/audit': typeof VaultlineAuditRoute
   '/vaultline/create-vault': typeof VaultlineCreateVaultRoute
   '/vaultline/dashboard': typeof VaultlineDashboardRoute
@@ -470,6 +487,7 @@ export interface FileRoutesById {
   '/vaultline/unlock': typeof VaultlineUnlockRoute
   '/vaultline/upload': typeof VaultlineUploadRoute
   '/queryline/': typeof QuerylineIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/vaultline/': typeof VaultlineIndexRoute
   '/api/automata/quote': typeof ApiAutomataQuoteRoute
   '/api/ipfs/pin': typeof ApiIpfsPinRoute
@@ -518,6 +536,7 @@ export interface FileRouteTypes {
     | '/queryline/query-templates'
     | '/queryline/request-query'
     | '/queryline/results'
+    | '/tools/$id'
     | '/vaultline/audit'
     | '/vaultline/create-vault'
     | '/vaultline/dashboard'
@@ -527,6 +546,7 @@ export interface FileRouteTypes {
     | '/vaultline/unlock'
     | '/vaultline/upload'
     | '/queryline/'
+    | '/tools/'
     | '/vaultline/'
     | '/api/automata/quote'
     | '/api/ipfs/pin'
@@ -569,6 +589,7 @@ export interface FileRouteTypes {
     | '/queryline/developer-console'
     | '/queryline/query-templates'
     | '/queryline/request-query'
+    | '/tools/$id'
     | '/vaultline/audit'
     | '/vaultline/create-vault'
     | '/vaultline/dashboard'
@@ -577,6 +598,7 @@ export interface FileRouteTypes {
     | '/vaultline/unlock'
     | '/vaultline/upload'
     | '/queryline'
+    | '/tools'
     | '/vaultline'
     | '/api/automata/quote'
     | '/api/ipfs/pin'
@@ -622,6 +644,7 @@ export interface FileRouteTypes {
     | '/queryline/query-templates'
     | '/queryline/request-query'
     | '/queryline/results'
+    | '/tools/$id'
     | '/vaultline/audit'
     | '/vaultline/create-vault'
     | '/vaultline/dashboard'
@@ -631,6 +654,7 @@ export interface FileRouteTypes {
     | '/vaultline/unlock'
     | '/vaultline/upload'
     | '/queryline/'
+    | '/tools/'
     | '/vaultline/'
     | '/api/automata/quote'
     | '/api/ipfs/pin'
@@ -670,6 +694,8 @@ export interface RootRouteChildren {
   StatusRoute: typeof StatusRoute
   VaultlineRoute: typeof VaultlineRouteWithChildren
   ApiRegistryRoute: typeof ApiRegistryRouteWithChildren
+  ToolsIdRoute: typeof ToolsIdRoute
+  ToolsIndexRoute: typeof ToolsIndexRoute
   ApiAutomataQuoteRoute: typeof ApiAutomataQuoteRoute
   ApiIpfsPinRoute: typeof ApiIpfsPinRoute
   ApiIpfsStatusRoute: typeof ApiIpfsStatusRoute
@@ -788,6 +814,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VaultlineIndexRouteImport
       parentRoute: typeof VaultlineRoute
     }
+    '/tools/': {
+      id: '/tools/'
+      path: '/tools'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/queryline/': {
       id: '/queryline/'
       path: '/'
@@ -850,6 +883,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/vaultline/audit'
       preLoaderRoute: typeof VaultlineAuditRouteImport
       parentRoute: typeof VaultlineRoute
+    }
+    '/tools/$id': {
+      id: '/tools/$id'
+      path: '/tools/$id'
+      fullPath: '/tools/$id'
+      preLoaderRoute: typeof ToolsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/queryline/results': {
       id: '/queryline/results'
@@ -1197,6 +1237,8 @@ const rootRouteChildren: RootRouteChildren = {
   StatusRoute: StatusRoute,
   VaultlineRoute: VaultlineRouteWithChildren,
   ApiRegistryRoute: ApiRegistryRouteWithChildren,
+  ToolsIdRoute: ToolsIdRoute,
+  ToolsIndexRoute: ToolsIndexRoute,
   ApiAutomataQuoteRoute: ApiAutomataQuoteRoute,
   ApiIpfsPinRoute: ApiIpfsPinRoute,
   ApiIpfsStatusRoute: ApiIpfsStatusRoute,
