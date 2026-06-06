@@ -9,12 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VeniceEvalRouteImport } from './routes/venice-eval'
 import { Route as VaultlineRouteImport } from './routes/vaultline'
 import { Route as ToolOnboardingRouteImport } from './routes/tool-onboarding'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SdkRouteImport } from './routes/sdk'
 import { Route as QuerylineRouteImport } from './routes/queryline'
+import { Route as PaymentLabRouteImport } from './routes/payment-lab'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DocsRouteImport } from './routes/docs'
@@ -25,6 +27,7 @@ import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentRunbookRouteImport } from './routes/agent-runbook'
 import { Route as AgentClearanceRouteImport } from './routes/agent-clearance'
+import { Route as A2aLabRouteImport } from './routes/a2a-lab'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultlineIndexRouteImport } from './routes/vaultline.index'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
@@ -68,6 +71,11 @@ import { Route as VaultlineListingsIdIndexRouteImport } from './routes/vaultline
 import { Route as VaultlineListingsIdBuyRouteImport } from './routes/vaultline.listings.$id.buy'
 import { Route as ApiIpfsGetCidRouteImport } from './routes/api.ipfs.get.$cid'
 
+const VeniceEvalRoute = VeniceEvalRouteImport.update({
+  id: '/venice-eval',
+  path: '/venice-eval',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VaultlineRoute = VaultlineRouteImport.update({
   id: '/vaultline',
   path: '/vaultline',
@@ -96,6 +104,11 @@ const SdkRoute = SdkRouteImport.update({
 const QuerylineRoute = QuerylineRouteImport.update({
   id: '/queryline',
   path: '/queryline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentLabRoute = PaymentLabRouteImport.update({
+  id: '/payment-lab',
+  path: '/payment-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -146,6 +159,11 @@ const AgentRunbookRoute = AgentRunbookRouteImport.update({
 const AgentClearanceRoute = AgentClearanceRouteImport.update({
   id: '/agent-clearance',
   path: '/agent-clearance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const A2aLabRoute = A2aLabRouteImport.update({
+  id: '/a2a-lab',
+  path: '/a2a-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -364,6 +382,7 @@ const ApiIpfsGetCidRoute = ApiIpfsGetCidRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
@@ -374,12 +393,14 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/payment-lab': typeof PaymentLabRoute
   '/queryline': typeof QuerylineRouteWithChildren
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
   '/tool-onboarding': typeof ToolOnboardingRoute
   '/vaultline': typeof VaultlineRouteWithChildren
+  '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -424,6 +445,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
@@ -434,10 +456,12 @@ export interface FileRoutesByTo {
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/payment-lab': typeof PaymentLabRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
   '/tool-onboarding': typeof ToolOnboardingRoute
+  '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -479,6 +503,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
@@ -489,12 +514,14 @@ export interface FileRoutesById {
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/payment-lab': typeof PaymentLabRoute
   '/queryline': typeof QuerylineRouteWithChildren
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
   '/tool-onboarding': typeof ToolOnboardingRoute
   '/vaultline': typeof VaultlineRouteWithChildren
+  '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -541,6 +568,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/a2a-lab'
     | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
@@ -551,12 +579,14 @@ export interface FileRouteTypes {
     | '/docs'
     | '/login'
     | '/mcp'
+    | '/payment-lab'
     | '/queryline'
     | '/sdk'
     | '/settings'
     | '/status'
     | '/tool-onboarding'
     | '/vaultline'
+    | '/venice-eval'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -601,6 +631,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/a2a-lab'
     | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
@@ -611,10 +642,12 @@ export interface FileRouteTypes {
     | '/docs'
     | '/login'
     | '/mcp'
+    | '/payment-lab'
     | '/sdk'
     | '/settings'
     | '/status'
     | '/tool-onboarding'
+    | '/venice-eval'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -655,6 +688,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/a2a-lab'
     | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
@@ -665,12 +699,14 @@ export interface FileRouteTypes {
     | '/docs'
     | '/login'
     | '/mcp'
+    | '/payment-lab'
     | '/queryline'
     | '/sdk'
     | '/settings'
     | '/status'
     | '/tool-onboarding'
     | '/vaultline'
+    | '/venice-eval'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -716,6 +752,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  A2aLabRoute: typeof A2aLabRoute
   AgentClearanceRoute: typeof AgentClearanceRoute
   AgentRunbookRoute: typeof AgentRunbookRoute
   ArchitectureRoute: typeof ArchitectureRoute
@@ -726,12 +763,14 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
+  PaymentLabRoute: typeof PaymentLabRoute
   QuerylineRoute: typeof QuerylineRouteWithChildren
   SdkRoute: typeof SdkRoute
   SettingsRoute: typeof SettingsRoute
   StatusRoute: typeof StatusRoute
   ToolOnboardingRoute: typeof ToolOnboardingRoute
   VaultlineRoute: typeof VaultlineRouteWithChildren
+  VeniceEvalRoute: typeof VeniceEvalRoute
   ApiRegistryRoute: typeof ApiRegistryRouteWithChildren
   ToolsIdRoute: typeof ToolsIdRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
@@ -748,6 +787,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/venice-eval': {
+      id: '/venice-eval'
+      path: '/venice-eval'
+      fullPath: '/venice-eval'
+      preLoaderRoute: typeof VeniceEvalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vaultline': {
       id: '/vaultline'
       path: '/vaultline'
@@ -788,6 +834,13 @@ declare module '@tanstack/react-router' {
       path: '/queryline'
       fullPath: '/queryline'
       preLoaderRoute: typeof QuerylineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment-lab': {
+      id: '/payment-lab'
+      path: '/payment-lab'
+      fullPath: '/payment-lab'
+      preLoaderRoute: typeof PaymentLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -858,6 +911,13 @@ declare module '@tanstack/react-router' {
       path: '/agent-clearance'
       fullPath: '/agent-clearance'
       preLoaderRoute: typeof AgentClearanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/a2a-lab': {
+      id: '/a2a-lab'
+      path: '/a2a-lab'
+      fullPath: '/a2a-lab'
+      preLoaderRoute: typeof A2aLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -1283,6 +1343,7 @@ const ApiRegistryRouteWithChildren = ApiRegistryRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  A2aLabRoute: A2aLabRoute,
   AgentClearanceRoute: AgentClearanceRoute,
   AgentRunbookRoute: AgentRunbookRoute,
   ArchitectureRoute: ArchitectureRoute,
@@ -1293,12 +1354,14 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
+  PaymentLabRoute: PaymentLabRoute,
   QuerylineRoute: QuerylineRouteWithChildren,
   SdkRoute: SdkRoute,
   SettingsRoute: SettingsRoute,
   StatusRoute: StatusRoute,
   ToolOnboardingRoute: ToolOnboardingRoute,
   VaultlineRoute: VaultlineRouteWithChildren,
+  VeniceEvalRoute: VeniceEvalRoute,
   ApiRegistryRoute: ApiRegistryRouteWithChildren,
   ToolsIdRoute: ToolsIdRoute,
   ToolsIndexRoute: ToolsIndexRoute,
