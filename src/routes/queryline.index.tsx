@@ -12,7 +12,7 @@ export const Route = createFileRoute("/queryline/")({
         content:
           "Buyers pay for allow-listed query results in a result vault. Raw dataset stays locked in CDR — due diligence, benchmarks, analytics.",
       },
-      { property: "og:title", content: "Queryline — Cipherline" },
+      { property: "og:title", content: "Queryline — Clearance402" },
       { property: "og:description", content: "Pay for insights without buying the raw dataset — on Story Aeneid." },
     ],
   }),

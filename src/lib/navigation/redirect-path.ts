@@ -10,7 +10,7 @@ export function buildRedirectPath(pathname: string, searchStr?: string): string 
 function parseRedirect(redirect: string): { pathname: string; search: Record<string, string> } {
   const trimmed = redirect.trim();
   if (!trimmed.startsWith("/")) {
-    return { pathname: "/vaultline/dashboard", search: {} };
+    return { pathname: "/dashboard", search: {} };
   }
   const qIndex = trimmed.indexOf("?");
   const pathname = qIndex === -1 ? trimmed : trimmed.slice(0, qIndex);
@@ -28,7 +28,7 @@ function parseRedirect(redirect: string): { pathname: string; search: Record<str
 export function navigateToRedirect(navigate: AppNavigate, redirect: string): void {
   const { pathname, search } = parseRedirect(redirect);
   navigate({
-    to: pathname,
+    to: pathname as NavigateOptions["to"],
     ...(Object.keys(search).length > 0 ? { search } : {}),
   });
 }

@@ -9,7 +9,7 @@ import { probeStoryRpc } from "@/lib/network/health";
 import { useConnection } from "@/lib/connection";
 
 export const Route = createFileRoute("/status")({
-  head: () => ({ meta: [{ title: "Cipherline · Status" }] }),
+  head: () => ({ meta: [{ title: "Clearance402 · Status" }] }),
   component: StatusPage,
 });
 

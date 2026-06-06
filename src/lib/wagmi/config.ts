@@ -9,7 +9,7 @@ function buildTransports(rpcUrl: string) {
   } as const;
 }
 
-const APP_NAME = "Cipherline";
+const APP_NAME = "Clearance402";
 
 /**
  * RainbowKit wallet picker (MetaMask, Rainbow; full list with WalletConnect project id).
@@ -21,7 +21,7 @@ export function createWagmiConfig() {
 
   if (!walletConnectProjectId) {
     console.warn(
-      "[Cipherline] VITE_WALLETCONNECT_PROJECT_ID is not set. Injected wallets (e.g. MetaMask) work, " +
+      "[Clearance402] VITE_WALLETCONNECT_PROJECT_ID is not set. Injected wallets (e.g. MetaMask) work, " +
         "but the full WalletConnect modal and mobile WC are disabled. Add a project id from " +
         "https://cloud.walletconnect.com to enable them.",
     );

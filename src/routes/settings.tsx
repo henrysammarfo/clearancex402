@@ -38,7 +38,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export const Route = createFileRoute("/settings")({
-  head: () => ({ meta: [{ title: "Cipherline · Settings" }] }),
+  head: () => ({ meta: [{ title: "Clearance402 · Settings" }] }),
   component: SettingsPage,
 });
 

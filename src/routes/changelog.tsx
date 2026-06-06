@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 
 export const Route = createFileRoute("/changelog")({
-  head: () => ({ meta: [{ title: "Cipherline · Changelog" }] }),
+  head: () => ({ meta: [{ title: "Clearance402 · Changelog" }] }),
   component: () => (
     <div className="min-h-screen bg-[#EFEFEF]">
       <SiteHeader />

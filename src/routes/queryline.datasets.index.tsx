@@ -18,7 +18,7 @@ function Page() {
     <AppShell
       product="queryline"
       title="Datasets"
-      description="Confidential datasets on the shared Cipherline registry (same data on any device when you connect the same wallet)."
+      description="Confidential datasets on the shared Clearance402 registry (same data on any device when you connect the same wallet)."
       actions={
         <Button asChild>
           <Link to="/queryline/create-dataset">New dataset</Link>

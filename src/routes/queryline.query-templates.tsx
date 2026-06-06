@@ -42,7 +42,7 @@ function Page() {
       description={
         onChainEnabled
           ? "Register allow-listed queries on Story Aeneid + shared registry (real tx)."
-          : "Cipherline contract addresses not loaded — check /status."
+          : "Clearance402 contract addresses not loaded — check /status."
       }
     >
       <RegistrySyncBanner syncing={syncing} error={error} />
@@ -142,7 +142,7 @@ function Page() {
             />
           ) : (
             <p className="text-sm text-chain-failed">
-              Connect wallet and ensure Cipherline contracts are configured (see /status).
+              Connect wallet and ensure Clearance402 contracts are configured (see /status).
             </p>
           )}
         </div>

@@ -4,12 +4,11 @@ const COLS = [
   {
     title: "Product",
     links: [
-      { label: "Architecture", href: "/architecture" },
-      { label: "Vaultline", href: "/vaultline" },
-      { label: "Queryline", href: "/queryline" },
-      { label: "MCP tools", href: "/mcp" },
-      { label: "Agent runbook", href: "/agent-runbook" },
-      { label: "Status", href: "/status" },
+      { label: "Tool registry", href: "/tools" },
+      { label: "Onboard tool", href: "/tool-onboarding" },
+      { label: "Agent clearance", href: "/agent-clearance" },
+      { label: "Payment lab", href: "/payment-lab" },
+      { label: "Audit log", href: "/audit" },
     ],
   },
   {
@@ -18,7 +17,7 @@ const COLS = [
       { label: "Docs", href: "/docs" },
       { label: "SDK", href: "/sdk" },
       { label: "CLI", href: "/cli" },
-      { label: "Changelog", href: "/changelog" },
+      { label: "MCP", href: "/mcp" },
       { label: "Settings", href: "/settings" },
     ],
   },
@@ -76,13 +75,13 @@ export function SiteFooter() {
             <div className="size-8 rounded-lg bg-white/15 border-[1.5px] border-white/85 flex items-center justify-center text-white text-[16px] font-bold tracking-tight">
               C
             </div>
-            <span className="text-[22px] font-bold text-white tracking-tight">Cipherline</span>
+            <span className="text-[22px] font-bold text-white tracking-tight">Clearance402</span>
           </div>
           <div className="relative z-10 mt-auto mb-7">
             <p className="text-[19px] text-white leading-[1.45]">
-              CDR-native developer rails,
+              The trust layer for agent payments,
               <br />
-              <span style={{ color: "rgba(255,255,255,0.65)" }}>built for Story testnet.</span>
+              <span style={{ color: "rgba(255,255,255,0.65)" }}>built on x402 &amp; MCP.</span>
             </p>
           </div>
           <div className="relative z-10 flex items-center justify-between gap-3">
@@ -149,10 +148,10 @@ export function SiteFooter() {
           </div>
 
           <div className="mt-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-            <p className="text-[12.5px] font-medium text-zinc-400">© 2026 Cipherline. All rights reserved.</p>
+            <p className="text-[12.5px] font-medium text-zinc-400">© 2026 Clearance402. All rights reserved.</p>
             <div className="flex flex-col gap-3.5">
               <h4 className="text-[15px] text-zinc-500 leading-[1.45]">
-                Live on Story Aeneid (1315).
+                x402 · MCP · MetaMask · Venice · 1Shot.
                 <br />
                 <strong className="block text-[19px] font-bold text-zinc-900">
                   <a href="https://linestack.vercel.app" className="hover:underline pointer-events-auto">
@@ -181,7 +180,7 @@ export function SiteFooter() {
             fontSize="320"
             style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, letterSpacing: "-0.03em", fill: "rgba(0,0,0,0.04)" }}
           >
-            Cipherline
+            Clearance402
           </text>
         </svg>
       </div>

@@ -9,20 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VeniceEvalRouteImport } from './routes/venice-eval'
 import { Route as VaultlineRouteImport } from './routes/vaultline'
+import { Route as ToolOnboardingRouteImport } from './routes/tool-onboarding'
 import { Route as StatusRouteImport } from './routes/status'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SdkRouteImport } from './routes/sdk'
+import { Route as RelayerRouteImport } from './routes/relayer'
 import { Route as QuerylineRouteImport } from './routes/queryline'
+import { Route as PermissionsRouteImport } from './routes/permissions'
+import { Route as PaymentLabRouteImport } from './routes/payment-lab'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CliRouteImport } from './routes/cli'
 import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentRunbookRouteImport } from './routes/agent-runbook'
+import { Route as AgentClearanceRouteImport } from './routes/agent-clearance'
+import { Route as A2aLabRouteImport } from './routes/a2a-lab'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultlineIndexRouteImport } from './routes/vaultline.index'
+import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as QuerylineIndexRouteImport } from './routes/queryline.index'
 import { Route as VaultlineUploadRouteImport } from './routes/vaultline.upload'
 import { Route as VaultlineUnlockRouteImport } from './routes/vaultline.unlock'
@@ -32,6 +42,7 @@ import { Route as VaultlineDeveloperConsoleRouteImport } from './routes/vaultlin
 import { Route as VaultlineDashboardRouteImport } from './routes/vaultline.dashboard'
 import { Route as VaultlineCreateVaultRouteImport } from './routes/vaultline.create-vault'
 import { Route as VaultlineAuditRouteImport } from './routes/vaultline.audit'
+import { Route as ToolsIdRouteImport } from './routes/tools.$id'
 import { Route as QuerylineResultsRouteImport } from './routes/queryline.results'
 import { Route as QuerylineRequestQueryRouteImport } from './routes/queryline.request-query'
 import { Route as QuerylineQueryTemplatesRouteImport } from './routes/queryline.query-templates'
@@ -62,9 +73,19 @@ import { Route as VaultlineListingsIdIndexRouteImport } from './routes/vaultline
 import { Route as VaultlineListingsIdBuyRouteImport } from './routes/vaultline.listings.$id.buy'
 import { Route as ApiIpfsGetCidRouteImport } from './routes/api.ipfs.get.$cid'
 
+const VeniceEvalRoute = VeniceEvalRouteImport.update({
+  id: '/venice-eval',
+  path: '/venice-eval',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VaultlineRoute = VaultlineRouteImport.update({
   id: '/vaultline',
   path: '/vaultline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolOnboardingRoute = ToolOnboardingRouteImport.update({
+  id: '/tool-onboarding',
+  path: '/tool-onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StatusRoute = StatusRouteImport.update({
@@ -82,9 +103,24 @@ const SdkRoute = SdkRouteImport.update({
   path: '/sdk',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RelayerRoute = RelayerRouteImport.update({
+  id: '/relayer',
+  path: '/relayer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuerylineRoute = QuerylineRouteImport.update({
   id: '/queryline',
   path: '/queryline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PermissionsRoute = PermissionsRouteImport.update({
+  id: '/permissions',
+  path: '/permissions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentLabRoute = PaymentLabRouteImport.update({
+  id: '/payment-lab',
+  path: '/payment-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const McpRoute = McpRouteImport.update({
@@ -102,6 +138,11 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CliRoute = CliRouteImport.update({
   id: '/cli',
   path: '/cli',
@@ -110,6 +151,11 @@ const CliRoute = CliRouteImport.update({
 const ChangelogRoute = ChangelogRouteImport.update({
   id: '/changelog',
   path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditRoute = AuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArchitectureRoute = ArchitectureRouteImport.update({
@@ -122,6 +168,16 @@ const AgentRunbookRoute = AgentRunbookRouteImport.update({
   path: '/agent-runbook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentClearanceRoute = AgentClearanceRouteImport.update({
+  id: '/agent-clearance',
+  path: '/agent-clearance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const A2aLabRoute = A2aLabRouteImport.update({
+  id: '/a2a-lab',
+  path: '/a2a-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -131,6 +187,11 @@ const VaultlineIndexRoute = VaultlineIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => VaultlineRoute,
+} as any)
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/tools/',
+  path: '/tools/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QuerylineIndexRoute = QuerylineIndexRouteImport.update({
   id: '/',
@@ -177,6 +238,11 @@ const VaultlineAuditRoute = VaultlineAuditRouteImport.update({
   id: '/audit',
   path: '/audit',
   getParentRoute: () => VaultlineRoute,
+} as any)
+const ToolsIdRoute = ToolsIdRouteImport.update({
+  id: '/tools/$id',
+  path: '/tools/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QuerylineResultsRoute = QuerylineResultsRouteImport.update({
   id: '/results',
@@ -328,18 +394,27 @@ const ApiIpfsGetCidRoute = ApiIpfsGetCidRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a2a-lab': typeof A2aLabRoute
+  '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
+  '/audit': typeof AuditRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
+  '/dashboard': typeof DashboardRoute
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/payment-lab': typeof PaymentLabRoute
+  '/permissions': typeof PermissionsRoute
   '/queryline': typeof QuerylineRouteWithChildren
+  '/relayer': typeof RelayerRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
+  '/tool-onboarding': typeof ToolOnboardingRoute
   '/vaultline': typeof VaultlineRouteWithChildren
+  '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -349,6 +424,7 @@ export interface FileRoutesByFullPath {
   '/queryline/query-templates': typeof QuerylineQueryTemplatesRoute
   '/queryline/request-query': typeof QuerylineRequestQueryRoute
   '/queryline/results': typeof QuerylineResultsRouteWithChildren
+  '/tools/$id': typeof ToolsIdRoute
   '/vaultline/audit': typeof VaultlineAuditRoute
   '/vaultline/create-vault': typeof VaultlineCreateVaultRoute
   '/vaultline/dashboard': typeof VaultlineDashboardRoute
@@ -358,6 +434,7 @@ export interface FileRoutesByFullPath {
   '/vaultline/unlock': typeof VaultlineUnlockRoute
   '/vaultline/upload': typeof VaultlineUploadRoute
   '/queryline/': typeof QuerylineIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/vaultline/': typeof VaultlineIndexRoute
   '/api/automata/quote': typeof ApiAutomataQuoteRoute
   '/api/ipfs/pin': typeof ApiIpfsPinRoute
@@ -382,16 +459,25 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a2a-lab': typeof A2aLabRoute
+  '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
+  '/audit': typeof AuditRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
+  '/dashboard': typeof DashboardRoute
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/payment-lab': typeof PaymentLabRoute
+  '/permissions': typeof PermissionsRoute
+  '/relayer': typeof RelayerRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
+  '/tool-onboarding': typeof ToolOnboardingRoute
+  '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -399,6 +485,7 @@ export interface FileRoutesByTo {
   '/queryline/developer-console': typeof QuerylineDeveloperConsoleRoute
   '/queryline/query-templates': typeof QuerylineQueryTemplatesRoute
   '/queryline/request-query': typeof QuerylineRequestQueryRoute
+  '/tools/$id': typeof ToolsIdRoute
   '/vaultline/audit': typeof VaultlineAuditRoute
   '/vaultline/create-vault': typeof VaultlineCreateVaultRoute
   '/vaultline/dashboard': typeof VaultlineDashboardRoute
@@ -407,6 +494,7 @@ export interface FileRoutesByTo {
   '/vaultline/unlock': typeof VaultlineUnlockRoute
   '/vaultline/upload': typeof VaultlineUploadRoute
   '/queryline': typeof QuerylineIndexRoute
+  '/tools': typeof ToolsIndexRoute
   '/vaultline': typeof VaultlineIndexRoute
   '/api/automata/quote': typeof ApiAutomataQuoteRoute
   '/api/ipfs/pin': typeof ApiIpfsPinRoute
@@ -431,18 +519,27 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a2a-lab': typeof A2aLabRoute
+  '/agent-clearance': typeof AgentClearanceRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
+  '/audit': typeof AuditRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
+  '/dashboard': typeof DashboardRoute
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
+  '/payment-lab': typeof PaymentLabRoute
+  '/permissions': typeof PermissionsRoute
   '/queryline': typeof QuerylineRouteWithChildren
+  '/relayer': typeof RelayerRoute
   '/sdk': typeof SdkRoute
   '/settings': typeof SettingsRoute
   '/status': typeof StatusRoute
+  '/tool-onboarding': typeof ToolOnboardingRoute
   '/vaultline': typeof VaultlineRouteWithChildren
+  '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
   '/queryline/audit': typeof QuerylineAuditRoute
   '/queryline/create-dataset': typeof QuerylineCreateDatasetRoute
@@ -452,6 +549,7 @@ export interface FileRoutesById {
   '/queryline/query-templates': typeof QuerylineQueryTemplatesRoute
   '/queryline/request-query': typeof QuerylineRequestQueryRoute
   '/queryline/results': typeof QuerylineResultsRouteWithChildren
+  '/tools/$id': typeof ToolsIdRoute
   '/vaultline/audit': typeof VaultlineAuditRoute
   '/vaultline/create-vault': typeof VaultlineCreateVaultRoute
   '/vaultline/dashboard': typeof VaultlineDashboardRoute
@@ -461,6 +559,7 @@ export interface FileRoutesById {
   '/vaultline/unlock': typeof VaultlineUnlockRoute
   '/vaultline/upload': typeof VaultlineUploadRoute
   '/queryline/': typeof QuerylineIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/vaultline/': typeof VaultlineIndexRoute
   '/api/automata/quote': typeof ApiAutomataQuoteRoute
   '/api/ipfs/pin': typeof ApiIpfsPinRoute
@@ -487,18 +586,27 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/a2a-lab'
+    | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
+    | '/audit'
     | '/changelog'
     | '/cli'
+    | '/dashboard'
     | '/docs'
     | '/login'
     | '/mcp'
+    | '/payment-lab'
+    | '/permissions'
     | '/queryline'
+    | '/relayer'
     | '/sdk'
     | '/settings'
     | '/status'
+    | '/tool-onboarding'
     | '/vaultline'
+    | '/venice-eval'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -508,6 +616,7 @@ export interface FileRouteTypes {
     | '/queryline/query-templates'
     | '/queryline/request-query'
     | '/queryline/results'
+    | '/tools/$id'
     | '/vaultline/audit'
     | '/vaultline/create-vault'
     | '/vaultline/dashboard'
@@ -517,6 +626,7 @@ export interface FileRouteTypes {
     | '/vaultline/unlock'
     | '/vaultline/upload'
     | '/queryline/'
+    | '/tools/'
     | '/vaultline/'
     | '/api/automata/quote'
     | '/api/ipfs/pin'
@@ -541,16 +651,25 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/a2a-lab'
+    | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
+    | '/audit'
     | '/changelog'
     | '/cli'
+    | '/dashboard'
     | '/docs'
     | '/login'
     | '/mcp'
+    | '/payment-lab'
+    | '/permissions'
+    | '/relayer'
     | '/sdk'
     | '/settings'
     | '/status'
+    | '/tool-onboarding'
+    | '/venice-eval'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -558,6 +677,7 @@ export interface FileRouteTypes {
     | '/queryline/developer-console'
     | '/queryline/query-templates'
     | '/queryline/request-query'
+    | '/tools/$id'
     | '/vaultline/audit'
     | '/vaultline/create-vault'
     | '/vaultline/dashboard'
@@ -566,6 +686,7 @@ export interface FileRouteTypes {
     | '/vaultline/unlock'
     | '/vaultline/upload'
     | '/queryline'
+    | '/tools'
     | '/vaultline'
     | '/api/automata/quote'
     | '/api/ipfs/pin'
@@ -589,18 +710,27 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/a2a-lab'
+    | '/agent-clearance'
     | '/agent-runbook'
     | '/architecture'
+    | '/audit'
     | '/changelog'
     | '/cli'
+    | '/dashboard'
     | '/docs'
     | '/login'
     | '/mcp'
+    | '/payment-lab'
+    | '/permissions'
     | '/queryline'
+    | '/relayer'
     | '/sdk'
     | '/settings'
     | '/status'
+    | '/tool-onboarding'
     | '/vaultline'
+    | '/venice-eval'
     | '/api/registry'
     | '/queryline/audit'
     | '/queryline/create-dataset'
@@ -610,6 +740,7 @@ export interface FileRouteTypes {
     | '/queryline/query-templates'
     | '/queryline/request-query'
     | '/queryline/results'
+    | '/tools/$id'
     | '/vaultline/audit'
     | '/vaultline/create-vault'
     | '/vaultline/dashboard'
@@ -619,6 +750,7 @@ export interface FileRouteTypes {
     | '/vaultline/unlock'
     | '/vaultline/upload'
     | '/queryline/'
+    | '/tools/'
     | '/vaultline/'
     | '/api/automata/quote'
     | '/api/ipfs/pin'
@@ -644,19 +776,30 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  A2aLabRoute: typeof A2aLabRoute
+  AgentClearanceRoute: typeof AgentClearanceRoute
   AgentRunbookRoute: typeof AgentRunbookRoute
   ArchitectureRoute: typeof ArchitectureRoute
+  AuditRoute: typeof AuditRoute
   ChangelogRoute: typeof ChangelogRoute
   CliRoute: typeof CliRoute
+  DashboardRoute: typeof DashboardRoute
   DocsRoute: typeof DocsRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
+  PaymentLabRoute: typeof PaymentLabRoute
+  PermissionsRoute: typeof PermissionsRoute
   QuerylineRoute: typeof QuerylineRouteWithChildren
+  RelayerRoute: typeof RelayerRoute
   SdkRoute: typeof SdkRoute
   SettingsRoute: typeof SettingsRoute
   StatusRoute: typeof StatusRoute
+  ToolOnboardingRoute: typeof ToolOnboardingRoute
   VaultlineRoute: typeof VaultlineRouteWithChildren
+  VeniceEvalRoute: typeof VeniceEvalRoute
   ApiRegistryRoute: typeof ApiRegistryRouteWithChildren
+  ToolsIdRoute: typeof ToolsIdRoute
+  ToolsIndexRoute: typeof ToolsIndexRoute
   ApiAutomataQuoteRoute: typeof ApiAutomataQuoteRoute
   ApiIpfsPinRoute: typeof ApiIpfsPinRoute
   ApiIpfsStatusRoute: typeof ApiIpfsStatusRoute
@@ -670,11 +813,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/venice-eval': {
+      id: '/venice-eval'
+      path: '/venice-eval'
+      fullPath: '/venice-eval'
+      preLoaderRoute: typeof VeniceEvalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vaultline': {
       id: '/vaultline'
       path: '/vaultline'
       fullPath: '/vaultline'
       preLoaderRoute: typeof VaultlineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tool-onboarding': {
+      id: '/tool-onboarding'
+      path: '/tool-onboarding'
+      fullPath: '/tool-onboarding'
+      preLoaderRoute: typeof ToolOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/status': {
@@ -698,11 +855,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SdkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/relayer': {
+      id: '/relayer'
+      path: '/relayer'
+      fullPath: '/relayer'
+      preLoaderRoute: typeof RelayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/queryline': {
       id: '/queryline'
       path: '/queryline'
       fullPath: '/queryline'
       preLoaderRoute: typeof QuerylineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/permissions': {
+      id: '/permissions'
+      path: '/permissions'
+      fullPath: '/permissions'
+      preLoaderRoute: typeof PermissionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment-lab': {
+      id: '/payment-lab'
+      path: '/payment-lab'
+      fullPath: '/payment-lab'
+      preLoaderRoute: typeof PaymentLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mcp': {
@@ -726,6 +904,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cli': {
       id: '/cli'
       path: '/cli'
@@ -738,6 +923,13 @@ declare module '@tanstack/react-router' {
       path: '/changelog'
       fullPath: '/changelog'
       preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audit': {
+      id: '/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof AuditRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/architecture': {
@@ -754,6 +946,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgentRunbookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agent-clearance': {
+      id: '/agent-clearance'
+      path: '/agent-clearance'
+      fullPath: '/agent-clearance'
+      preLoaderRoute: typeof AgentClearanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/a2a-lab': {
+      id: '/a2a-lab'
+      path: '/a2a-lab'
+      fullPath: '/a2a-lab'
+      preLoaderRoute: typeof A2aLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -767,6 +973,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/vaultline/'
       preLoaderRoute: typeof VaultlineIndexRouteImport
       parentRoute: typeof VaultlineRoute
+    }
+    '/tools/': {
+      id: '/tools/'
+      path: '/tools'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/queryline/': {
       id: '/queryline/'
@@ -830,6 +1043,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/vaultline/audit'
       preLoaderRoute: typeof VaultlineAuditRouteImport
       parentRoute: typeof VaultlineRoute
+    }
+    '/tools/$id': {
+      id: '/tools/$id'
+      path: '/tools/$id'
+      fullPath: '/tools/$id'
+      preLoaderRoute: typeof ToolsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/queryline/results': {
       id: '/queryline/results'
@@ -1163,19 +1383,30 @@ const ApiRegistryRouteWithChildren = ApiRegistryRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  A2aLabRoute: A2aLabRoute,
+  AgentClearanceRoute: AgentClearanceRoute,
   AgentRunbookRoute: AgentRunbookRoute,
   ArchitectureRoute: ArchitectureRoute,
+  AuditRoute: AuditRoute,
   ChangelogRoute: ChangelogRoute,
   CliRoute: CliRoute,
+  DashboardRoute: DashboardRoute,
   DocsRoute: DocsRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
+  PaymentLabRoute: PaymentLabRoute,
+  PermissionsRoute: PermissionsRoute,
   QuerylineRoute: QuerylineRouteWithChildren,
+  RelayerRoute: RelayerRoute,
   SdkRoute: SdkRoute,
   SettingsRoute: SettingsRoute,
   StatusRoute: StatusRoute,
+  ToolOnboardingRoute: ToolOnboardingRoute,
   VaultlineRoute: VaultlineRouteWithChildren,
+  VeniceEvalRoute: VeniceEvalRoute,
   ApiRegistryRoute: ApiRegistryRouteWithChildren,
+  ToolsIdRoute: ToolsIdRoute,
+  ToolsIndexRoute: ToolsIndexRoute,
   ApiAutomataQuoteRoute: ApiAutomataQuoteRoute,
   ApiIpfsPinRoute: ApiIpfsPinRoute,
   ApiIpfsStatusRoute: ApiIpfsStatusRoute,

@@ -38,7 +38,7 @@ function Page() {
       description={
         onChain
           ? "Allocates a CDR vault and registers the dataset on-chain (shared across all beta testers)."
-          : "Allocates a real CDR vault on Story Aeneid. Deploy Cipherline contracts to enable shared on-chain registry."
+          : "Allocates a real CDR vault on Story Aeneid. Deploy Clearance402 contracts to enable shared on-chain registry."
       }
     >
       <RegistrySyncBanner syncing={syncing} error={error} />
