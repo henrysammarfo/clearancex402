@@ -151,7 +151,7 @@ export function SiteFooter() {
             <p className="text-[12.5px] font-medium text-zinc-400">© 2026 Clearance402. All rights reserved.</p>
             <div className="flex flex-col gap-3.5">
               <h4 className="text-[15px] text-zinc-500 leading-[1.45]">
-                Live on Story Aeneid (1315).
+                x402 · MCP · MetaMask · Venice · 1Shot.
                 <br />
                 <strong className="block text-[19px] font-bold text-zinc-900">
                   <a href="https://linestack.vercel.app" className="hover:underline pointer-events-auto">
