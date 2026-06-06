@@ -4,12 +4,11 @@ const COLS = [
   {
     title: "Product",
     links: [
-      { label: "Architecture", href: "/architecture" },
-      { label: "Vaultline", href: "/vaultline" },
-      { label: "Queryline", href: "/queryline" },
-      { label: "MCP tools", href: "/mcp" },
-      { label: "Agent runbook", href: "/agent-runbook" },
-      { label: "Status", href: "/status" },
+      { label: "Tool registry", href: "/tools" },
+      { label: "Onboard tool", href: "/tool-onboarding" },
+      { label: "Agent clearance", href: "/agent-clearance" },
+      { label: "Payment lab", href: "/payment-lab" },
+      { label: "Audit log", href: "/audit" },
     ],
   },
   {
@@ -18,7 +17,7 @@ const COLS = [
       { label: "Docs", href: "/docs" },
       { label: "SDK", href: "/sdk" },
       { label: "CLI", href: "/cli" },
-      { label: "Changelog", href: "/changelog" },
+      { label: "MCP", href: "/mcp" },
       { label: "Settings", href: "/settings" },
     ],
   },
