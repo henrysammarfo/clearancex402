@@ -17,6 +17,7 @@ import { Route as QuerylineRouteImport } from './routes/queryline'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CliRouteImport } from './routes/cli'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
@@ -100,6 +101,11 @@ const LoginRoute = LoginRouteImport.update({
 const DocsRoute = DocsRouteImport.update({
   id: '/docs',
   path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CliRoute = CliRouteImport.update({
@@ -332,6 +338,7 @@ export interface FileRoutesByFullPath {
   '/architecture': typeof ArchitectureRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
+  '/dashboard': typeof DashboardRoute
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -386,6 +393,7 @@ export interface FileRoutesByTo {
   '/architecture': typeof ArchitectureRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
+  '/dashboard': typeof DashboardRoute
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -435,6 +443,7 @@ export interface FileRoutesById {
   '/architecture': typeof ArchitectureRoute
   '/changelog': typeof ChangelogRoute
   '/cli': typeof CliRoute
+  '/dashboard': typeof DashboardRoute
   '/docs': typeof DocsRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -491,6 +500,7 @@ export interface FileRouteTypes {
     | '/architecture'
     | '/changelog'
     | '/cli'
+    | '/dashboard'
     | '/docs'
     | '/login'
     | '/mcp'
@@ -545,6 +555,7 @@ export interface FileRouteTypes {
     | '/architecture'
     | '/changelog'
     | '/cli'
+    | '/dashboard'
     | '/docs'
     | '/login'
     | '/mcp'
@@ -593,6 +604,7 @@ export interface FileRouteTypes {
     | '/architecture'
     | '/changelog'
     | '/cli'
+    | '/dashboard'
     | '/docs'
     | '/login'
     | '/mcp'
@@ -648,6 +660,7 @@ export interface RootRouteChildren {
   ArchitectureRoute: typeof ArchitectureRoute
   ChangelogRoute: typeof ChangelogRoute
   CliRoute: typeof CliRoute
+  DashboardRoute: typeof DashboardRoute
   DocsRoute: typeof DocsRoute
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
@@ -724,6 +737,13 @@ declare module '@tanstack/react-router' {
       path: '/docs'
       fullPath: '/docs'
       preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cli': {
@@ -1167,6 +1187,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArchitectureRoute: ArchitectureRoute,
   ChangelogRoute: ChangelogRoute,
   CliRoute: CliRoute,
+  DashboardRoute: DashboardRoute,
   DocsRoute: DocsRoute,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
