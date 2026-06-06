@@ -79,9 +79,9 @@ export function SiteFooter() {
           </div>
           <div className="relative z-10 mt-auto mb-7">
             <p className="text-[19px] text-white leading-[1.45]">
-              CDR-native developer rails,
+              The trust layer for agent payments,
               <br />
-              <span style={{ color: "rgba(255,255,255,0.65)" }}>built for Story testnet.</span>
+              <span style={{ color: "rgba(255,255,255,0.65)" }}>built on x402 &amp; MCP.</span>
             </p>
           </div>
           <div className="relative z-10 flex items-center justify-between gap-3">
