@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-type LineStackLogoProps = {
+type LogoProps = {
   className?: string;
   /** Pixel size (width & height). */
   size?: number;
@@ -8,8 +8,11 @@ type LineStackLogoProps = {
   variant?: "dark" | "light";
 };
 
-/** Square mark — Cipherline "C" ring with safe padding for sidebar, header, favicon. */
-export function LineStackLogo({ className, size = 32, variant = "dark" }: LineStackLogoProps) {
+/**
+ * Clearance402 mark — a shield (trust) with a checkmark (cleared).
+ * Square, with safe padding for sidebar, header, and favicon.
+ */
+export function LineStackLogo({ className, size = 32, variant = "dark" }: LogoProps) {
   const bg = variant === "dark" ? "#4f46e5" : "#ffffff";
   const fg = variant === "dark" ? "#ffffff" : "#4f46e5";
 
@@ -24,16 +27,23 @@ export function LineStackLogo({ className, size = 32, variant = "dark" }: LineSt
       aria-hidden
     >
       <rect width="32" height="32" rx={size >= 36 ? 10 : 8} fill={bg} />
-      {/* Open "C" ring */}
+      {/* Shield outline */}
       <path
-        d="M21.4 11.6 A 7 7 0 1 0 21.4 20.4"
+        d="M16 6.5l6 2.1v4.8c0 3.9-2.5 7.2-6 8.6-3.5-1.4-6-4.7-6-8.6V8.6l6-2.1z"
         stroke={fg}
-        strokeWidth="3"
-        strokeLinecap="round"
+        strokeWidth="2"
+        strokeLinejoin="round"
         fill="none"
       />
-      {/* Center node — the "line" anchor */}
-      <circle cx="16" cy="16" r="2.1" fill={fg} />
+      {/* Cleared checkmark */}
+      <path
+        d="M12.8 15.4l2.3 2.3 4.1-4.6"
+        stroke={fg}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </svg>
   );
 }
