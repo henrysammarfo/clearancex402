@@ -85,6 +85,23 @@ function Page() {
           </Card>
 
           <Card>
+            <CardHeader><CardTitle className="text-sm">Live status checks</CardTitle></CardHeader>
+            <CardContent className="space-y-2.5">
+              {buildChecks(tool).map((c) => (
+                <div key={c.label} className="flex items-start justify-between gap-3 rounded-lg border p-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">{c.label}</p>
+                    <p className="text-xs text-muted-foreground">{c.detail}</p>
+                  </div>
+                  <ClearanceBadge state={c.state} className="shrink-0" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+
+
+          <Card>
             <CardHeader><CardTitle className="text-sm">Integration snippet</CardTitle></CardHeader>
             <CardContent>
               <pre className="rounded-lg bg-muted/50 p-4 text-xs overflow-x-auto font-mono leading-relaxed">
