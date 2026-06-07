@@ -3,8 +3,8 @@ import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ClearanceBadge } from "@/components/clearance/ClearanceBadge";
-import { getTool, SCORE_LABELS, type ScoreKey } from "@/lib/clearance/sample";
+import { ClearanceBadge, type ClearanceState } from "@/components/clearance/ClearanceBadge";
+import { getTool, SCORE_LABELS, type ScoreKey, type Tool } from "@/lib/clearance/sample";
 
 export const Route = createFileRoute("/tools/$id")({
   head: ({ params }) => ({
@@ -85,6 +85,23 @@ function Page() {
           </Card>
 
           <Card>
+            <CardHeader><CardTitle className="text-sm">Live status checks</CardTitle></CardHeader>
+            <CardContent className="space-y-2.5">
+              {buildChecks(tool).map((c) => (
+                <div key={c.label} className="flex items-start justify-between gap-3 rounded-lg border p-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium">{c.label}</p>
+                    <p className="text-xs text-muted-foreground">{c.detail}</p>
+                  </div>
+                  <ClearanceBadge state={c.state} className="shrink-0" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+
+
+          <Card>
             <CardHeader><CardTitle className="text-sm">Integration snippet</CardTitle></CardHeader>
             <CardContent>
               <pre className="rounded-lg bg-muted/50 p-4 text-xs overflow-x-auto font-mono leading-relaxed">
@@ -129,3 +146,45 @@ function Row({ label, value, mono }: { label: string; value: string; mono?: bool
     </div>
   );
 }
+
+function scoreState(score: number): ClearanceState {
+  if (score >= 90) return "ALLOW";
+  if (score >= 70) return "WARN";
+  return "BLOCK";
+}
+
+function buildChecks(tool: Tool): { label: string; detail: string; state: ClearanceState }[] {
+  return [
+    {
+      label: "Endpoint health",
+      detail: `${tool.uptime}% uptime · ${tool.latencyMs}ms median latency · last probe ${tool.lastProbe}`,
+      state: tool.uptime >= 99 ? "ALLOW" : tool.uptime >= 95 ? "WARN" : "BLOCK",
+    },
+    {
+      label: "Protocol compliance",
+      detail: `${tool.protocol} challenge + receipt verification`,
+      state: scoreState(tool.scores.protocol),
+    },
+    {
+      label: "Price integrity",
+      detail: "Advertised price matches the on-chain payment requirement",
+      state: scoreState(tool.scores.price),
+    },
+    {
+      label: "Output integrity",
+      detail: "Returned output matches the declared schema",
+      state: scoreState(tool.scores.output),
+    },
+    {
+      label: "Behavior drift",
+      detail: "Output shape is stable across recent probes",
+      state: tool.state === "RETEST" ? "RETEST" : scoreState(tool.scores.drift),
+    },
+    {
+      label: "Permission & mandate",
+      detail: "Requested spend stays within the agent mandate",
+      state: tool.state === "HUMAN_APPROVAL_REQUIRED" ? "HUMAN_APPROVAL_REQUIRED" : scoreState(tool.scores.permission),
+    },
+  ];
+}
+

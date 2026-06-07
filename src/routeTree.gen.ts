@@ -28,6 +28,7 @@ import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
 import { Route as AgentRunbookRouteImport } from './routes/agent-runbook'
+import { Route as AgentDemoRouteImport } from './routes/agent-demo'
 import { Route as AgentClearanceRouteImport } from './routes/agent-clearance'
 import { Route as A2aLabRouteImport } from './routes/a2a-lab'
 import { Route as IndexRouteImport } from './routes/index'
@@ -166,6 +167,11 @@ const ArchitectureRoute = ArchitectureRouteImport.update({
 const AgentRunbookRoute = AgentRunbookRouteImport.update({
   id: '/agent-runbook',
   path: '/agent-runbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentDemoRoute = AgentDemoRouteImport.update({
+  id: '/agent-demo',
+  path: '/agent-demo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgentClearanceRoute = AgentClearanceRouteImport.update({
@@ -396,6 +402,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
+  '/agent-demo': typeof AgentDemoRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
   '/audit': typeof AuditRoute
@@ -461,6 +468,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
+  '/agent-demo': typeof AgentDemoRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
   '/audit': typeof AuditRoute
@@ -521,6 +529,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
+  '/agent-demo': typeof AgentDemoRoute
   '/agent-runbook': typeof AgentRunbookRoute
   '/architecture': typeof ArchitectureRoute
   '/audit': typeof AuditRoute
@@ -588,6 +597,7 @@ export interface FileRouteTypes {
     | '/'
     | '/a2a-lab'
     | '/agent-clearance'
+    | '/agent-demo'
     | '/agent-runbook'
     | '/architecture'
     | '/audit'
@@ -653,6 +663,7 @@ export interface FileRouteTypes {
     | '/'
     | '/a2a-lab'
     | '/agent-clearance'
+    | '/agent-demo'
     | '/agent-runbook'
     | '/architecture'
     | '/audit'
@@ -712,6 +723,7 @@ export interface FileRouteTypes {
     | '/'
     | '/a2a-lab'
     | '/agent-clearance'
+    | '/agent-demo'
     | '/agent-runbook'
     | '/architecture'
     | '/audit'
@@ -778,6 +790,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   A2aLabRoute: typeof A2aLabRoute
   AgentClearanceRoute: typeof AgentClearanceRoute
+  AgentDemoRoute: typeof AgentDemoRoute
   AgentRunbookRoute: typeof AgentRunbookRoute
   ArchitectureRoute: typeof ArchitectureRoute
   AuditRoute: typeof AuditRoute
@@ -944,6 +957,13 @@ declare module '@tanstack/react-router' {
       path: '/agent-runbook'
       fullPath: '/agent-runbook'
       preLoaderRoute: typeof AgentRunbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent-demo': {
+      id: '/agent-demo'
+      path: '/agent-demo'
+      fullPath: '/agent-demo'
+      preLoaderRoute: typeof AgentDemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agent-clearance': {
@@ -1385,6 +1405,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   A2aLabRoute: A2aLabRoute,
   AgentClearanceRoute: AgentClearanceRoute,
+  AgentDemoRoute: AgentDemoRoute,
   AgentRunbookRoute: AgentRunbookRoute,
   ArchitectureRoute: ArchitectureRoute,
   AuditRoute: AuditRoute,

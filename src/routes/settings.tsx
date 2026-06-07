@@ -26,6 +26,9 @@ import {
 } from "@/lib/storacha/browser-client";
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import { Link } from "@tanstack/react-router";
+import { Lock, ShieldCheck } from "lucide-react";
+import { UnauthorizedState } from "@/components/states";
 
 const schema = z.object({
   rpcUrl: z.string().url("Must be a valid URL"),
@@ -91,6 +94,14 @@ function SettingsPage() {
           isWrongChain={isWrongChain}
         />
 
+        <SecurityAccessCard
+          isConnected={isConnected}
+          isWrongChain={isWrongChain}
+          walletAddress={walletAddress}
+          hasConfig={!!config}
+        />
+
+
         <form onSubmit={onSubmit} className="mt-6 space-y-6">
           <div className="rounded-2xl border bg-white p-6 space-y-4">
             <h3 className="font-semibold">Network endpoints</h3>
@@ -148,11 +159,27 @@ function SettingsPage() {
 
           <div className="rounded-2xl border bg-white p-6 space-y-4">
             <h3 className="font-semibold">API key</h3>
-            <div className="space-y-2">
-              <Label htmlFor="apiKey">LINESTACK_API_KEY</Label>
-              <Input id="apiKey" type="password" placeholder="sk_…" {...form.register("apiKey")} />
-            </div>
+            {isConnected ? (
+              <div className="space-y-2">
+                <Label htmlFor="apiKey">CLEARANCE402_API_KEY</Label>
+                <Input id="apiKey" type="password" placeholder="sk_…" {...form.register("apiKey")} />
+                <p className="text-xs text-muted-foreground">
+                  Used by the SDK / CLI / MCP server to call the Clearance402 verification API. Stored locally in this browser.
+                </p>
+              </div>
+            ) : (
+              <UnauthorizedState
+                title="Sign in to manage your API key"
+                reason="Connect a wallet on Story Aeneid to view and rotate the Clearance402 API key. Until you have access, this credential stays hidden."
+                action={
+                  <Button size="sm" variant="outline" asChild>
+                    <Link to="/login" search={{ redirect: "/settings" }}>Connect wallet</Link>
+                  </Button>
+                }
+              />
+            )}
           </div>
+
 
           <div className="flex flex-wrap items-center gap-3">
             <Button type="submit" disabled={!form.formState.isDirty && !!config}>Save configuration</Button>
@@ -169,6 +196,90 @@ function SettingsPage() {
     </div>
   );
 }
+
+function SecurityAccessCard({
+  isConnected,
+  isWrongChain,
+  walletAddress,
+  hasConfig,
+}: {
+  isConnected: boolean;
+  isWrongChain: boolean;
+  walletAddress: string | null;
+  hasConfig: boolean;
+}) {
+  const level = isConnected ? "Operator" : "Read-only";
+  const checks: { label: string; ok: boolean; note: string }[] = [
+    {
+      label: "Wallet authenticated",
+      ok: isConnected,
+      note: isConnected ? `Signed in as ${walletAddress}` : "No wallet connected — sensitive actions are blocked.",
+    },
+    {
+      label: "Correct network (Story Aeneid · 1315)",
+      ok: isConnected && !isWrongChain,
+      note: isWrongChain ? "Wallet is on the wrong chain." : isConnected ? "Verified on chain 1315." : "Connect a wallet to verify.",
+    },
+    {
+      label: "Endpoints configured",
+      ok: hasConfig,
+      note: hasConfig ? "RPC + CDR endpoints saved in this browser." : "Save endpoints below to enable CDR flows.",
+    },
+  ];
+
+  return (
+    <div className="mt-6 rounded-2xl border bg-white p-6 space-y-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="size-5 text-brand" />
+          <h3 className="font-semibold">Security &amp; access</h3>
+        </div>
+        <span
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold",
+            isConnected
+              ? "border-chain-success/40 bg-chain-success/10 text-foreground"
+              : "border-chain-unauthorized/40 bg-chain-unauthorized/10 text-foreground",
+          )}
+        >
+          <Lock className="size-3" />
+          {level} access
+        </span>
+      </div>
+
+      {!isConnected && (
+        <UnauthorizedState
+          title="You are not authorized for operator actions"
+          reason="Connect a wallet on Story Aeneid to manage API keys, run clearance checks, and access the audit log. Read-only previews remain available."
+          action={
+            <Button size="sm" asChild>
+              <Link to="/login" search={{ redirect: "/settings" }}>Connect wallet</Link>
+            </Button>
+          }
+        />
+      )}
+
+      <ul className="space-y-2">
+        {checks.map((c) => (
+          <li key={c.label} className="flex items-start gap-3 rounded-lg border p-3">
+            <span
+              className={cn(
+                "mt-0.5 size-2 rounded-full shrink-0",
+                c.ok ? "bg-chain-success" : "bg-chain-unauthorized",
+              )}
+            />
+            <div className="min-w-0">
+              <p className="text-sm font-medium">{c.label}</p>
+              <p className="text-xs text-muted-foreground">{c.note}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+
 
 function StorachaSettings() {
   const [proof, setProof] = useState(() => getLocalStorachaProof() ?? "");
