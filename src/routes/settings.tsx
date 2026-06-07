@@ -159,11 +159,27 @@ function SettingsPage() {
 
           <div className="rounded-2xl border bg-white p-6 space-y-4">
             <h3 className="font-semibold">API key</h3>
-            <div className="space-y-2">
-              <Label htmlFor="apiKey">LINESTACK_API_KEY</Label>
-              <Input id="apiKey" type="password" placeholder="sk_…" {...form.register("apiKey")} />
-            </div>
+            {isConnected ? (
+              <div className="space-y-2">
+                <Label htmlFor="apiKey">CLEARANCE402_API_KEY</Label>
+                <Input id="apiKey" type="password" placeholder="sk_…" {...form.register("apiKey")} />
+                <p className="text-xs text-muted-foreground">
+                  Used by the SDK / CLI / MCP server to call the Clearance402 verification API. Stored locally in this browser.
+                </p>
+              </div>
+            ) : (
+              <UnauthorizedState
+                title="Sign in to manage your API key"
+                reason="Connect a wallet on Story Aeneid to view and rotate the Clearance402 API key. Until you have access, this credential stays hidden."
+                action={
+                  <Button size="sm" variant="outline" asChild>
+                    <Link to="/login" search={{ redirect: "/settings" }}>Connect wallet</Link>
+                  </Button>
+                }
+              />
+            )}
           </div>
+
 
           <div className="flex flex-wrap items-center gap-3">
             <Button type="submit" disabled={!form.formState.isDirty && !!config}>Save configuration</Button>
