@@ -27,7 +27,7 @@ import {
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@tanstack/react-router";
-import { Lock, ShieldCheck, ShieldAlert } from "lucide-react";
+import { Lock, ShieldCheck } from "lucide-react";
 import { UnauthorizedState } from "@/components/states";
 
 const schema = z.object({
