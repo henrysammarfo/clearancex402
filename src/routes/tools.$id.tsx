@@ -146,3 +146,45 @@ function Row({ label, value, mono }: { label: string; value: string; mono?: bool
     </div>
   );
 }
+
+function scoreState(score: number): ClearanceState {
+  if (score >= 90) return "ALLOW";
+  if (score >= 70) return "WARN";
+  return "BLOCK";
+}
+
+function buildChecks(tool: Tool): { label: string; detail: string; state: ClearanceState }[] {
+  return [
+    {
+      label: "Endpoint health",
+      detail: `${tool.uptime}% uptime · ${tool.latencyMs}ms median latency · last probe ${tool.lastProbe}`,
+      state: tool.uptime >= 99 ? "ALLOW" : tool.uptime >= 95 ? "WARN" : "BLOCK",
+    },
+    {
+      label: "Protocol compliance",
+      detail: `${tool.protocol} challenge + receipt verification`,
+      state: scoreState(tool.scores.protocol),
+    },
+    {
+      label: "Price integrity",
+      detail: "Advertised price matches the on-chain payment requirement",
+      state: scoreState(tool.scores.price),
+    },
+    {
+      label: "Output integrity",
+      detail: "Returned output matches the declared schema",
+      state: scoreState(tool.scores.output),
+    },
+    {
+      label: "Behavior drift",
+      detail: "Output shape is stable across recent probes",
+      state: tool.state === "RETEST" ? "RETEST" : scoreState(tool.scores.drift),
+    },
+    {
+      label: "Permission & mandate",
+      detail: "Requested spend stays within the agent mandate",
+      state: tool.state === "HUMAN_APPROVAL_REQUIRED" ? "HUMAN_APPROVAL_REQUIRED" : scoreState(tool.scores.permission),
+    },
+  ];
+}
+
