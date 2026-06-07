@@ -94,6 +94,14 @@ function SettingsPage() {
           isWrongChain={isWrongChain}
         />
 
+        <SecurityAccessCard
+          isConnected={isConnected}
+          isWrongChain={isWrongChain}
+          walletAddress={walletAddress}
+          hasConfig={!!config}
+        />
+
+
         <form onSubmit={onSubmit} className="mt-6 space-y-6">
           <div className="rounded-2xl border bg-white p-6 space-y-4">
             <h3 className="font-semibold">Network endpoints</h3>
