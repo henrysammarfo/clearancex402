@@ -3,8 +3,8 @@ import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ClearanceBadge } from "@/components/clearance/ClearanceBadge";
-import { getTool, SCORE_LABELS, type ScoreKey } from "@/lib/clearance/sample";
+import { ClearanceBadge, type ClearanceState } from "@/components/clearance/ClearanceBadge";
+import { getTool, SCORE_LABELS, type ScoreKey, type Tool } from "@/lib/clearance/sample";
 
 export const Route = createFileRoute("/tools/$id")({
   head: ({ params }) => ({
