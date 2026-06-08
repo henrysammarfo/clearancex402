@@ -14,7 +14,7 @@ export const Route = createFileRoute("/api/ipfs/get/$cid")({
         }
         try {
           const bytes = await getBytesRemote(cid);
-          return new Response(bytes, {
+          return new Response(new Blob([bytes as Uint8Array<ArrayBuffer>]), {
             headers: { "content-type": "application/octet-stream" },
           });
         } catch (err) {

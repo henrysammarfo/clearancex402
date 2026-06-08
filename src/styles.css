@@ -102,9 +102,9 @@
   /* Clearance402 brand — Midnight Indigo */
   --brand: oklch(0.51 0.22 277);            /* Indigo #4f46e5 */
   --brand-foreground: oklch(0.99 0 0);
-  --vault: oklch(0.51 0.22 277);            /* Vaultline: indigo */
+  --vault: oklch(0.51 0.22 277);            /* Clearance primary */
   --vault-foreground: oklch(0.99 0 0);
-  --query: oklch(0.62 0.13 233);            /* Queryline: sky blue */
+  --query: oklch(0.62 0.13 233);            /* Clearance info */
   --query-foreground: oklch(0.99 0 0);
 
   --chain-pending: oklch(0.78 0.15 85);     /* amber */
