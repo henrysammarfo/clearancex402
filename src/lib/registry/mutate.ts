@@ -22,6 +22,7 @@ export type RegistryMutate =
   | { op: "append"; path: "vaultline.audit"; record: AuditEntry }
   | { op: "upsert"; path: "queryline.datasets"; record: DatasetRecord }
   | { op: "upsert"; path: "queryline.templates"; record: QueryTemplateRecord }
+  | { op: "patch"; path: "queryline.templates"; id: string; patch: Partial<QueryTemplateRecord> }
   | { op: "upsert"; path: "queryline.requests"; record: QueryRequestRecord }
   | { op: "patch"; path: "queryline.requests"; id: string; patch: Partial<QueryRequestRecord> }
   | { op: "append"; path: "queryline.audit"; record: AuditEntry }

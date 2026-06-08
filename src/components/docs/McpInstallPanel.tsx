@@ -12,17 +12,17 @@ const CLIENTS: { id: ClientId; label: string }[] = [
   { id: "vscode", label: "VS Code" },
 ];
 
-const ENV_PATH_WIN = "C:/Users/YOUR_USER/.linestack/.env";
-const ENV_PATH_UNIX = "/Users/YOUR_USER/.linestack/.env";
+const ENV_PATH_WIN = "C:/Users/YOUR_USER/.clearance402/.env";
+const ENV_PATH_UNIX = "/Users/YOUR_USER/.clearance402/.env";
 
 function snippets(envPath: string): Record<ClientId, { label: string; code: string; lang: string }> {
   const mcpJson = JSON.stringify(
     {
       mcpServers: {
-        linestack: {
+        clearance402: {
           command: "npx",
-          args: ["-y", "@line-stack/mcp-server"],
-          env: { LINESTACK_ENV_FILE: envPath },
+          args: ["-y", "@clearance402/mcp-server"],
+          env: { CLEARANCE402_ENV_FILE: envPath },
         },
       },
     },
@@ -44,21 +44,21 @@ function snippets(envPath: string): Record<ClientId, { label: string; code: stri
     "claude-code": {
       label: "terminal",
       lang: "bash",
-      code: `claude mcp add linestack -- npx -y @line-stack/mcp-server\n# Then set env LINESTACK_ENV_FILE=${envPath} in Claude Code MCP settings if needed.`,
+      code: `claude mcp add clearance402 -- npx -y @clearance402/mcp-server\n# Then set env CLEARANCE402_ENV_FILE=${envPath} in Claude Code MCP settings if needed.`,
     },
     gemini: {
       label: "terminal",
       lang: "bash",
-      code: `gemini mcp add linestack npx -y @line-stack/mcp-server\n# Set LINESTACK_ENV_FILE=${envPath} in Gemini MCP env.`,
+      code: `gemini mcp add clearance402 npx -y @clearance402/mcp-server\n# Set CLEARANCE402_ENV_FILE=${envPath} in Gemini MCP env.`,
     },
     vscode: {
       label: "terminal",
       lang: "bash",
       code: `code --add-mcp '${JSON.stringify({
-        name: "linestack",
+        name: "clearance402",
         command: "npx",
-        args: ["-y", "@line-stack/mcp-server"],
-        env: { LINESTACK_ENV_FILE: envPath },
+        args: ["-y", "@clearance402/mcp-server"],
+        env: { CLEARANCE402_ENV_FILE: envPath },
       })}'`,
     },
   };
@@ -113,7 +113,7 @@ export function McpInstallPanel({ className }: { className?: string }) {
         ))}
       </div>
       <div className="flex flex-wrap items-center gap-2 px-3 py-2 border-b border-zinc-200 bg-white text-[11px] text-zinc-500">
-        <span>LINESTACK_ENV_FILE:</span>
+        <span>CLEARANCE402_ENV_FILE:</span>
         <button type="button" onClick={() => setOs("win")} className={cn(os === "win" && "text-[#4f46e5] font-semibold")}>
           Windows
         </button>
