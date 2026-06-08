@@ -16,7 +16,7 @@ export const Route = createFileRoute("/vaultline/")({
   component: LegacyVaultline,
 });
 
-function LegacyVaultline() {
+export function LegacyWorkflowHandoff() {
   return (
     <div className="min-h-screen bg-[#EFEFEF]">
       <SiteHeader />

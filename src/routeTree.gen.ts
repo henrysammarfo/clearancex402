@@ -35,7 +35,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as VaultlineIndexRouteImport } from './routes/vaultline.index'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as QuerylineIndexRouteImport } from './routes/queryline.index'
+import { Route as VaultlineSplatRouteImport } from './routes/vaultline.$'
 import { Route as ToolsIdRouteImport } from './routes/tools.$id'
+import { Route as QuerylineSplatRouteImport } from './routes/queryline.$'
 import { Route as ApiRegistryRouteImport } from './routes/api.registry'
 import { Route as ApiStoryApiIndexRouteImport } from './routes/api.story-api.index'
 import { Route as ApiStoryApiStatusRouteImport } from './routes/api.story-api.status'
@@ -178,10 +180,20 @@ const QuerylineIndexRoute = QuerylineIndexRouteImport.update({
   path: '/',
   getParentRoute: () => QuerylineRoute,
 } as any)
+const VaultlineSplatRoute = VaultlineSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => VaultlineRoute,
+} as any)
 const ToolsIdRoute = ToolsIdRouteImport.update({
   id: '/tools/$id',
   path: '/tools/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const QuerylineSplatRoute = QuerylineSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => QuerylineRoute,
 } as any)
 const ApiRegistryRoute = ApiRegistryRouteImport.update({
   id: '/api/registry',
@@ -264,7 +276,9 @@ export interface FileRoutesByFullPath {
   '/vaultline': typeof VaultlineRouteWithChildren
   '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
+  '/queryline/$': typeof QuerylineSplatRoute
   '/tools/$id': typeof ToolsIdRoute
+  '/vaultline/$': typeof VaultlineSplatRoute
   '/queryline/': typeof QuerylineIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/vaultline/': typeof VaultlineIndexRoute
@@ -302,7 +316,9 @@ export interface FileRoutesByTo {
   '/tool-onboarding': typeof ToolOnboardingRoute
   '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
+  '/queryline/$': typeof QuerylineSplatRoute
   '/tools/$id': typeof ToolsIdRoute
+  '/vaultline/$': typeof VaultlineSplatRoute
   '/queryline': typeof QuerylineIndexRoute
   '/tools': typeof ToolsIndexRoute
   '/vaultline': typeof VaultlineIndexRoute
@@ -343,7 +359,9 @@ export interface FileRoutesById {
   '/vaultline': typeof VaultlineRouteWithChildren
   '/venice-eval': typeof VeniceEvalRoute
   '/api/registry': typeof ApiRegistryRouteWithChildren
+  '/queryline/$': typeof QuerylineSplatRoute
   '/tools/$id': typeof ToolsIdRoute
+  '/vaultline/$': typeof VaultlineSplatRoute
   '/queryline/': typeof QuerylineIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/vaultline/': typeof VaultlineIndexRoute
@@ -385,7 +403,9 @@ export interface FileRouteTypes {
     | '/vaultline'
     | '/venice-eval'
     | '/api/registry'
+    | '/queryline/$'
     | '/tools/$id'
+    | '/vaultline/$'
     | '/queryline/'
     | '/tools/'
     | '/vaultline/'
@@ -423,7 +443,9 @@ export interface FileRouteTypes {
     | '/tool-onboarding'
     | '/venice-eval'
     | '/api/registry'
+    | '/queryline/$'
     | '/tools/$id'
+    | '/vaultline/$'
     | '/queryline'
     | '/tools'
     | '/vaultline'
@@ -463,7 +485,9 @@ export interface FileRouteTypes {
     | '/vaultline'
     | '/venice-eval'
     | '/api/registry'
+    | '/queryline/$'
     | '/tools/$id'
+    | '/vaultline/$'
     | '/queryline/'
     | '/tools/'
     | '/vaultline/'
@@ -701,12 +725,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuerylineIndexRouteImport
       parentRoute: typeof QuerylineRoute
     }
+    '/vaultline/$': {
+      id: '/vaultline/$'
+      path: '/$'
+      fullPath: '/vaultline/$'
+      preLoaderRoute: typeof VaultlineSplatRouteImport
+      parentRoute: typeof VaultlineRoute
+    }
     '/tools/$id': {
       id: '/tools/$id'
       path: '/tools/$id'
       fullPath: '/tools/$id'
       preLoaderRoute: typeof ToolsIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/queryline/$': {
+      id: '/queryline/$'
+      path: '/$'
+      fullPath: '/queryline/$'
+      preLoaderRoute: typeof QuerylineSplatRouteImport
+      parentRoute: typeof QuerylineRoute
     }
     '/api/registry': {
       id: '/api/registry'
@@ -789,10 +827,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface QuerylineRouteChildren {
+  QuerylineSplatRoute: typeof QuerylineSplatRoute
   QuerylineIndexRoute: typeof QuerylineIndexRoute
 }
 
 const QuerylineRouteChildren: QuerylineRouteChildren = {
+  QuerylineSplatRoute: QuerylineSplatRoute,
   QuerylineIndexRoute: QuerylineIndexRoute,
 }
 
@@ -801,10 +841,12 @@ const QuerylineRouteWithChildren = QuerylineRoute._addFileChildren(
 )
 
 interface VaultlineRouteChildren {
+  VaultlineSplatRoute: typeof VaultlineSplatRoute
   VaultlineIndexRoute: typeof VaultlineIndexRoute
 }
 
 const VaultlineRouteChildren: VaultlineRouteChildren = {
+  VaultlineSplatRoute: VaultlineSplatRoute,
   VaultlineIndexRoute: VaultlineIndexRoute,
 }
 
