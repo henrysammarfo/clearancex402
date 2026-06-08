@@ -21,7 +21,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@line-stack/cdr-core": ["./packages/cdr-core/src/index.ts"],
+      "@line-stack/cdr-core/attestation/browser": ["./packages/cdr-core/src/attestation/browser.ts"],
+      "@line-stack/cdr-core/quote": ["./packages/cdr-core/src/attestation/quote-fixture.ts"]
     }
   }
 }

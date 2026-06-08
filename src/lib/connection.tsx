@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useAccount, useChainId } from "wagmi";
-import { AENEID_CHAIN_ID, AENEID_DEFAULTS } from "@line-stack/cdr-core";
+import { CLEARANCE_CHAIN_ID, CLEARANCE_DEFAULTS } from "@/lib/clearance/network";
 import { getClientEnv, resolveBrowserStoryApiUrl } from "@/lib/env/client";
 
 export type Network = "story-testnet" | "story-mainnet";
@@ -15,17 +15,17 @@ export type ConnectionConfig = {
   apiKey?: string;
 };
 
-export const DEFAULT_EXPLORER_BASE_URL = AENEID_DEFAULTS.explorerTxBaseUrl;
+export const DEFAULT_EXPLORER_BASE_URL = CLEARANCE_DEFAULTS.explorerTxBaseUrl;
 
 function defaultCdrUrl(): string {
-  if (typeof window === "undefined") return AENEID_DEFAULTS.storyApiUrl;
+  if (typeof window === "undefined") return CLEARANCE_DEFAULTS.storyApiUrl;
   return getClientEnv().storyApiUrl;
 }
 
 export const AENEID_DEFAULT_CONFIG: ConnectionConfig = {
-  rpcUrl: AENEID_DEFAULTS.rpcUrl,
+  rpcUrl: CLEARANCE_DEFAULTS.rpcUrl,
   cdrUrl: defaultCdrUrl(),
-  explorerBaseUrl: AENEID_DEFAULTS.explorerTxBaseUrl,
+  explorerBaseUrl: CLEARANCE_DEFAULTS.explorerTxBaseUrl,
   network: "story-testnet",
   environment: "development",
 };
@@ -43,7 +43,7 @@ type Ctx = {
 };
 
 const ConnectionContext = React.createContext<Ctx | null>(null);
-const STORAGE_KEY = "linestack.connection.v1";
+const STORAGE_KEY = "clearance402.connection.v1";
 
 function sanitizeConnectionConfig(cfg: ConnectionConfig): ConnectionConfig {
   return { ...cfg, cdrUrl: resolveBrowserStoryApiUrl(cfg.cdrUrl) };
@@ -54,7 +54,7 @@ function ConnectionProviderInner({ children }: { children: React.ReactNode }) {
   const { address, isConnected: walletConnected, isConnecting, status: accountStatus } = useAccount();
   const chainId = useChainId();
 
-  const isWrongChain = walletConnected && chainId !== AENEID_CHAIN_ID;
+  const isWrongChain = walletConnected && chainId !== CLEARANCE_CHAIN_ID;
 
   const status: ConnectionStatus = React.useMemo(() => {
     if (
@@ -65,7 +65,7 @@ function ConnectionProviderInner({ children }: { children: React.ReactNode }) {
       return "connecting";
     }
     if (walletConnected && isWrongChain) return "failed";
-    if (walletConnected && chainId === AENEID_CHAIN_ID) return "connected";
+    if (walletConnected && chainId === CLEARANCE_CHAIN_ID) return "connected";
     return config ? "disconnected" : "disconnected";
   }, [isConnecting, accountStatus, walletConnected, isWrongChain, chainId, config]);
 

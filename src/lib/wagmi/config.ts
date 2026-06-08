@@ -1,11 +1,11 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { http } from "wagmi";
-import { storyAeneid } from "@line-stack/cdr-core";
+import { clearanceStoryAeneid } from "@/lib/clearance/network";
 import { getClientEnv } from "@/lib/env/client";
 
 function buildTransports(rpcUrl: string) {
   return {
-    [storyAeneid.id]: http(rpcUrl),
+    [clearanceStoryAeneid.id]: http(rpcUrl),
   } as const;
 }
 
@@ -31,7 +31,7 @@ export function createWagmiConfig() {
     appName: APP_NAME,
     // RainbowKit requires a non-empty string; use a placeholder when none is configured.
     projectId: walletConnectProjectId || "00000000000000000000000000000000",
-    chains: [storyAeneid],
+    chains: [clearanceStoryAeneid],
     transports,
     ssr: true,
   });

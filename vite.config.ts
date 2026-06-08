@@ -2,6 +2,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
+import { fileURLToPath } from "node:url";
 import { defineConfig, type Plugin } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 
@@ -58,6 +59,11 @@ export default defineConfig({
     viteReact(),
   ],
   resolve: {
+    alias: {
+      "@line-stack/cdr-core/attestation/browser": fileURLToPath(new URL("./packages/cdr-core/src/attestation/browser.ts", import.meta.url)),
+      "@line-stack/cdr-core/quote": fileURLToPath(new URL("./packages/cdr-core/src/attestation/quote-fixture.ts", import.meta.url)),
+      "@line-stack/cdr-core": fileURLToPath(new URL("./packages/cdr-core/src/index.ts", import.meta.url)),
+    },
     conditions: ["import", "module", "browser", "default"],
     dedupe: ["multiformats", "viem"],
   },
