@@ -25,7 +25,7 @@ export async function pinBytesRemote(data: Uint8Array): Promise<string> {
       ...authHeaders(),
       "content-type": "application/octet-stream",
     },
-    body: data,
+    body: new Blob([data as Uint8Array<ArrayBuffer>]),
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "");

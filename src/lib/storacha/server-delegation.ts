@@ -32,7 +32,7 @@ export async function createUploadDelegation(agentDid: string): Promise<string> 
   const space = await client.addSpace(proof);
   await client.setCurrentSpace(space.did());
 
-  const audience = Verifier.parse(agentDid);
+  const audience = Verifier.parse(agentDid as `did:${string}:${string}`);
   const expiration = Math.floor(Date.now() / 1000) + 60 * 60 * 24;
   const delegation = await client.createDelegation(audience, [...UPLOAD_ABILITIES], {
     expiration,

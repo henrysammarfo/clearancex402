@@ -90,17 +90,17 @@ async function migrateLocalStorageOnce(current: RegistrySnapshot): Promise<void>
     current.queryline.requests.length > 0 ||
     current.buyerLicenses.length > 0;
 
-  const vaults = readLegacyJson("linestack.vaultline.vaults.v1");
-  const files = readLegacyJson("linestack.vaultline.files.v1");
-  const unlocks = readLegacyJson("linestack.vaultline.unlocks.v1");
-  const ipAssets = readLegacyJson("linestack.vaultline.ip-assets.v1");
-  const listings = readLegacyJson("linestack.vaultline.listings.v1");
-  const vaultAudit = readLegacyJson("linestack.vaultline.audit.v1");
-  const datasets = readLegacyJson("linestack.queryline.datasets.v1");
-  const templates = readLegacyJson("linestack.queryline.templates.v1");
-  const requests = readLegacyJson("linestack.queryline.requests.v1");
-  const queryAudit = readLegacyJson("linestack.audit.queryline.v1");
-  const buyerLicenses = readLegacyJson("linestack.vaultline.buyer-licenses.v1");
+  const vaults = readLegacyJson<any>("linestack.vaultline.vaults.v1");
+  const files = readLegacyJson<any>("linestack.vaultline.files.v1");
+  const unlocks = readLegacyJson<any>("linestack.vaultline.unlocks.v1");
+  const ipAssets = readLegacyJson<any>("linestack.vaultline.ip-assets.v1");
+  const listings = readLegacyJson<any>("linestack.vaultline.listings.v1");
+  const vaultAudit = readLegacyJson<any>("linestack.vaultline.audit.v1");
+  const datasets = readLegacyJson<any>("linestack.queryline.datasets.v1");
+  const templates = readLegacyJson<any>("linestack.queryline.templates.v1");
+  const requests = readLegacyJson<any>("linestack.queryline.requests.v1");
+  const queryAudit = readLegacyJson<any>("linestack.audit.queryline.v1");
+  const buyerLicenses = readLegacyJson<any>("linestack.vaultline.buyer-licenses.v1");
 
   const hasLocal =
     vaults.length > 0 ||

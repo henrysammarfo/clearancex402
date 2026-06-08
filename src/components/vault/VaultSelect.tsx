@@ -39,10 +39,10 @@ export function VaultSelect({
       </Select>
       {vaults.length === 0 && (
         <p className="text-xs text-muted-foreground">
-          <Link to="/vaultline/create-vault" className="underline">
-            Create a vault
+          <Link to="/tool-onboarding" className="underline">
+            Onboard a tool
           </Link>{" "}
-          to get a numeric CDR UUID on Story Aeneid.
+          to create a Clearance402 trust card.
         </p>
       )}
     </div>

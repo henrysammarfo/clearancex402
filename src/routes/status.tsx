@@ -122,10 +122,10 @@ function StatusPage() {
           />
           <HealthCard
             title="MCP server"
-            subtitle="@line-stack/mcp-server"
+            subtitle="@clearance402/mcp-server"
             loading={false}
             ok={undefined}
-            detail="Run locally: npm run linestack:mcp — tools mirror SDK"
+            detail="Run locally through your MCP host — tools mirror SDK and CLI"
           />
         </div>
       </section>

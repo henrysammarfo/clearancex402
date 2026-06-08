@@ -15,7 +15,7 @@ type Ctx = {
 };
 
 const AuthContext = React.createContext<Ctx | null>(null);
-const STORAGE_KEY = "linestack.session.v1";
+const STORAGE_KEY = "clearance402.session.v1";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = React.useState<Session | null>(null);

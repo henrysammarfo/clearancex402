@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 import { WalletConnect } from "@/components/wallet/WalletConnect";
 import { useConnection } from "@/lib/connection";
 import { navigateToRedirect } from "@/lib/navigation/redirect-path";
-import { AENEID_CHAIN_ID } from "@line-stack/cdr-core";
+import { CLEARANCE_CHAIN_ID } from "@/lib/clearance/network";
 
 export const Route = createFileRoute("/login")({
   validateSearch: (search: Record<string, unknown>) => ({
-    redirect: typeof search.redirect === "string" ? search.redirect : "/vaultline/dashboard",
+    redirect: typeof search.redirect === "string" ? search.redirect : "/dashboard",
   }),
   head: () => ({ meta: [{ title: "Connect wallet · Clearance402" }] }),
   component: ConnectPage,
@@ -39,8 +39,8 @@ function ConnectPage() {
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">Connect your wallet</h1>
           <p className="text-sm text-zinc-600 mt-1.5">
-            Clearance402 uses your wallet on Story Aeneid (chain {AENEID_CHAIN_ID}) for CDR vaults, licenses, and queries.
-            No workspace API key is required for testnet flows.
+            Clearance402 uses your wallet on Story Aeneid (chain {CLEARANCE_CHAIN_ID}) for operator access,
+            payment checks, and audit permissions.
           </p>
 
           <div className="mt-6 flex flex-col items-center gap-4 rounded-2xl border bg-zinc-50 p-6">

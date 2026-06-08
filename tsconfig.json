@@ -1,5 +1,6 @@
 {
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts", "eslint.config.js", "packages/*/src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts", "eslint.config.js"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"],
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
@@ -21,7 +22,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@line-stack/cdr-core": ["./packages/cdr-core/src/index.ts"],
+      "@line-stack/cdr-core/attestation/browser": ["./packages/cdr-core/src/attestation/browser.ts"],
+      "@line-stack/cdr-core/quote": ["./packages/cdr-core/src/attestation/quote-fixture.ts"]
     }
   }
 }

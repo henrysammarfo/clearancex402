@@ -114,7 +114,7 @@ function SettingsPage() {
               <Label htmlFor="cdrUrl">CDR endpoint</Label>
               <Input id="cdrUrl" placeholder={AENEID_DEFAULT_CONFIG.cdrUrl} {...form.register("cdrUrl")} />
               <p className="text-xs text-muted-foreground">
-                On HTTPS (e.g. linestack.vercel.app), plain <code className="text-[11px]">http://</code> Story-API URLs are
+                On HTTPS deployments, plain <code className="text-[11px]">http://</code> verification API URLs are
                 auto-rewritten to{" "}
                 <code className="text-[11px] break-all">{resolveBrowserStoryApiUrl("http://example")}</code> so CDR WASM is not
                 blocked by mixed content.
@@ -187,7 +187,7 @@ function SettingsPage() {
               Clear
             </Button>
             <p className="text-xs text-zinc-500">
-              Saved in localStorage. Connect wallet via RainbowKit in the header (chain 1315).
+          Saved in this browser. Connect wallet via RainbowKit in the header (chain 1315).
             </p>
           </div>
         </form>
