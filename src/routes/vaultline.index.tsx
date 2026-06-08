@@ -13,7 +13,7 @@ export const Route = createFileRoute("/vaultline/")({
       },
     ],
   }),
-  component: LegacyVaultline,
+  component: LegacyWorkflowHandoff,
 });
 
 export function LegacyWorkflowHandoff() {

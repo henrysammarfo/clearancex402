@@ -11,21 +11,21 @@ type SectionId =
   | "install-mcp"
   | "configure"
   | "tool-catalog"
-  | "cdr"
-  | "vaults"
-  | "licenses"
-  | "queries"
-  | "attestation";
+  | "clearance"
+  | "trust-cards"
+  | "payments"
+  | "audit"
+  | "permissions";
 
 const NAV: { id: SectionId; label: string; icon: ReactNode; group: string }[] = [
   { id: "install-mcp", label: "Install MCP", icon: <Rocket className="size-4" />, group: "Getting started" },
   { id: "configure", label: "Configuration", icon: <Wrench className="size-4" />, group: "Getting started" },
   { id: "tool-catalog", label: "Tool catalog", icon: <Sparkles className="size-4" />, group: "Getting started" },
-  { id: "cdr", label: "CDR", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "vaults", label: "Vaults", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "licenses", label: "Licenses", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "queries", label: "Queries", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "attestation", label: "Attestation", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "clearance", label: "Clearance", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "trust-cards", label: "Trust cards", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "payments", label: "Payments", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "audit", label: "Audit", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "permissions", label: "Permissions", icon: <BookOpen className="size-4" />, group: "Concepts" },
 ];
 
 function scrollToSection(id: SectionId) {
@@ -118,11 +118,8 @@ export function DocsPage() {
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5] mb-2">Clearance402</p>
               <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Documentation</h1>
               <p className="text-zinc-600 mt-3 max-w-2xl text-[15px] leading-relaxed">
-                Interactive MCP setup — pick your client, copy one block. Same registry and txs as{" "}
-                <a href="https://linestack.vercel.app" className="text-zinc-900 underline">
-                  linestack.vercel.app
-                </a>
-                .
+                Clearance402 verifies paid x402/MCP tools before agents spend: onboard tools, probe trust dimensions,
+                check agent mandates, and export audit evidence.
               </p>
             </header>
 
@@ -130,38 +127,36 @@ export function DocsPage() {
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Getting started</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Clearance402 MCP</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                17 on-chain tools over stdio via npm. Create <code className="text-zinc-800 bg-zinc-100 px-1 rounded">~/.linestack/.env</code> first
-                (Configuration below).
+                Install the MCP server in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
               </p>
               <McpInstallPanel />
               <StepCard n="01" title="Install">
-                Paste the config for your client, set <code>LINESTACK_ENV_FILE</code> to your real path, restart the IDE,
-                then ask the agent: “Call linestack_status”.
+                Paste the config for your client, set <code>CLEARANCE402_ENV_FILE</code> to your real path, restart the IDE,
+                then ask the agent to call <code>clearance402_status</code>.
               </StepCard>
             </section>
 
             <section id="configure" className="scroll-mt-24 space-y-4">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Configuration</h2>
               <p className="text-zinc-600 text-sm">
-                Set these in <code className="bg-zinc-100 px-1 rounded">~/.linestack/.env</code> (chmod 600). Never commit.
+                Set these in <code className="bg-zinc-100 px-1 rounded">~/.clearance402/.env</code> (chmod 600). Never commit.
               </p>
               <CodeBlock
                 theme="light"
                 lang=".env"
-                code={`WALLET_PRIVATE_KEY=0x...
-STORY_RPC_URL=https://aeneid.storyrpc.io
-IPFS_PROXY_URL=http://YOUR_VPS:8787
-IPFS_PROXY_SECRET=...
-REGISTRY_API_URL=http://YOUR_VPS:8788
-REGISTRY_PROXY_SECRET=...
-USE_AUTOMATA_DCAP_FIXTURE=1`}
+                code={`CLEARANCE402_API_KEY=sk_...
+CLEARANCE402_REGISTRY_URL=https://api.clearance402.local
+CLEARANCE402_AGENT_ID=buyer-agent
+CLEARANCE402_DEFAULT_MANDATE_USD=5.00
+CLEARANCE402_NETWORK=base-sepolia`}
               />
             </section>
 
             <section id="tool-catalog" className="scroll-mt-24 space-y-4">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Tool catalog</h2>
               <p className="text-zinc-600 text-sm">
-                Vaultline + Queryline: vaults, upload, buy license, request query, fulfill, unlock result.
+                Clearance402 tools cover registry lookup, tool onboarding, live probing, trust-card retrieval,
+                agent registration, payment checks, audit export, and permission revocation.
               </p>
               <Link
                 to="/mcp"
@@ -171,45 +166,44 @@ USE_AUTOMATA_DCAP_FIXTURE=1`}
               </Link>
             </section>
 
-            <section id="cdr" className="scroll-mt-24 space-y-3">
+            <section id="clearance" className="scroll-mt-24 space-y-3">
               <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Concepts</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">CDR</h2>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Clearance states</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Encrypt/decrypt via <code>@piplabs/cdr-sdk</code> on Aeneid. On-chain conditions gate every decrypt.
+                Every check returns <code>ALLOW</code>, <code>WARN</code>, <code>BLOCK</code>, <code>RETEST</code>, or <code>HUMAN_APPROVAL_REQUIRED</code>.
               </p>
             </section>
 
-            <section id="vaults" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Vaults</h2>
+            <section id="trust-cards" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Trust cards</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Vaultline: allocate → upload → IP → list → license → unlock. Queryline: dataset vault (publisher-only) +
-                per-buyer result vault.
+                Trust cards show protocol compliance, price integrity, output quality, reliability, permission safety,
+                relayer readiness, drift, and developer readiness.
               </p>
               <Link to="/architecture" className="text-[#4f46e5] text-sm font-medium underline">
                 Architecture diagrams →
               </Link>
             </section>
 
-            <section id="licenses" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Licenses</h2>
+            <section id="payments" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">x402 payments</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Register IP with PIL terms; buyers mint using <code>licenseTermsId</code>. Re-register listings missing
-                terms.
+                Clearance402 checks the advertised price against the payment requirement, verifies the challenge/receipt,
+                and blocks payment when the tool or mandate is unsafe.
               </p>
             </section>
 
-            <section id="queries" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Queries</h2>
+            <section id="audit" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Audit log</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Allow-listed templates only. Publisher fulfills off-chain template after CDR decrypt; buyers unlock
-                result vault only.
+                Audit entries record probes, payments, blocks, approvals, Venice evaluations, relays, revokes, and exports.
               </p>
             </section>
 
-            <section id="attestation" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Fulfill attestation</h2>
+            <section id="permissions" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Permissions</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                EIP-712 + Automata <code>verifyAndAttestOnChain</code> on fulfill. See{" "}
+                ERC-7715-style spend mandates and revocation checks are evaluated before delegated wallet spend. See{" "}
                 <Link to="/agent-runbook" className="text-[#4f46e5] font-medium underline">
                   agent runbook
                 </Link>

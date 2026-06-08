@@ -154,16 +154,16 @@ export function SiteFooter() {
                 x402 · MCP · MetaMask · Venice · 1Shot.
                 <br />
                 <strong className="block text-[19px] font-bold text-zinc-900">
-                  <a href="https://linestack.vercel.app" className="hover:underline pointer-events-auto">
-                    linestack.vercel.app
+                  <a href="/" className="hover:underline pointer-events-auto">
+                    clearance402.app
                   </a>
                 </strong>
               </h4>
               <a
-                href="https://github.com/henrysammarfo/linestack"
+                href="/docs"
                 className="text-[13.5px] font-semibold text-zinc-900 hover:text-[#1f65d6] pointer-events-auto"
               >
-                github.com/henrysammarfo/linestack
+                Clearance402 docs
               </a>
             </div>
           </div>
