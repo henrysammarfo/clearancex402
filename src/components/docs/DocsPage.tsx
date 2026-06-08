@@ -180,8 +180,8 @@ CLEARANCE402_NETWORK=base-sepolia`}
                 Trust cards show protocol compliance, price integrity, output quality, reliability, permission safety,
                 relayer readiness, drift, and developer readiness.
               </p>
-              <Link to="/architecture" className="text-[#4f46e5] text-sm font-medium underline">
-                Architecture diagrams →
+              <Link to="/tools" className="text-[#4f46e5] text-sm font-medium underline">
+                Open trust-card registry →
               </Link>
             </section>
 
@@ -204,8 +204,8 @@ CLEARANCE402_NETWORK=base-sepolia`}
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Permissions</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 ERC-7715-style spend mandates and revocation checks are evaluated before delegated wallet spend. See{" "}
-                <Link to="/agent-runbook" className="text-[#4f46e5] font-medium underline">
-                  agent runbook
+                <Link to="/agent-demo" className="text-[#4f46e5] font-medium underline">
+                  agent demo
                 </Link>
                 .
               </p>
