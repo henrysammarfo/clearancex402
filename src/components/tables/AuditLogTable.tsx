@@ -334,62 +334,6 @@ function TargetCell({
 }) {
   void product;
   return <span>{entry.target}</span>;
-
-  if (product === "vaultline") {
-    const vaultUuid = vaultUuidFromTarget(entry.target);
-    if (vaultUuid) {
-      return (
-        <Link
-          to="/vaultline/vaults/$uuid"
-          params={{ uuid: vaultUuid }}
-          className="underline hover:text-foreground"
-          title="Open vault"
-        >
-          {entry.target}
-        </Link>
-      );
-    }
-    if (entry.action === "story.mintLicense" && entry.target && !entry.target.includes("/")) {
-      return (
-        <Link
-          to="/vaultline/listings/$id"
-          params={{ id: entry.target }}
-          className="underline hover:text-foreground"
-          title="Open listing"
-        >
-          {entry.target}
-        </Link>
-      );
-    }
-  }
-  if (product === "queryline") {
-    const requestId = entry.target.trim();
-    if (
-      requestId &&
-      requestId.length >= 8 &&
-      !/^\d+$/.test(requestId) &&
-      (entry.action.startsWith("queryline.") || entry.action.includes("query"))
-    ) {
-      return (
-        <Link
-          to="/queryline/results/$id"
-          params={{ id: requestId }}
-          className="underline hover:text-foreground"
-          title="Open result"
-        >
-          {entry.target}
-        </Link>
-      );
-    }
-    if (/^\d+$/.test(requestId)) {
-      return (
-        <span className="font-mono" title="CDR vault UUID">
-          {entry.target}
-        </span>
-      );
-    }
-  }
-  return <span>{entry.target}</span>;
 }
 
 function TxHashCell({ hash, explorerBase }: { hash: string; explorerBase: string }) {
