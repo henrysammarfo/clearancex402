@@ -332,6 +332,9 @@ function TargetCell({
   entry: AuditEntry;
   product: "vaultline" | "queryline";
 }) {
+  void product;
+  return <span>{entry.target}</span>;
+
   if (product === "vaultline") {
     const vaultUuid = vaultUuidFromTarget(entry.target);
     if (vaultUuid) {

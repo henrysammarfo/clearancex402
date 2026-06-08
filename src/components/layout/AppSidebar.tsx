@@ -39,26 +39,19 @@ import { ConnectionFooter } from "@/components/layout/ConnectionFooter";
 type Item = { to: string; label: string; icon: React.ComponentType<{ className?: string }> };
 
 const VAULTLINE: Item[] = [
-  { to: "/vaultline/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/vaultline/vaults", label: "Vaults", icon: Vault },
-  { to: "/vaultline/create-vault", label: "Create vault", icon: PlusCircle },
-  { to: "/vaultline/upload", label: "Upload", icon: UploadCloud },
-  { to: "/vaultline/ip-register", label: "Register IP", icon: ShieldCheck },
-  { to: "/vaultline/listings", label: "Listings", icon: Tag },
-  { to: "/vaultline/unlock", label: "Unlock", icon: Unlock },
-  { to: "/vaultline/audit", label: "Audit log", icon: Activity },
-  { to: "/vaultline/developer-console", label: "Developer console", icon: Terminal },
+  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/tools", label: "Tool registry", icon: Vault },
+  { to: "/tool-onboarding", label: "Onboard tool", icon: PlusCircle },
+  { to: "/agent-clearance", label: "Agent clearance", icon: UploadCloud },
+  { to: "/audit", label: "Audit log", icon: Activity },
 ];
 
 const QUERYLINE: Item[] = [
-  { to: "/queryline/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/queryline/datasets", label: "Datasets", icon: Database },
-  { to: "/queryline/create-dataset", label: "Create dataset", icon: PackagePlus },
-  { to: "/queryline/query-templates", label: "Query templates", icon: ListChecks },
-  { to: "/queryline/request-query", label: "Request query", icon: Send },
-  { to: "/queryline/results", label: "Results", icon: FileSearch },
-  { to: "/queryline/audit", label: "Audit log", icon: Activity },
-  { to: "/queryline/developer-console", label: "Developer console", icon: Terminal },
+  { to: "/payment-lab", label: "Payment lab", icon: Database },
+  { to: "/venice-eval", label: "Venice eval", icon: PackagePlus },
+  { to: "/a2a-lab", label: "A2A lab", icon: ListChecks },
+  { to: "/permissions", label: "Permissions", icon: Send },
+  { to: "/relayer", label: "Relayer", icon: FileSearch },
 ];
 
 const SHARED: Item[] = [
@@ -91,7 +84,7 @@ export function AppSidebar({ product }: { product: "vaultline" | "queryline" }) 
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center gap-2">
             <Icon className={`size-3.5 ${accentClass}`} />
-            {product === "vaultline" ? "Vaultline" : "Queryline"}
+            {product === "vaultline" ? "Console" : "Labs"}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -115,15 +108,15 @@ export function AppSidebar({ product }: { product: "vaultline" | "queryline" }) 
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname.startsWith("/vaultline")}>
-                  <Link to="/vaultline/dashboard">
-                    <Vault className="size-4" /> <span>Vaultline</span>
+                  <Link to="/dashboard">
+                    <Vault className="size-4" /> <span>Console</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname.startsWith("/queryline")}>
-                  <Link to="/queryline/dashboard">
-                    <LockKeyhole className="size-4" /> <span>Queryline</span>
+                  <Link to="/payment-lab">
+                    <LockKeyhole className="size-4" /> <span>Labs</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

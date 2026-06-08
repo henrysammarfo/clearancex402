@@ -28,7 +28,7 @@ export async function mintBuyerLicense(params: {
   });
 
   const mint = await params.storyClient.license.mintLicenseTokens({
-    licensorIpId: params.licensorIpId,
+    licensorIpId: params.licensorIpId as `0x${string}`,
     licenseTermsId: params.licenseTermsId,
     amount: 1,
   });

@@ -59,7 +59,6 @@ function ConnectionProviderInner({ children }: { children: React.ReactNode }) {
   const status: ConnectionStatus = React.useMemo(() => {
     if (
       isConnecting ||
-      accountStatus === "connecting" ||
       accountStatus === "reconnecting"
     ) {
       return "connecting";
