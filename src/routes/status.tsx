@@ -69,10 +69,10 @@ function StatusPage() {
       <SiteHeader />
       <section className="mx-auto max-w-[900px] px-5 sm:px-8 py-10">
         <h1 className="text-3xl font-medium tracking-tight">Status</h1>
-        <p className="text-zinc-600 mt-2">Live probes against Story Aeneid RPC and Story-API REST (CDR DKG).</p>
+        <p className="text-zinc-600 mt-2">Live probes for the Clearance402 network, verification API, registry, and agent tools.</p>
         <div className="mt-8 grid sm:grid-cols-2 gap-4">
           <HealthCard
-            title="Story Aeneid RPC"
+            title="Network RPC"
             subtitle={rpcUrl}
             loading={rpc.isLoading}
             ok={rpc.data?.ok}
@@ -83,7 +83,7 @@ function StatusPage() {
             }
           />
           <HealthCard
-            title="Story-API REST (CDR)"
+            title="Verification API"
             subtitle={apiUrl}
             loading={storyApi.isLoading}
             ok={storyApi.data?.ok}
@@ -101,7 +101,7 @@ function StatusPage() {
             detail={
               isConnected
                 ? isWrongChain
-                  ? "Connected — switch to Story Aeneid (1315)"
+                  ? "Connected — switch to the configured network"
                   : walletAddress ?? "Connected"
                 : "Not connected — use header Connect wallet"
             }
@@ -114,8 +114,8 @@ function StatusPage() {
             detail={registry.data?.ok ? "available: true" : registry.error?.message ?? "unavailable"}
           />
           <HealthCard
-            title="IPFS proxy"
-            subtitle="VPS · encrypted uploads"
+            title="Evidence storage"
+            subtitle="Proof and audit artifacts"
             loading={ipfs.isLoading}
             ok={ipfs.data?.ok}
             detail={ipfs.data?.ok ? "Reachable" : ipfs.error?.message ?? "unavailable"}

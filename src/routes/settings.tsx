@@ -19,13 +19,6 @@ import {
 } from "@/lib/connection";
 import { resolveBrowserStoryApiUrl } from "@/lib/env/client";
 import { cn } from "@/lib/utils";
-import {
-  getLocalStorachaProof,
-  setLocalStorachaProof,
-  checkStorachaAvailable,
-} from "@/lib/storacha/browser-client";
-import { useEffect, useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@tanstack/react-router";
 import { Lock, ShieldCheck } from "lucide-react";
 import { UnauthorizedState } from "@/components/states";
@@ -116,8 +109,7 @@ function SettingsPage() {
               <p className="text-xs text-muted-foreground">
                 On HTTPS deployments, plain <code className="text-[11px]">http://</code> verification API URLs are
                 auto-rewritten to{" "}
-                <code className="text-[11px] break-all">{resolveBrowserStoryApiUrl("http://example")}</code> so CDR WASM is not
-                blocked by mixed content.
+                <code className="text-[11px] break-all">{resolveBrowserStoryApiUrl("http://example")}</code> so secure previews stay reachable.
               </p>
               {form.formState.errors.cdrUrl && <p className="text-xs text-chain-failed">{form.formState.errors.cdrUrl.message}</p>}
             </div>
@@ -150,11 +142,6 @@ function SettingsPage() {
                 </Select>
               </div>
             </div>
-          </div>
-
-          <div className="rounded-2xl border bg-white p-6 space-y-4">
-            <h3 className="font-semibold">Storacha (file uploads)</h3>
-            <StorachaSettings />
           </div>
 
           <div className="rounded-2xl border bg-white p-6 space-y-4">

@@ -10,14 +10,10 @@ import {
   ListChecks,
   LockKeyhole,
   PackagePlus,
-  PlayCircle,
   PlusCircle,
   Send,
   Settings as SettingsIcon,
-  ShieldCheck,
-  Tag,
   Terminal,
-  Unlock,
   UploadCloud,
   Vault,
 } from "lucide-react";
@@ -59,7 +55,6 @@ const SHARED: Item[] = [
   { to: "/sdk", label: "SDK", icon: Code2 },
   { to: "/cli", label: "CLI", icon: Terminal },
   { to: "/mcp", label: "MCP", icon: Boxes },
-  { to: "/agent-runbook", label: "Agent runbook", icon: PlayCircle },
   { to: "/status", label: "Status", icon: Activity },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
 ];
