@@ -8,24 +8,24 @@ import { McpInstallPanel } from "@/components/docs/McpInstallPanel";
 import { cn } from "@/lib/utils";
 
 type SectionId =
-  | "install-mcp"
-  | "configure"
-  | "tool-catalog"
-  | "clearance"
+  | "overview"
+  | "tool-onboarding"
   | "trust-cards"
-  | "payments"
-  | "audit"
-  | "permissions";
+  | "agent-clearance"
+  | "payment-checks"
+  | "audit-export"
+  | "permissions"
+  | "agent-tools";
 
 const NAV: { id: SectionId; label: string; icon: ReactNode; group: string }[] = [
-  { id: "install-mcp", label: "Install MCP", icon: <Rocket className="size-4" />, group: "Getting started" },
-  { id: "configure", label: "Configuration", icon: <Wrench className="size-4" />, group: "Getting started" },
-  { id: "tool-catalog", label: "Tool catalog", icon: <Sparkles className="size-4" />, group: "Getting started" },
-  { id: "clearance", label: "Clearance", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "trust-cards", label: "Trust cards", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "payments", label: "Payments", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "audit", label: "Audit", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "permissions", label: "Permissions", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "overview", label: "Overview", icon: <BookOpen className="size-4" />, group: "Clearance402" },
+  { id: "tool-onboarding", label: "Tool onboarding", icon: <Rocket className="size-4" />, group: "Clearance402" },
+  { id: "trust-cards", label: "Trust cards", icon: <Sparkles className="size-4" />, group: "Clearance402" },
+  { id: "agent-clearance", label: "Agent clearance", icon: <BookOpen className="size-4" />, group: "Workflows" },
+  { id: "payment-checks", label: "Payment checks", icon: <BookOpen className="size-4" />, group: "Workflows" },
+  { id: "audit-export", label: "Audit export", icon: <BookOpen className="size-4" />, group: "Workflows" },
+  { id: "permissions", label: "Permissions", icon: <Wrench className="size-4" />, group: "Controls" },
+  { id: "agent-tools", label: "Agent tools", icon: <Wrench className="size-4" />, group: "Controls" },
 ];
 
 function scrollToSection(id: SectionId) {
