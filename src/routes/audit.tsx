@@ -99,7 +99,7 @@ function Page() {
       <ConsoleShell section="Audit log" title="Audit log" description="Verifiable evidence for every clearance decision.">
         <UnauthorizedState
           title="Sign in to view the audit log"
-          reason="The audit log contains payment, block, and approval events scoped to your workspace. Connect a wallet on Story Aeneid to access it."
+          reason="The audit log contains payment, block, and approval events scoped to your workspace. Connect an authorized wallet to access it."
           action={
             <Button size="sm" asChild>
               <Link to="/login" search={{ redirect: "/audit" }}>Connect wallet</Link>

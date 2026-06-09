@@ -35,11 +35,11 @@ function ConnectPage() {
       <section className="flex-1 mx-auto max-w-[460px] w-full px-5 sm:px-8 py-12">
         <div className="rounded-3xl border bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
           <div className="flex items-center gap-2 text-[12px] font-medium text-zinc-500 mb-4">
-            <Wallet className="size-3.5" /> Clearance402 · Story Aeneid
+            <Wallet className="size-3.5" /> Clearance402 access
           </div>
           <h1 className="text-2xl font-semibold tracking-tight">Connect your wallet</h1>
           <p className="text-sm text-zinc-600 mt-1.5">
-            Clearance402 uses your wallet on Story Aeneid (chain {CLEARANCE_CHAIN_ID}) for operator access,
+            Clearance402 uses your wallet on the configured network (chain {CLEARANCE_CHAIN_ID}) for operator access,
             payment checks, and audit permissions.
           </p>
 
@@ -47,7 +47,7 @@ function ConnectPage() {
             <WalletConnect />
             {isWrongChain && (
               <p className="text-xs text-chain-failed text-center">
-                Wrong network — switch MetaMask to <strong>Story Aeneid Testnet</strong>.
+                Wrong network — switch MetaMask to the configured Clearance402 network.
               </p>
             )}
             {walletAddress && !isConnected && !isWrongChain && (
@@ -57,7 +57,7 @@ function ConnectPage() {
 
           <div className="mt-6 space-y-2 text-[12px] text-zinc-600">
             <p>
-              <strong className="text-zinc-900">First time?</strong> Add Story Aeneid in MetaMask and fund with{" "}
+              <strong className="text-zinc-900">First time?</strong> Add the Clearance402 network in MetaMask and fund with{" "}
               <a href="https://faucet.story.foundation" target="_blank" rel="noreferrer" className="underline">
                 testnet IP
               </a>

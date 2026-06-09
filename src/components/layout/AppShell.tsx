@@ -31,7 +31,7 @@ export function AppShell({
     status === "failed" ? "bg-chain-failed" :
     config ? "bg-chain-unauthorized" : "bg-chain-pending";
   const label =
-    isConnected ? `Story ${config?.network === "story-mainnet" ? "mainnet" : "testnet"} · connected` :
+    isConnected ? `${config?.network === "story-mainnet" ? "Mainnet" : "Testnet"} · connected` :
     status === "connecting" ? "Connecting…" :
     status === "failed" ? "Connection failed" :
     config ? "Configured · awaiting wallet" : "Wallet disconnected";
@@ -63,8 +63,8 @@ export function AppShell({
                     <span>{session.email}</span>
                   </span>
                 )}
-                <a href="https://testnet.story.foundation" target="_blank" rel="noreferrer" className="hidden sm:inline-flex items-center gap-1 hover:text-foreground">
-                  Explorer <ExternalLink className="size-3" />
+                <a href="/status" className="hidden sm:inline-flex items-center gap-1 hover:text-foreground">
+                  Status <ExternalLink className="size-3" />
                 </a>
                 {session && (
                   <button

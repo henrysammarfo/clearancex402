@@ -170,7 +170,7 @@ function SettingsPage() {
             ) : (
               <UnauthorizedState
                 title="Sign in to manage your API key"
-                reason="Connect a wallet on Story Aeneid to view and rotate the Clearance402 API key. Until you have access, this credential stays hidden."
+                reason="Connect an authorized wallet to view and rotate the Clearance402 API key. Until you have access, this credential stays hidden."
                 action={
                   <Button size="sm" variant="outline" asChild>
                     <Link to="/login" search={{ redirect: "/settings" }}>Connect wallet</Link>
@@ -349,27 +349,27 @@ function StatusCard({
     connected: {
       icon: <CheckCircle2 className="size-5" />,
       title: "Connected",
-      text: `Wallet on Story Aeneid · ${walletAddress ?? ""}`,
+      text: `Authorized wallet · ${walletAddress ?? ""}`,
       cls: "border-chain-success/40 bg-chain-success/10",
     },
     configured: {
       icon: <Plug className="size-5" />,
       title: "Configured · awaiting wallet",
-      text: "Endpoints saved. Connect wallet in the header (Story Aeneid, chain 1315).",
+      text: "Endpoints saved. Connect wallet in the header to continue.",
       cls: "border-chain-unauthorized/40 bg-chain-unauthorized/10",
     },
     disconnected: {
       icon: <Plug className="size-5" />,
       title: "Disconnected",
-      text: "Save endpoints below and connect a wallet to enable CDR flows.",
+      text: "Save endpoints below and connect a wallet to enable clearance flows.",
       cls: "border-border bg-muted/40",
     },
     failed: {
       icon: <ShieldAlert className="size-5" />,
       title: isWrongChain ? "Wrong network" : "Connection failed",
       text: isWrongChain
-        ? "Switch MetaMask to Story Aeneid Testnet (chain ID 1315)."
-        : "Wallet connected but not on Aeneid.",
+        ? "Switch MetaMask to the configured Clearance402 network."
+        : "Wallet connected but not on the configured network.",
       cls: "border-chain-failed/40 bg-chain-failed/10",
     },
   }[status];

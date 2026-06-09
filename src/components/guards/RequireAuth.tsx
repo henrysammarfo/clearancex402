@@ -5,7 +5,7 @@ import { useAuth } from "@/lib/auth";
 import { useConnection } from "@/lib/connection";
 import { buildRedirectPath } from "@/lib/navigation/redirect-path";
 
-/** App routes require a Story Aeneid wallet (primary) or legacy workspace session. */
+/** Console routes require an authorized wallet or workspace session. */
 export function RequireAuth({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   const { isConnected, status } = useConnection();
@@ -33,7 +33,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
       <div className="min-h-[50vh] flex items-center justify-center px-4">
         <LoadingState
           title="Reconnecting wallet"
-          description="Restoring your Story Aeneid session — you should not need to sign in again."
+          description="Restoring your Clearance402 session — you should not need to sign in again."
         />
       </div>
     );
