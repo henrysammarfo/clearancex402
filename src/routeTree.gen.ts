@@ -26,6 +26,7 @@ import { Route as AuditRouteImport } from './routes/audit'
 import { Route as AgentDemoRouteImport } from './routes/agent-demo'
 import { Route as AgentClearanceRouteImport } from './routes/agent-clearance'
 import { Route as A2aLabRouteImport } from './routes/a2a-lab'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsIdRouteImport } from './routes/tools.$id'
@@ -126,6 +127,11 @@ const A2aLabRoute = A2aLabRouteImport.update({
   path: '/a2a-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -199,6 +205,7 @@ const ApiIpfsGetCidRoute = ApiIpfsGetCidRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
   '/agent-demo': typeof AgentDemoRoute
@@ -232,6 +239,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
   '/agent-demo': typeof AgentDemoRoute
@@ -266,6 +274,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/a2a-lab': typeof A2aLabRoute
   '/agent-clearance': typeof AgentClearanceRoute
   '/agent-demo': typeof AgentDemoRoute
@@ -301,6 +310,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$'
     | '/a2a-lab'
     | '/agent-clearance'
     | '/agent-demo'
@@ -334,6 +344,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$'
     | '/a2a-lab'
     | '/agent-clearance'
     | '/agent-demo'
@@ -367,6 +378,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/$'
     | '/a2a-lab'
     | '/agent-clearance'
     | '/agent-demo'
@@ -401,6 +413,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
   A2aLabRoute: typeof A2aLabRoute
   AgentClearanceRoute: typeof AgentClearanceRoute
   AgentDemoRoute: typeof AgentDemoRoute
@@ -553,6 +566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof A2aLabRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -668,6 +688,7 @@ const ApiRegistryRouteWithChildren = ApiRegistryRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
   A2aLabRoute: A2aLabRoute,
   AgentClearanceRoute: AgentClearanceRoute,
   AgentDemoRoute: AgentDemoRoute,
