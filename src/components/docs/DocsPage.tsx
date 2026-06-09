@@ -46,7 +46,7 @@ function StepCard({ n, title, children }: { n: string; title: string; children: 
 }
 
 export function DocsPage() {
-  const [active, setActive] = useState<SectionId>("install-mcp");
+  const [active, setActive] = useState<SectionId>("overview");
 
   useEffect(() => {
     const hash = window.location.hash.replace("#", "") as SectionId;
@@ -123,46 +123,37 @@ export function DocsPage() {
               </p>
             </header>
 
-            <section id="install-mcp" className="scroll-mt-24 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Getting started</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Clearance402 MCP</h2>
+            <section id="overview" className="scroll-mt-24 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Clearance402</p>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">One quiet checkpoint before an agent pays</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Install the MCP server in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
+                Clearance402 keeps the complex verification work behind the scenes. Agents send a tool, amount, and mandate;
+                Clearance402 returns a clear decision with the evidence needed to trust or block the payment.
               </p>
-              <McpInstallPanel />
-              <StepCard n="01" title="Install">
-                Paste the config for your client, set <code>CLEARANCE402_ENV_FILE</code> to your real path, restart the IDE,
-                then ask the agent to call <code>clearance402_status</code>.
-              </StepCard>
+              <div className="grid sm:grid-cols-3 gap-3">
+                <StepCard n="01" title="Discover">Find a paid tool and read its Trust Card.</StepCard>
+                <StepCard n="02" title="Check">Run live protocol, price, output, and permission checks.</StepCard>
+                <StepCard n="03" title="Decide">Return ALLOW, WARN, BLOCK, RETEST, or HUMAN_APPROVAL_REQUIRED.</StepCard>
+              </div>
             </section>
 
-            <section id="configure" className="scroll-mt-24 space-y-4">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Configuration</h2>
-              <p className="text-zinc-600 text-sm">
-                Set these in <code className="bg-zinc-100 px-1 rounded">~/.clearance402/.env</code> (chmod 600). Never commit.
+            <section id="tool-onboarding" className="scroll-mt-24 space-y-4">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Tool onboarding</h2>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Developers register the endpoint, protocol, advertised price, output schema, and owner contact. Clearance402
+                immediately runs a probe and shows pending, passed, blocked, or retest states.
               </p>
               <CodeBlock
                 theme="light"
-                lang=".env"
-                code={`CLEARANCE402_API_KEY=sk_...
-CLEARANCE402_REGISTRY_URL=https://api.clearance402.local
-CLEARANCE402_AGENT_ID=buyer-agent
-CLEARANCE402_DEFAULT_MANDATE_USD=5.00
-CLEARANCE402_NETWORK=base-sepolia`}
+                lang="bash"
+                code={`clearance402 tools onboard \
+  --name "Weather API" \
+  --endpoint https://api.example.com/x402 \
+  --protocol x402 \
+  --price "0.010 USDC"`}
               />
-            </section>
-
-            <section id="tool-catalog" className="scroll-mt-24 space-y-4">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Tool catalog</h2>
-              <p className="text-zinc-600 text-sm">
-                Clearance402 tools cover registry lookup, tool onboarding, live probing, trust-card retrieval,
-                agent registration, payment checks, audit export, and permission revocation.
-              </p>
-              <Link
-                to="/mcp"
-                className="inline-flex items-center gap-2 rounded-full bg-zinc-900 text-white px-5 py-2 text-sm font-medium hover:bg-zinc-800"
-              >
-                Browse 17 MCP tools →
+              <Link to="/tool-onboarding" className="text-[#4f46e5] text-sm font-medium underline">
+                Open tool onboarding →
               </Link>
             </section>
 
