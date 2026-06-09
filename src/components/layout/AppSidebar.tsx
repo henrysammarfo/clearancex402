@@ -54,7 +54,7 @@ const SHARED: Item[] = [
   { to: "/docs", label: "Docs", icon: FileCode },
   { to: "/sdk", label: "SDK", icon: Code2 },
   { to: "/cli", label: "CLI", icon: Terminal },
-  { to: "/mcp", label: "MCP", icon: Boxes },
+  { to: "/mcp", label: "Agent tools", icon: Boxes },
   { to: "/status", label: "Status", icon: Activity },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
 ];
