@@ -101,16 +101,16 @@ function vaultUuidFromTarget(target: string): string | undefined {
 
 export function AuditLogTable({
   entries = [] as AuditEntry[],
-  scope = "Vaultline",
+  scope = "Clearance402",
   storageKey,
-  product = "vaultline",
+  product = "clearance",
 }: {
   entries?: AuditEntry[];
   scope?: string;
   storageKey?: string;
-  product?: "vaultline" | "queryline";
+  product?: "clearance";
 }) {
-  const key = storageKey ?? `linestack.audit.${scope.toLowerCase()}.v1`;
+  const key = storageKey ?? `clearance402.audit.${scope.toLowerCase()}.v1`;
   const initial = useMemo(() => loadState(key), [key]);
 
   const { config } = useConnection();
@@ -269,12 +269,12 @@ export function AuditLogTable({
       {entries.length === 0 ? (
         <EmptyState
           title={`No ${scope} audit entries`}
-          description="On-chain audit entries will appear here once real CDR actions are executed against Story testnet."
+          description="Clearance events will appear here once tools are probed, payments are checked, or approvals are requested."
         />
       ) : filtered.length === 0 ? (
         <EmptyState
           title="No entries match"
-          description="Audit status is for each tx (success / failed / pending), not Queryline request state. Clear filters or pick All statuses."
+          description="Clear filters or pick All statuses to see the full Clearance402 audit trail."
         />
       ) : (
         <>
@@ -330,7 +330,7 @@ function TargetCell({
   product,
 }: {
   entry: AuditEntry;
-  product: "vaultline" | "queryline";
+  product: "clearance";
 }) {
   void product;
   return <span>{entry.target}</span>;
