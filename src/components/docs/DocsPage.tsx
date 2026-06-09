@@ -89,6 +89,7 @@ export function DocsPage() {
                     <button
                       key={item.id}
                       type="button"
+                      aria-current={active === item.id ? "true" : undefined}
                       onClick={() => {
                         setActive(item.id);
                         scrollToSection(item.id);
@@ -116,9 +117,9 @@ export function DocsPage() {
           <article className="min-w-0 space-y-14 scroll-mt-24">
             <header>
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5] mb-2">Clearance402</p>
-              <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Documentation</h1>
+              <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Clearance402 docs</h1>
               <p className="text-zinc-600 mt-3 max-w-2xl text-[15px] leading-relaxed">
-                Clearance402 verifies paid x402/MCP tools before agents spend: onboard tools, probe trust dimensions,
+                Clearance402 verifies paid agent tools before spend: onboard tools, probe trust dimensions,
                 check agent mandates, and export audit evidence.
               </p>
             </header>
@@ -214,7 +215,7 @@ export function DocsPage() {
             <section id="agent-tools" className="scroll-mt-24 space-y-4">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent tools</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Install the MCP server in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
+                Install the agent connector in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
               </p>
               <McpInstallPanel />
               <Link to="/mcp" className="text-[#4f46e5] text-sm font-medium underline">
