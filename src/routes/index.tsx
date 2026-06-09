@@ -56,7 +56,7 @@ function Landing() {
             >
               <span className="overflow-hidden h-[20px] flex flex-col items-start">
                 <span className="block transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">Open the console</span>
-                <span className="block">Open the console</span>
+                <span className="block" aria-hidden="true">Open the console</span>
               </span>
               <span className="size-7 sm:size-8 rounded-full bg-white text-[#4f46e5] flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
                 <ArrowRight className="size-4" />
@@ -68,7 +68,7 @@ function Landing() {
             >
               <span className="overflow-hidden h-[20px] flex flex-col items-start">
                 <span className="block transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">Browse verified tools</span>
-                <span className="block">Browse verified tools</span>
+                <span className="block" aria-hidden="true">Browse verified tools</span>
               </span>
               <span className="size-7 sm:size-8 rounded-full bg-zinc-900 text-white flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
                 <ArrowRight className="size-4" />

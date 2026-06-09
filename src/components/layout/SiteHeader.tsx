@@ -133,7 +133,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
                 <span className="block transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-translate-y-1/2">
                   Open console
                 </span>
-                <span className="block">Open console</span>
+                <span className="block" aria-hidden="true">Open console</span>
               </span>
               <span className="size-6 rounded-full bg-white text-zinc-900 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
                 <ArrowRight className="size-3.5" />
