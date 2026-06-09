@@ -52,7 +52,7 @@ const DEV: Item[] = [
   { to: "/docs", label: "Docs", icon: FileCode },
   { to: "/sdk", label: "SDK", icon: Code2 },
   { to: "/cli", label: "CLI", icon: Terminal },
-  { to: "/mcp", label: "MCP", icon: Boxes },
+  { to: "/mcp", label: "Agent tools", icon: Boxes },
   { to: "/agent-demo", label: "Agent demo", icon: Sparkles },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
 ];

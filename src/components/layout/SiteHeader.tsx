@@ -13,7 +13,7 @@ const NAV = [
   { to: "/agent-clearance", label: "Agent clearance" },
   { to: "/payment-lab", label: "Payment lab" },
   { to: "/docs", label: "Docs" },
-  { to: "/mcp", label: "MCP" },
+  { to: "/mcp", label: "Agent tools" },
 ];
 
 function LondonClock() {

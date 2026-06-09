@@ -109,7 +109,7 @@ export function DocsPage() {
               </div>
             ))}
             <Link to="/mcp" className="block text-sm font-medium text-[#4f46e5] hover:underline pt-2">
-              Open MCP tools page →
+              Open agent tools page →
             </Link>
           </aside>
 
@@ -218,7 +218,7 @@ export function DocsPage() {
               </p>
               <McpInstallPanel />
               <Link to="/mcp" className="text-[#4f46e5] text-sm font-medium underline">
-                Open MCP tools →
+                Open agent tools →
               </Link>
             </section>
           </article>
