@@ -157,15 +157,8 @@ export function DocsPage() {
               </Link>
             </section>
 
-            <section id="clearance" className="scroll-mt-24 space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Concepts</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Clearance states</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
-                Every check returns <code>ALLOW</code>, <code>WARN</code>, <code>BLOCK</code>, <code>RETEST</code>, or <code>HUMAN_APPROVAL_REQUIRED</code>.
-              </p>
-            </section>
-
             <section id="trust-cards" className="scroll-mt-24 space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Clearance402</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Trust cards</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 Trust cards show protocol compliance, price integrity, output quality, reliability, permission safety,
@@ -176,19 +169,35 @@ export function DocsPage() {
               </Link>
             </section>
 
-            <section id="payments" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">x402 payments</h2>
+            <section id="agent-clearance" className="scroll-mt-24 space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Workflows</p>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent clearance</h2>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Agents register an identity and spend mandate, then ask Clearance402 before each payment. The response is short,
+                machine-readable, and safe for automated routing.
+              </p>
+              <Link to="/agent-clearance" className="text-[#4f46e5] text-sm font-medium underline">
+                Open agent clearance →
+              </Link>
+            </section>
+
+            <section id="payment-checks" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Payment checks</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 Clearance402 checks the advertised price against the payment requirement, verifies the challenge/receipt,
                 and blocks payment when the tool or mandate is unsafe.
               </p>
             </section>
 
-            <section id="audit" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Audit log</h2>
+            <section id="audit-export" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Audit export</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Audit entries record probes, payments, blocks, approvals, Venice evaluations, relays, revokes, and exports.
+                Audit entries record probes, payments, blocks, approvals, evaluations, relays, revokes, and exports. Filter by
+                event type, search by actor or tool, then download CSV evidence.
               </p>
+              <Link to="/audit" className="text-[#4f46e5] text-sm font-medium underline">
+                Open audit log →
+              </Link>
             </section>
 
             <section id="permissions" className="scroll-mt-24 space-y-3">
@@ -200,6 +209,17 @@ export function DocsPage() {
                 </Link>
                 .
               </p>
+            </section>
+
+            <section id="agent-tools" className="scroll-mt-24 space-y-4">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent tools</h2>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Install the MCP server in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
+              </p>
+              <McpInstallPanel />
+              <Link to="/mcp" className="text-[#4f46e5] text-sm font-medium underline">
+                Open MCP tools →
+              </Link>
             </section>
           </article>
         </div>
