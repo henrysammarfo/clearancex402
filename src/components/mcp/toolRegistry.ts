@@ -1,10 +1,6 @@
-/**
- * MCP tools exposed by @line-stack/mcp-server (stdio).
- * Keep in sync with packages/mcp-server/src/index.ts
- */
 export type McpTool = {
   name: string;
-  product: "platform" | "vaultline" | "queryline";
+  product: "core" | "agents" | "ops";
   description: string;
   input: Record<string, string>;
   output: Record<string, string>;
@@ -12,143 +8,59 @@ export type McpTool = {
 
 export const MCP_TOOLS: McpTool[] = [
   {
-    name: "linestack_status",
-    product: "platform",
-    description: "Wallet, Story RPC, registry, IPFS proxy, contracts, Storacha.",
+    name: "clearance402_status",
+    product: "ops",
+    description: "Health and configuration for the Clearance402 verification layer.",
     input: {},
-    output: { status: "object" },
+    output: { ok: "boolean", registry: "string", version: "string" },
   },
   {
-    name: "registry_refresh",
-    product: "platform",
-    description: "Reload shared VPS registry (same snapshot as the web app).",
+    name: "clearance402_registry_refresh",
+    product: "ops",
+    description: "Refresh the trust-card registry used by agents and the console.",
     input: {},
     output: { snapshot: "object" },
   },
   {
-    name: "vaultline_create_vault",
-    product: "vaultline",
-    description: "Create a CDR vault (owner read/write).",
-    input: { name: "string (required)" },
-    output: { vaultId: "string", cdrUuid: "string", txHash: "string" },
+    name: "clearance402_tool_onboard",
+    product: "core",
+    description: "Register a paid tool endpoint, price, protocol, and output schema.",
+    input: { name: "string", endpoint: "string", protocol: "x402|MCP", price: "string" },
+    output: { toolId: "string", state: "ClearanceState" },
   },
   {
-    name: "vaultline_write_secret",
-    product: "vaultline",
-    description: "Write on-chain secret bytes to a vault UUID.",
-    input: { cdrUuid: "string", text: "string?", filePath: "string?" },
-    output: { txHash: "string" },
+    name: "clearance402_tool_probe",
+    product: "core",
+    description: "Run live protocol, price, output, and reliability checks.",
+    input: { toolId: "string" },
+    output: { trust: "number", state: "ClearanceState", latencyMs: "number" },
   },
   {
-    name: "vaultline_read_secret",
-    product: "vaultline",
-    description: "Read on-chain secret from vault UUID.",
-    input: { cdrUuid: "string" },
-    output: { txHash: "string", text: "string" },
+    name: "clearance402_tool_card",
+    product: "core",
+    description: "Return trust dimensions, clearance badges, and status checks.",
+    input: { toolId: "string" },
+    output: { trust: "number", dimensions: "object", checks: "object[]" },
   },
   {
-    name: "vaultline_upload_file",
-    product: "vaultline",
-    description: "Encrypt and upload a local file (IPFS + CDR).",
-    input: {
-      filePath: "string (required)",
-      vaultUuid: "string?",
-      licenseGated: "boolean?",
-      ipId: "string?",
-    },
-    output: { fileId: "string", cdrUuid: "string", cid: "string", txHash: "string" },
+    name: "clearance402_agent_register",
+    product: "agents",
+    description: "Create an agent identity with a spend mandate and approval policy.",
+    input: { id: "string", mandateUsd: "number" },
+    output: { agentId: "string", mandateUsd: "number" },
   },
   {
-    name: "vaultline_unlock_file",
-    product: "vaultline",
-    description: "Decrypt file vault to disk (buyer license optional).",
-    input: {
-      cdrUuid: "string (required)",
-      outPath: "string (required)",
-      listingId: "string?",
-      ipId: "string?",
-    },
-    output: { outPath: "string", txHash: "string" },
+    name: "clearance402_check_payment",
+    product: "agents",
+    description: "Decide whether an agent can pay a tool for a requested amount.",
+    input: { agentId: "string", toolId: "string", amount: "string" },
+    output: { state: "ClearanceState", reasons: "string[]" },
   },
   {
-    name: "vaultline_register_ip",
-    product: "vaultline",
-    description: "Register Story IP + marketplace listing (needs STORACHA_PROOF).",
-    input: {
-      vaultUuid: "string",
-      title: "string",
-      description: "string?",
-      licenseTemplate: "non-commercial | commercial-use | commercial-remix?",
-      priceIp: "string?",
-    },
-    output: { ipId: "string", listingId: "string", txHashes: "object" },
-  },
-  {
-    name: "vaultline_buy_license",
-    product: "vaultline",
-    description: "Mint buyer license for a registry listing.",
-    input: { listingId: "string" },
-    output: { licenseId: "string", txHash: "string" },
-  },
-  {
-    name: "vaultline_list",
-    product: "vaultline",
-    description: "List vaults, files, listings from shared registry.",
-    input: {},
-    output: { vaults: "array", files: "array", listings: "array" },
-  },
-  {
-    name: "queryline_create_dataset",
-    product: "queryline",
-    description: "Allocate dataset vault + registry (+ on-chain if LINESTACK_* set).",
-    input: { name: "string", schemaJson: "string?", description: "string?" },
-    output: { datasetId: "string", cdrUuid: "string", txHash: "string?" },
-  },
-  {
-    name: "queryline_seed_dataset",
-    product: "queryline",
-    description: "Write JSON rows into dataset vault.",
-    input: { datasetId: "string", payloadJson: "string (JSON object)" },
-    output: { txHash: "string" },
-  },
-  {
-    name: "queryline_add_template",
-    product: "queryline",
-    description: "Register allow-listed template (+ on-chain if configured).",
-    input: { datasetId: "string", name: "string", paramsSchemaJson: "string?" },
-    output: { templateId: "string", txHash: "string?" },
-  },
-  {
-    name: "queryline_request_query",
-    product: "queryline",
-    description: "Buyer: allocate result vault for a query request.",
-    input: {
-      datasetId: "string",
-      templateId: "string",
-      paramsJson: "string (JSON object)",
-    },
-    output: { requestId: "string", resultVaultUuid: "string" },
-  },
-  {
-    name: "queryline_execute_query",
-    product: "queryline",
-    description:
-      "Publisher fulfill: CDR read/write + EIP-712 + Automata DCAP on-chain (quote env required).",
-    input: { requestId: "string" },
-    output: { requestId: "string", resultHash: "string", attestation: "object", txHashes: "object" },
-  },
-  {
-    name: "queryline_unlock_result",
-    product: "queryline",
-    description: "Buyer: decrypt completed query result vault.",
-    input: { requestId: "string" },
-    output: { data: "object", txHash: "string" },
-  },
-  {
-    name: "queryline_list",
-    product: "queryline",
-    description: "List datasets, templates, requests from shared registry.",
-    input: {},
-    output: { datasets: "array", templates: "array", requests: "array" },
+    name: "clearance402_audit_export",
+    product: "ops",
+    description: "Export probe, payment, block, approval, and revoke events.",
+    input: { kind: "string?", since: "string?" },
+    output: { csv: "string", count: "number" },
   },
 ];
