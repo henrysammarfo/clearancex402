@@ -268,61 +268,6 @@ function SecurityAccessCard({
 
 
 
-function StorachaSettings() {
-  const [proof, setProof] = useState(() => getLocalStorachaProof() ?? "");
-  const [status, setStatus] = useState<string>("Checking…");
-
-  useEffect(() => {
-    checkStorachaAvailable().then((s) => {
-      if (s.available) {
-        setStatus(s.source === "local" ? "Local CLI proof saved in this browser." : "Server delegation available (STORACHA_PROOF).");
-      } else {
-        setStatus(s.error ?? "Not configured.");
-      }
-    });
-  }, [proof]);
-
-  return (
-    <div className="space-y-3">
-      <p className="text-xs text-muted-foreground">{status}</p>
-      <div className="space-y-2">
-        <Label htmlFor="storachaProof">Local Storacha proof (dev — from CLI)</Label>
-        <Textarea
-          id="storachaProof"
-          rows={4}
-          className="font-mono text-xs"
-          placeholder="Paste UCAN proof from storacha CLI (optional if server STORACHA_PROOF is set)"
-          value={proof}
-          onChange={(e) => setProof(e.target.value)}
-        />
-      </div>
-      <div className="flex gap-2">
-        <Button
-          type="button"
-          size="sm"
-          onClick={() => {
-            setLocalStorachaProof(proof);
-          }}
-        >
-          Save local proof
-        </Button>
-        <Button
-          type="button"
-          size="sm"
-          variant="outline"
-          onClick={() => {
-            setLocalStorachaProof(null);
-            setProof("");
-          }}
-        >
-          Clear
-        </Button>
-      </div>
-      <p className="text-xs text-muted-foreground">Never commit proof material. On Vercel, set STORACHA_PROOF as a server env var only.</p>
-    </div>
-  );
-}
-
 function StatusCard({
   status,
   walletAddress,
