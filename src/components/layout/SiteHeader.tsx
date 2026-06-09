@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useAccount } from "wagmi";
 import { useAuth } from "@/lib/auth";
 import { WalletConnect } from "@/components/wallet/WalletConnect";
-import { LineStackLogo } from "@/components/brand/LineStackLogo";
+import { Clearance402Logo } from "@/components/brand/Clearance402Logo";
 
 const NAV = [
   { to: "/tools", label: "Tools" },
@@ -84,8 +84,9 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
         <nav className="bg-white rounded-full p-[5px] flex items-center justify-between shadow-[0_2px_12px_rgba(0,0,0,0.05)]">
           <div className="flex items-center gap-6 pl-1">
             <Link to="/" className="flex items-center gap-2">
-              <LineStackLogo size={40} className="sm:hidden" />
-              <LineStackLogo size={44} className="hidden sm:block" />
+              <Clearance402Logo size={40} className="sm:hidden" />
+              <Clearance402Logo size={44} className="hidden sm:block" />
+              <span className="hidden sm:inline text-[15px] font-semibold tracking-tight text-zinc-900">Clearance402</span>
             </Link>
             <div className="hidden md:flex items-center gap-6">
               {NAV.map((n) => (

@@ -4,7 +4,7 @@ import { NotConnectedState, TxPendingState } from "@/components/states";
 
 /**
  * SubmitGate: wraps any form. On submit, transitions submit -> pending -> not-connected.
- * Never fakes a successful tx. Designed for real Story testnet/CDR wiring later.
+ * Never fakes a successful approval. Designed for real Clearance402 wiring later.
  */
 export function SubmitGate({
   label = "Submit",
@@ -40,7 +40,7 @@ export function SubmitGate({
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={state === "pending"}>{state === "pending" ? pendingLabel : label}</Button>
         <span className="text-xs text-muted-foreground">
-          Requires connected wallet + CDR endpoint. Configure in <a href="/settings" className="underline">Settings</a>.
+          Requires connected wallet + Clearance402 settings. Configure in <a href="/settings" className="underline">Settings</a>.
         </span>
       </div>
       {state === "pending" && <TxPendingState description={pendingLabel} />}

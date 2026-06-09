@@ -10,10 +10,10 @@ function shortAddress(addr: string) {
 export function ConnectionFooter({ className }: { className?: string }) {
   const { status, isConnected, walletAddress, isWrongChain } = useConnection();
 
-  let label = "Not connected · Story testnet";
+  let label = "Not connected · wallet required";
   if (status === "connecting") label = "Connecting…";
-  else if (isWrongChain) label = "Wrong network · switch to Aeneid";
-  else if (isConnected && walletAddress) label = `${shortAddress(walletAddress)} · Aeneid`;
+  else if (isWrongChain) label = "Wrong network · switch chain";
+  else if (isConnected && walletAddress) label = `${shortAddress(walletAddress)} · cleared`;
   else if (status === "failed") label = "Connection failed · check network";
 
   return (
