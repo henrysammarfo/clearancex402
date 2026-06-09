@@ -216,14 +216,14 @@ function SecurityAccessCard({
       note: isConnected ? `Signed in as ${walletAddress}` : "No wallet connected — sensitive actions are blocked.",
     },
     {
-      label: "Correct network (Story Aeneid · 1315)",
+      label: "Correct network",
       ok: isConnected && !isWrongChain,
-      note: isWrongChain ? "Wallet is on the wrong chain." : isConnected ? "Verified on chain 1315." : "Connect a wallet to verify.",
+      note: isWrongChain ? "Wallet is on the wrong chain." : isConnected ? "Network verified." : "Connect a wallet to verify.",
     },
     {
       label: "Endpoints configured",
       ok: hasConfig,
-      note: hasConfig ? "RPC + CDR endpoints saved in this browser." : "Save endpoints below to enable CDR flows.",
+      note: hasConfig ? "Network + verification endpoints saved in this browser." : "Save endpoints below to enable clearance flows.",
     },
   ];
 
@@ -250,7 +250,7 @@ function SecurityAccessCard({
       {!isConnected && (
         <UnauthorizedState
           title="You are not authorized for operator actions"
-          reason="Connect a wallet on Story Aeneid to manage API keys, run clearance checks, and access the audit log. Read-only previews remain available."
+          reason="Connect a wallet to manage API keys, run clearance checks, and access the audit log. Read-only previews remain available."
           action={
             <Button size="sm" asChild>
               <Link to="/login" search={{ redirect: "/settings" }}>Connect wallet</Link>
