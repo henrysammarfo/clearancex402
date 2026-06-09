@@ -8,24 +8,24 @@ import { McpInstallPanel } from "@/components/docs/McpInstallPanel";
 import { cn } from "@/lib/utils";
 
 type SectionId =
-  | "install-mcp"
-  | "configure"
-  | "tool-catalog"
-  | "clearance"
+  | "overview"
+  | "tool-onboarding"
   | "trust-cards"
-  | "payments"
-  | "audit"
-  | "permissions";
+  | "agent-clearance"
+  | "payment-checks"
+  | "audit-export"
+  | "permissions"
+  | "agent-tools";
 
 const NAV: { id: SectionId; label: string; icon: ReactNode; group: string }[] = [
-  { id: "install-mcp", label: "Install MCP", icon: <Rocket className="size-4" />, group: "Getting started" },
-  { id: "configure", label: "Configuration", icon: <Wrench className="size-4" />, group: "Getting started" },
-  { id: "tool-catalog", label: "Tool catalog", icon: <Sparkles className="size-4" />, group: "Getting started" },
-  { id: "clearance", label: "Clearance", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "trust-cards", label: "Trust cards", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "payments", label: "Payments", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "audit", label: "Audit", icon: <BookOpen className="size-4" />, group: "Concepts" },
-  { id: "permissions", label: "Permissions", icon: <BookOpen className="size-4" />, group: "Concepts" },
+  { id: "overview", label: "Overview", icon: <BookOpen className="size-4" />, group: "Clearance402" },
+  { id: "tool-onboarding", label: "Tool onboarding", icon: <Rocket className="size-4" />, group: "Clearance402" },
+  { id: "trust-cards", label: "Trust cards", icon: <Sparkles className="size-4" />, group: "Clearance402" },
+  { id: "agent-clearance", label: "Agent clearance", icon: <BookOpen className="size-4" />, group: "Workflows" },
+  { id: "payment-checks", label: "Payment checks", icon: <BookOpen className="size-4" />, group: "Workflows" },
+  { id: "audit-export", label: "Audit export", icon: <BookOpen className="size-4" />, group: "Workflows" },
+  { id: "permissions", label: "Permissions", icon: <Wrench className="size-4" />, group: "Controls" },
+  { id: "agent-tools", label: "Agent tools", icon: <Wrench className="size-4" />, group: "Controls" },
 ];
 
 function scrollToSection(id: SectionId) {
@@ -46,7 +46,7 @@ function StepCard({ n, title, children }: { n: string; title: string; children: 
 }
 
 export function DocsPage() {
-  const [active, setActive] = useState<SectionId>("install-mcp");
+  const [active, setActive] = useState<SectionId>("overview");
 
   useEffect(() => {
     const hash = window.location.hash.replace("#", "") as SectionId;
@@ -89,6 +89,7 @@ export function DocsPage() {
                     <button
                       key={item.id}
                       type="button"
+                      aria-current={active === item.id ? "true" : undefined}
                       onClick={() => {
                         setActive(item.id);
                         scrollToSection(item.id);
@@ -109,72 +110,56 @@ export function DocsPage() {
               </div>
             ))}
             <Link to="/mcp" className="block text-sm font-medium text-[#4f46e5] hover:underline pt-2">
-              Open MCP tools page →
+              Open agent tools page →
             </Link>
           </aside>
 
           <article className="min-w-0 space-y-14 scroll-mt-24">
             <header>
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5] mb-2">Clearance402</p>
-              <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Documentation</h1>
+              <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-zinc-900">Clearance402 docs</h1>
               <p className="text-zinc-600 mt-3 max-w-2xl text-[15px] leading-relaxed">
-                Clearance402 verifies paid x402/MCP tools before agents spend: onboard tools, probe trust dimensions,
+                Clearance402 verifies paid agent tools before spend: onboard tools, probe trust dimensions,
                 check agent mandates, and export audit evidence.
               </p>
             </header>
 
-            <section id="install-mcp" className="scroll-mt-24 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Getting started</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Install Clearance402 MCP</h2>
+            <section id="overview" className="scroll-mt-24 space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Clearance402</p>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">One quiet checkpoint before an agent pays</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Install the MCP server in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
+                Clearance402 keeps the complex verification work behind the scenes. Agents send a tool, amount, and mandate;
+                Clearance402 returns a clear decision with the evidence needed to trust or block the payment.
               </p>
-              <McpInstallPanel />
-              <StepCard n="01" title="Install">
-                Paste the config for your client, set <code>CLEARANCE402_ENV_FILE</code> to your real path, restart the IDE,
-                then ask the agent to call <code>clearance402_status</code>.
-              </StepCard>
+              <div className="grid sm:grid-cols-3 gap-3">
+                <StepCard n="01" title="Discover">Find a paid tool and read its Trust Card.</StepCard>
+                <StepCard n="02" title="Check">Run live protocol, price, output, and permission checks.</StepCard>
+                <StepCard n="03" title="Decide">Return ALLOW, WARN, BLOCK, RETEST, or HUMAN_APPROVAL_REQUIRED.</StepCard>
+              </div>
             </section>
 
-            <section id="configure" className="scroll-mt-24 space-y-4">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Configuration</h2>
-              <p className="text-zinc-600 text-sm">
-                Set these in <code className="bg-zinc-100 px-1 rounded">~/.clearance402/.env</code> (chmod 600). Never commit.
+            <section id="tool-onboarding" className="scroll-mt-24 space-y-4">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Tool onboarding</h2>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Developers register the endpoint, protocol, advertised price, output schema, and owner contact. Clearance402
+                immediately runs a probe and shows pending, passed, blocked, or retest states.
               </p>
               <CodeBlock
                 theme="light"
-                lang=".env"
-                code={`CLEARANCE402_API_KEY=sk_...
-CLEARANCE402_REGISTRY_URL=https://api.clearance402.local
-CLEARANCE402_AGENT_ID=buyer-agent
-CLEARANCE402_DEFAULT_MANDATE_USD=5.00
-CLEARANCE402_NETWORK=base-sepolia`}
+                lang="bash"
+                code={`clearance402 tools onboard \
+  --name "Weather API" \
+  --endpoint https://api.example.com/x402 \
+  --protocol x402 \
+  --price "0.010 USDC"`}
               />
-            </section>
-
-            <section id="tool-catalog" className="scroll-mt-24 space-y-4">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Tool catalog</h2>
-              <p className="text-zinc-600 text-sm">
-                Clearance402 tools cover registry lookup, tool onboarding, live probing, trust-card retrieval,
-                agent registration, payment checks, audit export, and permission revocation.
-              </p>
-              <Link
-                to="/mcp"
-                className="inline-flex items-center gap-2 rounded-full bg-zinc-900 text-white px-5 py-2 text-sm font-medium hover:bg-zinc-800"
-              >
-                Browse 17 MCP tools →
+              <Link to="/tool-onboarding" className="text-[#4f46e5] text-sm font-medium underline">
+                Open tool onboarding →
               </Link>
             </section>
 
-            <section id="clearance" className="scroll-mt-24 space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Concepts</p>
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Clearance states</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
-                Every check returns <code>ALLOW</code>, <code>WARN</code>, <code>BLOCK</code>, <code>RETEST</code>, or <code>HUMAN_APPROVAL_REQUIRED</code>.
-              </p>
-            </section>
-
             <section id="trust-cards" className="scroll-mt-24 space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Clearance402</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Trust cards</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 Trust cards show protocol compliance, price integrity, output quality, reliability, permission safety,
@@ -185,19 +170,35 @@ CLEARANCE402_NETWORK=base-sepolia`}
               </Link>
             </section>
 
-            <section id="payments" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">x402 payments</h2>
+            <section id="agent-clearance" className="scroll-mt-24 space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Workflows</p>
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent clearance</h2>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Agents register an identity and spend mandate, then ask Clearance402 before each payment. The response is short,
+                machine-readable, and safe for automated routing.
+              </p>
+              <Link to="/agent-clearance" className="text-[#4f46e5] text-sm font-medium underline">
+                Open agent clearance →
+              </Link>
+            </section>
+
+            <section id="payment-checks" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Payment checks</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
                 Clearance402 checks the advertised price against the payment requirement, verifies the challenge/receipt,
                 and blocks payment when the tool or mandate is unsafe.
               </p>
             </section>
 
-            <section id="audit" className="scroll-mt-24 space-y-3">
-              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Audit log</h2>
+            <section id="audit-export" className="scroll-mt-24 space-y-3">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Audit export</h2>
               <p className="text-zinc-600 text-sm leading-relaxed">
-                Audit entries record probes, payments, blocks, approvals, Venice evaluations, relays, revokes, and exports.
+                Audit entries record probes, payments, blocks, approvals, evaluations, relays, revokes, and exports. Filter by
+                event type, search by actor or tool, then download CSV evidence.
               </p>
+              <Link to="/audit" className="text-[#4f46e5] text-sm font-medium underline">
+                Open audit log →
+              </Link>
             </section>
 
             <section id="permissions" className="scroll-mt-24 space-y-3">
@@ -209,6 +210,17 @@ CLEARANCE402_NETWORK=base-sepolia`}
                 </Link>
                 .
               </p>
+            </section>
+
+            <section id="agent-tools" className="scroll-mt-24 space-y-4">
+              <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent tools</h2>
+              <p className="text-zinc-600 text-sm leading-relaxed">
+                Install the agent connector in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
+              </p>
+              <McpInstallPanel />
+              <Link to="/mcp" className="text-[#4f46e5] text-sm font-medium underline">
+                Open agent tools →
+              </Link>
             </section>
           </article>
         </div>

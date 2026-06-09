@@ -17,7 +17,7 @@ const COLS = [
       { label: "Docs", href: "/docs" },
       { label: "SDK", href: "/sdk" },
       { label: "CLI", href: "/cli" },
-      { label: "MCP", href: "/mcp" },
+      { label: "Agent tools", href: "/mcp" },
       { label: "Settings", href: "/settings" },
     ],
   },

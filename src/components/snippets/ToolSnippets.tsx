@@ -4,7 +4,7 @@ import { MCP_TOOLS } from "@/components/mcp/toolRegistry";
 import { snippetBodies } from "@/components/snippets/toolSnippetContent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export function ToolSnippets({ filter }: { filter: "vaultline" | "queryline" }) {
+export function ToolSnippets({ filter }: { filter: "core" | "agents" | "ops" }) {
   const tools = MCP_TOOLS.filter((t) => t.product === filter);
   return (
     <div className="space-y-6">

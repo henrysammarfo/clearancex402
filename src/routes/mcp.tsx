@@ -6,8 +6,8 @@ import { CodeBlock } from "@/components/snippets/CodeBlock";
 export const Route = createFileRoute("/mcp")({
   head: () => ({
     meta: [
-      { title: "Clearance402 · MCP tools" },
-      { name: "description", content: "MCP tool reference for @clearance402/mcp-server — verify tools and clear agent payments from any MCP host." },
+      { title: "Clearance402 · Agent tools" },
+      { name: "description", content: "Agent tool reference for Clearance402 — verify tools and clear payments from any compatible agent host." },
     ],
   }),
   component: Page,
@@ -76,10 +76,9 @@ function Page() {
     <div className="min-h-screen bg-[#EFEFEF]">
       <SiteHeader />
       <section className="mx-auto max-w-[1280px] px-5 sm:px-8 py-10">
-        <h1 className="text-3xl sm:text-4xl font-medium tracking-tight">MCP tool explorer</h1>
+        <h1 className="text-3xl sm:text-4xl font-medium tracking-tight">Agent tool connector</h1>
         <p className="text-zinc-600 mt-2 max-w-2xl">
-          Tools from <code className="text-sm">@clearance402/mcp-server</code> (stdio). Give any MCP host — Cursor, Claude, ChatGPT —
-          the ability to verify x402/MCP tools and clear payments before spending. Same surface as the{" "}
+          Give Cursor, Claude, ChatGPT, and compatible agent hosts the ability to verify paid tools and clear payments before spending. Same surface as the{" "}
           <Link to="/sdk" className="underline">SDK</Link> and <Link to="/cli" className="underline">CLI</Link>.
         </p>
 
@@ -119,9 +118,9 @@ function Page() {
         </div>
 
         <div className="mt-12 space-y-4">
-          <h2 className="text-xl font-semibold">MCP server config</h2>
+          <h2 className="text-xl font-semibold">Agent connector config</h2>
           <p className="text-sm text-zinc-600">
-            Add this to your MCP host config. Keep <code className="text-xs">CLEARANCE402_API_KEY</code> out of source control — set it
+            Add this to your agent host config. Keep <code className="text-xs">CLEARANCE402_API_KEY</code> out of source control — set it
             from <Link to="/settings" className="underline">Settings → API key</Link>.
           </p>
           <CodeBlock lang="json" code={MCP_CONFIG} />

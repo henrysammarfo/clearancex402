@@ -8,11 +8,8 @@ type LogoProps = {
   variant?: "dark" | "light";
 };
 
-/**
- * Clearance402 mark — a shield (trust) with a checkmark (cleared).
- * Square, with safe padding for sidebar, header, and favicon.
- */
-export function LineStackLogo({ className, size = 32, variant = "dark" }: LogoProps) {
+/** Clearance402 mark — a shield for trust and a check for cleared payment. */
+export function Clearance402Logo({ className, size = 32, variant = "dark" }: LogoProps) {
   const bg = variant === "dark" ? "#4f46e5" : "#ffffff";
   const fg = variant === "dark" ? "#ffffff" : "#4f46e5";
 
@@ -27,7 +24,6 @@ export function LineStackLogo({ className, size = 32, variant = "dark" }: LogoPr
       aria-hidden
     >
       <rect width="32" height="32" rx={size >= 36 ? 10 : 8} fill={bg} />
-      {/* Shield outline */}
       <path
         d="M16 6.5l6 2.1v4.8c0 3.9-2.5 7.2-6 8.6-3.5-1.4-6-4.7-6-8.6V8.6l6-2.1z"
         stroke={fg}
@@ -35,7 +31,6 @@ export function LineStackLogo({ className, size = 32, variant = "dark" }: LogoPr
         strokeLinejoin="round"
         fill="none"
       />
-      {/* Cleared checkmark */}
       <path
         d="M12.8 15.4l2.3 2.3 4.1-4.6"
         stroke={fg}

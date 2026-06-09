@@ -10,10 +10,10 @@ export function RequireConnection({ children, reason }: { children: React.ReactN
   if (isConnected) return <>{children}</>;
 
   const description = isWrongChain
-    ? "Switch your wallet to Story Aeneid Testnet (chain ID 1315), then retry."
+    ? "Switch your wallet to the configured Clearance402 network, then retry."
     : config
-      ? "Connect a wallet on Story Aeneid to use CDR vault and query flows."
-      : "Configure Story RPC and Story-API URLs in Settings, then connect a wallet.";
+      ? "Connect a wallet to run Clearance402 operator workflows."
+      : "Configure Clearance402 endpoints in Settings, then connect a wallet.";
 
   return (
     <UnauthorizedState

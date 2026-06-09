@@ -31,7 +31,7 @@ export function VaultSelect({
           ) : (
             vaults.map((v) => (
               <SelectItem key={v.uuid} value={v.uuid}>
-                {v.name} (CDR {v.uuid})
+                {v.name} (proof {v.uuid})
               </SelectItem>
             ))
           )}

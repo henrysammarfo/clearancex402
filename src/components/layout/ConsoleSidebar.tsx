@@ -27,7 +27,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { LineStackLogo } from "@/components/brand/LineStackLogo";
+import { Clearance402Logo } from "@/components/brand/Clearance402Logo";
 import { ConnectionFooter } from "@/components/layout/ConnectionFooter";
 
 type Item = { to: string; label: string; icon: React.ComponentType<{ className?: string }> };
@@ -52,7 +52,7 @@ const DEV: Item[] = [
   { to: "/docs", label: "Docs", icon: FileCode },
   { to: "/sdk", label: "SDK", icon: Code2 },
   { to: "/cli", label: "CLI", icon: Terminal },
-  { to: "/mcp", label: "MCP", icon: Boxes },
+  { to: "/mcp", label: "Agent tools", icon: Boxes },
   { to: "/agent-demo", label: "Agent demo", icon: Sparkles },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
 ];
@@ -85,7 +85,7 @@ export function ConsoleSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <Link to="/" className="flex items-center gap-2 px-2 py-2 min-w-0">
-          <LineStackLogo size={32} className="shrink-0" />
+          <Clearance402Logo size={32} className="shrink-0" />
           <span className="font-semibold tracking-tight whitespace-nowrap group-data-[collapsible=icon]:hidden">
             Clearance402
           </span>

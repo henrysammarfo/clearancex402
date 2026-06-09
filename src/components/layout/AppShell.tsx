@@ -16,7 +16,7 @@ export function AppShell({
   children,
   unprotected = false,
 }: {
-  product: "vaultline" | "queryline";
+  product: "console" | "labs";
   title: string;
   description?: string;
   actions?: React.ReactNode;
@@ -31,10 +31,10 @@ export function AppShell({
     status === "failed" ? "bg-chain-failed" :
     config ? "bg-chain-unauthorized" : "bg-chain-pending";
   const label =
-    isConnected ? `Story ${config?.network === "story-mainnet" ? "mainnet" : "testnet"} · connected` :
+    isConnected ? `${config?.network === "story-mainnet" ? "Mainnet" : "Testnet"} · connected` :
     status === "connecting" ? "Connecting…" :
     status === "failed" ? "Connection failed" :
-    config ? "Configured · awaiting wallet" : "Story testnet · disconnected";
+    config ? "Configured · awaiting wallet" : "Wallet disconnected";
 
   return (
     <RequireAuth>
@@ -47,7 +47,7 @@ export function AppShell({
               <div className="text-sm text-muted-foreground whitespace-nowrap min-w-0 truncate">
                 <Link to="/" className="hover:text-foreground">Clearance402</Link>
                 <span className="mx-1.5">/</span>
-                <Link to={product === "vaultline" ? "/vaultline" : "/queryline"} className="hover:text-foreground capitalize">
+                <Link to={product === "console" ? "/dashboard" : "/payment-lab"} className="hover:text-foreground capitalize">
                   {product}
                 </Link>
               </div>
@@ -63,8 +63,8 @@ export function AppShell({
                     <span>{session.email}</span>
                   </span>
                 )}
-                <a href="https://testnet.story.foundation" target="_blank" rel="noreferrer" className="hidden sm:inline-flex items-center gap-1 hover:text-foreground">
-                  Explorer <ExternalLink className="size-3" />
+                <a href="/status" className="hidden sm:inline-flex items-center gap-1 hover:text-foreground">
+                  Status <ExternalLink className="size-3" />
                 </a>
                 {session && (
                   <button

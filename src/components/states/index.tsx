@@ -40,7 +40,7 @@ export function LoadingState({ title = "Loading…", description, className }: B
   return <Shell icon={<Loader2 className="size-5 animate-spin text-muted-foreground" />} title={title} description={description} className={className} tone="muted" />;
 }
 
-export function TxPendingState({ title = "Transaction pending", description = "Waiting for confirmation on Story testnet.", txHash, className }: BaseProps & { txHash?: string }) {
+export function TxPendingState({ title = "Transaction pending", description = "Waiting for wallet confirmation.", txHash, className }: BaseProps & { txHash?: string }) {
   return (
     <Shell
       icon={<Loader2 className="size-5 animate-spin text-chain-pending" />}
@@ -82,7 +82,7 @@ export function TxFailedState({ title = "Transaction failed", description, error
 
 export function UnauthorizedState({
   title = "Unauthorized",
-  description = "This vault is locked. Purchase a license or request access to unlock.",
+  description = "This action needs operator access. Connect an authorized wallet to continue.",
   reason,
   className,
   action,
@@ -119,7 +119,7 @@ export function SuccessState({ title = "Success", description, txHash, className
 
 export function NotConnectedState({
   title = "Not connected",
-  description = "Connect a wallet and configure the Story testnet RPC + CDR endpoint in Settings to perform this action.",
+  description = "Connect a wallet and save Clearance402 settings before running this action.",
   className,
 }: BaseProps) {
   return (
@@ -138,7 +138,7 @@ export function NotConnectedState({
   );
 }
 
-export function LockedState({ title = "Raw dataset locked", description = "The underlying dataset is encrypted in a CDR vault. Only approved query templates can be executed against it.", className }: BaseProps) {
+export function LockedState({ title = "Access locked", description = "This tool action is protected by Clearance402 policy and needs approval before it can run.", className }: BaseProps) {
   return <Shell icon={<Ban className="size-5 text-chain-unauthorized" />} title={title} description={description} tone="unauthorized" className={className} />;
 }
 
