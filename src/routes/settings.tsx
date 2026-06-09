@@ -76,7 +76,7 @@ function SettingsPage() {
       <SiteHeader />
       <section className="mx-auto max-w-[820px] px-5 sm:px-8 py-10">
         <h1 className="text-3xl font-medium tracking-tight">Settings</h1>
-        <p className="text-zinc-600 mt-2">Story Aeneid RPC, CDR Story-API URL, and optional local overrides (saved in your browser).</p>
+        <p className="text-zinc-600 mt-2">Clearance402 network, verification API, and local access settings saved in this browser.</p>
 
         <StatusCard
           status={
@@ -106,12 +106,12 @@ function SettingsPage() {
           <div className="rounded-2xl border bg-white p-6 space-y-4">
             <h3 className="font-semibold">Network endpoints</h3>
             <div className="space-y-2">
-              <Label htmlFor="rpcUrl">Story RPC URL</Label>
+              <Label htmlFor="rpcUrl">Network RPC URL</Label>
               <Input id="rpcUrl" placeholder={AENEID_DEFAULT_CONFIG.rpcUrl} {...form.register("rpcUrl")} />
               {form.formState.errors.rpcUrl && <p className="text-xs text-chain-failed">{form.formState.errors.rpcUrl.message}</p>}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="cdrUrl">CDR endpoint</Label>
+              <Label htmlFor="cdrUrl">Verification API endpoint</Label>
               <Input id="cdrUrl" placeholder={AENEID_DEFAULT_CONFIG.cdrUrl} {...form.register("cdrUrl")} />
               <p className="text-xs text-muted-foreground">
                 On HTTPS deployments, plain <code className="text-[11px]">http://</code> verification API URLs are
@@ -133,8 +133,8 @@ function SettingsPage() {
                 <Select value={form.watch("network")} onValueChange={(v) => form.setValue("network", v as Network, { shouldDirty: true })}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="story-testnet">Story testnet</SelectItem>
-                    <SelectItem value="story-mainnet">Story mainnet</SelectItem>
+                    <SelectItem value="story-testnet">Clearance402 testnet</SelectItem>
+                    <SelectItem value="story-mainnet">Clearance402 mainnet</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -187,7 +187,7 @@ function SettingsPage() {
               Clear
             </Button>
             <p className="text-xs text-zinc-500">
-          Saved in this browser. Connect wallet via RainbowKit in the header (chain 1315).
+          Saved in this browser. Connect wallet in the header to unlock operator actions.
             </p>
           </div>
         </form>

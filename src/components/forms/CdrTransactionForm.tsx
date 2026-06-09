@@ -117,7 +117,7 @@ export function CdrTransactionForm({
       {phase === "wrong-chain" && (
         <UnauthorizedState
           title="Wrong network"
-          reason="Switch your wallet to Story Aeneid Testnet (chain ID 1315), then retry."
+          reason="Switch your wallet to the configured Clearance402 network, then retry."
         />
       )}
       {phase === "failed" && (
@@ -128,13 +128,13 @@ export function CdrTransactionForm({
           title={successTitle}
           description={
             buildSuccessDescription?.({ txHash, data: extra }) ??
-            "On-chain transaction confirmed on Story Aeneid."
+            "Clearance402 transaction confirmed."
           }
           txHash={txHash}
           action={
             <Button asChild size="sm" variant="outline">
               <a href={explorerTxUrl(explorerBase, txHash)} target="_blank" rel="noreferrer">
-                View on Storyscan
+                View transaction
               </a>
             </Button>
           }
