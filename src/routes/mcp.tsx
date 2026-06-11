@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
+import { DevPageShell, DevSection, DevCard } from "@/components/layout/DevPageShell";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
 
 export const Route = createFileRoute("/mcp")({
@@ -73,60 +72,68 @@ const MCP_CONFIG = `{
 
 function Page() {
   return (
-    <div className="min-h-screen bg-[#EFEFEF]">
-      <SiteHeader />
-      <section className="mx-auto max-w-[1280px] px-5 sm:px-8 py-10">
-        <h1 className="text-3xl sm:text-4xl font-medium tracking-tight">Agent tool connector</h1>
-        <p className="text-zinc-600 mt-2 max-w-2xl">
-          Give Cursor, Claude, ChatGPT, and compatible agent hosts the ability to verify paid tools and clear payments before spending. Same surface as the{" "}
-          <Link to="/sdk" className="underline">SDK</Link> and <Link to="/cli" className="underline">CLI</Link>.
-        </p>
+    <DevPageShell
+      eyebrow="Developers"
+      title="Agent tool connector"
+      intro={
+        <>
+          Give Cursor, Claude, ChatGPT, and any compatible agent host the ability to verify paid tools and clear payments
+          before spending — the same surface as the{" "}
+          <Link to="/sdk" className="text-[#4f46e5] underline">SDK</Link> and{" "}
+          <Link to="/cli" className="text-[#4f46e5] underline">CLI</Link>.
+        </>
+      }
+    >
+      <div className="space-y-10">
+        <DevSection step="01" title="Connect your agent host" description="Add this to your agent host config, then restart it.">
+          <CodeBlock lang="json" code={MCP_CONFIG} />
+          <p className="text-[13px] text-zinc-500 mt-3">
+            Keep <code className="text-[12px]">CLEARANCE402_API_KEY</code> out of source control — set it from{" "}
+            <Link to="/settings" className="text-[#4f46e5] underline">Settings → API key</Link>.
+          </p>
+        </DevSection>
 
-        <div className="grid md:grid-cols-2 gap-5 mt-8">
-          {MCP_TOOLS.map((t) => (
-            <div key={t.name} className="rounded-2xl border bg-white p-5">
-              <div className="font-mono text-sm font-semibold">{t.name}</div>
-              <p className="text-sm text-zinc-600 mt-1.5">{t.description}</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <div>
-                  <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-1">Input</div>
-                  <ul className="text-xs font-mono space-y-0.5">
-                    {Object.keys(t.input).length === 0 ? (
-                      <li className="text-zinc-500">—</li>
-                    ) : (
-                      Object.entries(t.input).map(([k, v]) => (
-                        <li key={k}>
+        <DevSection
+          step="02"
+          title="Available tools"
+          description="Six focused tools cover onboarding, probing, trust cards, and payment clearance."
+        >
+          <div className="grid md:grid-cols-2 gap-4">
+            {MCP_TOOLS.map((t) => (
+              <DevCard key={t.name}>
+                <div className="font-mono text-[13px] font-semibold text-zinc-900 break-all">{t.name}</div>
+                <p className="text-[13px] text-zinc-600 mt-1.5 leading-relaxed">{t.description}</p>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-zinc-400 mb-1">Input</div>
+                    <ul className="text-[11px] font-mono space-y-0.5">
+                      {Object.keys(t.input).length === 0 ? (
+                        <li className="text-zinc-400">—</li>
+                      ) : (
+                        Object.entries(t.input).map(([k, v]) => (
+                          <li key={k} className="break-all">
+                            <span className="text-zinc-900">{k}</span>: <span className="text-zinc-500">{v}</span>
+                          </li>
+                        ))
+                      )}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-wide text-zinc-400 mb-1">Output</div>
+                    <ul className="text-[11px] font-mono space-y-0.5">
+                      {Object.entries(t.output).map(([k, v]) => (
+                        <li key={k} className="break-all">
                           <span className="text-zinc-900">{k}</span>: <span className="text-zinc-500">{v}</span>
                         </li>
-                      ))
-                    )}
-                  </ul>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[11px] uppercase tracking-wide text-zinc-500 mb-1">Output</div>
-                  <ul className="text-xs font-mono space-y-0.5">
-                    {Object.entries(t.output).map(([k, v]) => (
-                      <li key={k}>
-                        <span className="text-zinc-900">{k}</span>: <span className="text-zinc-500">{v}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-12 space-y-4">
-          <h2 className="text-xl font-semibold">Agent connector config</h2>
-          <p className="text-sm text-zinc-600">
-            Add this to your agent host config. Keep <code className="text-xs">CLEARANCE402_API_KEY</code> out of source control — set it
-            from <Link to="/settings" className="underline">Settings → API key</Link>.
-          </p>
-          <CodeBlock lang="json" code={MCP_CONFIG} />
-        </div>
-      </section>
-      <SiteFooter />
-    </div>
+              </DevCard>
+            ))}
+          </div>
+        </DevSection>
+      </div>
+    </DevPageShell>
   );
 }
