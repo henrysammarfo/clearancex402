@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
+import { Package, Terminal, Boxes, ArrowRight } from "lucide-react";
+import { DevPageShell, DevSection, DevCard } from "@/components/layout/DevPageShell";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
 
 export const Route = createFileRoute("/sdk")({
@@ -10,23 +10,37 @@ export const Route = createFileRoute("/sdk")({
       { name: "description", content: "Node/TS SDK to verify x402 and MCP tools and clear payments before your agent pays." },
     ],
   }),
-  component: () => (
-    <div className="min-h-screen bg-[#EFEFEF]">
-      <SiteHeader />
-      <section className="mx-auto max-w-[1100px] px-5 sm:px-8 py-10">
-        <h1 className="text-3xl font-medium tracking-tight">SDK</h1>
-        <p className="text-zinc-600 mt-2 max-w-2xl">
-          The Clearance402 SDK wraps the trust layer: probe an endpoint, evaluate output, and get an{" "}
-          <code className="text-sm">ALLOW / WARN / BLOCK / RETEST / HUMAN_APPROVAL_REQUIRED</code> decision before your agent spends.
-        </p>
-        <div className="mt-8 space-y-6">
-          <CodeBlock lang="bash" code={`npm install @clearance402/sdk\n# CLEARANCE402_API_KEY from Settings → API key`} />
+  component: Page,
+});
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Clear a payment before paying</h2>
-            <CodeBlock
-              lang="ts"
-              code={`import { Clearance402 } from "@clearance402/sdk";
+function Page() {
+  return (
+    <DevPageShell
+      eyebrow="Developers"
+      title="TypeScript SDK"
+      intro={
+        <>
+          Drop the trust layer into any Node or TypeScript agent. Probe a tool, evaluate its output, and get a clear{" "}
+          <code className="rounded bg-white px-1.5 py-0.5 text-[13px] text-zinc-800 border border-zinc-200">
+            ALLOW / WARN / BLOCK
+          </code>{" "}
+          decision before a single cent is spent.
+        </>
+      }
+    >
+      <div className="space-y-10">
+        <DevSection step="01" title="Install" description="Add the package and set your API key from Settings.">
+          <CodeBlock lang="bash" code={`npm install @clearance402/sdk\n# CLEARANCE402_API_KEY comes from Settings → API key`} />
+        </DevSection>
+
+        <DevSection
+          step="02"
+          title="Clear a payment before paying"
+          description="Register an agent with a spend mandate, then ask Clearance402 before every payment."
+        >
+          <CodeBlock
+            lang="ts"
+            code={`import { Clearance402 } from "@clearance402/sdk";
 
 const c402 = new Clearance402({ apiKey: process.env.CLEARANCE402_API_KEY });
 
@@ -47,14 +61,17 @@ if (decision.state === "ALLOW") {
 } else {
   console.warn("Blocked:", decision.reasons);
 }`}
-            />
-          </div>
+          />
+        </DevSection>
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Onboard your own tool</h2>
-            <CodeBlock
-              lang="ts"
-              code={`const card = await c402.onboardTool({
+        <DevSection
+          step="03"
+          title="Onboard your own tool"
+          description="Register an endpoint and get back a Trust Card with a score and live status."
+        >
+          <CodeBlock
+            lang="ts"
+            code={`const card = await c402.onboardTool({
   name: "Venice Vision API",
   endpoint: "https://api.venice.ai/x402/vision",
   protocol: "x402",
@@ -63,17 +80,30 @@ if (decision.state === "ALLOW") {
 });
 
 console.log(card.trust, card.state); // 96 "ALLOW"`}
-            />
-          </div>
-        </div>
+          />
+        </DevSection>
 
-        <p className="text-sm text-zinc-600 mt-8">
-          Next: try the <Link to="/cli" className="underline">CLI</Link>, wire up{" "}
-          <Link to="/mcp" className="underline">MCP tools</Link>, or run the{" "}
-          <Link to="/agent-demo" className="underline">agent demo</Link>.
-        </p>
-      </section>
-      <SiteFooter />
-    </div>
-  ),
-});
+        <div className="grid sm:grid-cols-3 gap-4 pt-2">
+          <NextCard to="/cli" icon={<Terminal className="size-4" />} title="CLI" copy="Same checks from your terminal." />
+          <NextCard to="/mcp" icon={<Boxes className="size-4" />} title="Agent tools" copy="Wire it into Cursor or Claude." />
+          <NextCard to="/agent-demo" icon={<Package className="size-4" />} title="Agent demo" copy="See an end-to-end run." />
+        </div>
+      </div>
+    </DevPageShell>
+  );
+}
+
+function NextCard({ to, icon, title, copy }: { to: string; icon: React.ReactNode; title: string; copy: string }) {
+  return (
+    <Link to={to}>
+      <DevCard className="group h-full transition-shadow hover:shadow-[0_8px_28px_rgba(0,0,0,0.07)]">
+        <span className="size-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center mb-3">{icon}</span>
+        <div className="flex items-center gap-1.5 font-medium text-zinc-900">
+          {title}
+          <ArrowRight className="size-3.5 text-zinc-400 transition-transform group-hover:translate-x-0.5" />
+        </div>
+        <p className="text-[13px] text-zinc-500 mt-1">{copy}</p>
+      </DevCard>
+    </Link>
+  );
+}
