@@ -30,6 +30,8 @@ function Page() {
       }
     >
       <div className="space-y-10">
+        <GetStarted intro="Pick your path, then drop the SDK into your agent." />
+
         <DevSection step="01" title="Install" description="Add the package and set your API key from Settings.">
           <CodeBlock lang="bash" code={`npm install @clearance402/sdk\n# CLEARANCE402_API_KEY comes from Settings → API key`} />
         </DevSection>
