@@ -46,7 +46,12 @@ export function CodeBlock({
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className={cn("p-4 text-[13px] leading-relaxed overflow-x-auto", light && "bg-zinc-50")}>
+      <pre
+        className={cn(
+          "p-4 text-[13px] leading-6 overflow-x-auto font-mono [tab-size:2]",
+          light && "bg-zinc-50/70",
+        )}
+      >
         <code>{code}</code>
       </pre>
     </div>
