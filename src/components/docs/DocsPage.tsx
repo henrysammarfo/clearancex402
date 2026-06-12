@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
 import { McpInstallPanel } from "@/components/docs/McpInstallPanel";
+import { GetStarted } from "@/components/onboarding/GetStarted";
 import { cn } from "@/lib/utils";
 
 type SectionId =
