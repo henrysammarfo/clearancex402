@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Package, Terminal, Boxes, ArrowRight } from "lucide-react";
 import { DevPageShell, DevSection, DevCard } from "@/components/layout/DevPageShell";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
+import { GetStarted } from "@/components/onboarding/GetStarted";
 
 export const Route = createFileRoute("/sdk")({
   head: () => ({
