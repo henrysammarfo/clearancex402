@@ -125,6 +125,36 @@ export function DocsPage() {
               </p>
             </header>
 
+            {/* Mobile section nav */}
+            <nav className="lg:hidden -mx-5 px-5 overflow-x-auto no-scrollbar">
+              <div className="flex gap-2 w-max pb-1">
+                {NAV.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-current={active === item.id ? "true" : undefined}
+                    onClick={() => {
+                      setActive(item.id);
+                      scrollToSection(item.id);
+                      window.history.replaceState(null, "", `#${item.id}`);
+                    }}
+                    className={cn(
+                      "shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium border transition-colors",
+                      active === item.id
+                        ? "bg-[#4f46e5] text-white border-[#4f46e5]"
+                        : "bg-white text-zinc-600 border-zinc-200",
+                    )}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </nav>
+
+            <GetStarted />
+
+
+
             <section id="overview" className="scroll-mt-24 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Clearance402</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">One quiet checkpoint before an agent pays</h2>
