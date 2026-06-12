@@ -1,11 +1,11 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
-import { useAccount } from "wagmi";
-import { useAuth } from "@/lib/auth";
+import { useConnection } from "@/lib/connection";
 import { WalletConnect } from "@/components/wallet/WalletConnect";
+import { ConnectDialog } from "@/components/wallet/ConnectDialog";
 import { Clearance402Logo } from "@/components/brand/Clearance402Logo";
 
 const NAV = [
@@ -37,7 +37,7 @@ function MobileNavSheet({
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[200] md:hidden" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div className="fixed inset-0 z-[200] lg:hidden" role="dialog" aria-modal="true" aria-label="Navigation menu">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" onClick={onClose} />
       <div className="absolute inset-x-0 bottom-0 flex max-h-[min(88vh,640px)] flex-col rounded-t-3xl bg-white shadow-2xl animate-in slide-in-from-bottom duration-300">
         <div className="overflow-y-auto overscroll-contain p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
@@ -51,11 +51,21 @@ function MobileNavSheet({
 
 export function SiteHeader({ variant = "light" }: { variant?: "light" | "transparent" }) {
   const [open, setOpen] = useState(false);
+  const [connectOpen, setConnectOpen] = useState(false);
+  const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { isConnected: walletConnected } = useAccount();
+  const { isConnected } = useConnection();
   const onConnectPage = pathname === "/login";
 
   const close = () => setOpen(false);
+
+  const openConsole = () => {
+    if (isConnected) {
+      navigate({ to: "/dashboard" });
+    } else {
+      setConnectOpen(true);
+    }
+  };
 
   return (
     <div className={cn("relative z-30 w-full", variant === "light" && "bg-transparent")}>
@@ -64,10 +74,10 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           {/* Brand + primary nav */}
           <div className="flex items-center gap-7 min-w-0">
             <Link to="/" className="flex items-center gap-2 shrink-0">
-              <Clearance402Logo size={34} />
+              <Clearance402Logo size={32} />
               <span className="text-[15px] font-semibold tracking-tight text-zinc-900">Clearance402</span>
             </Link>
-            <div className="hidden md:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-6">
               {NAV.map((n) => (
                 <Link
                   key={n.to}
@@ -84,35 +94,36 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           </div>
 
           {/* Right actions */}
-          <div className="hidden md:flex items-center gap-2 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
             {!onConnectPage &&
-              (walletConnected ? (
+              (isConnected ? (
                 <WalletConnect />
               ) : (
-                <Link
-                  to="/login"
-                  search={{ redirect: "/dashboard" }}
+                <button
+                  type="button"
+                  onClick={() => setConnectOpen(true)}
                   className="text-[13px] font-medium text-zinc-600 hover:text-zinc-900 px-3 py-2 rounded-full transition-colors"
                 >
                   Connect wallet
-                </Link>
+                </button>
               ))}
-            <Link
-              to="/dashboard"
+            <button
+              type="button"
+              onClick={openConsole}
               className="group bg-zinc-900 text-white text-[13px] font-medium rounded-full pl-4 pr-1.5 py-1.5 flex items-center gap-2"
             >
               Open console
               <span className="size-6 rounded-full bg-white text-zinc-900 flex items-center justify-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:-rotate-45">
                 <ArrowRight className="size-3.5" />
               </span>
-            </Link>
+            </button>
           </div>
 
           {/* Mobile trigger */}
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="md:hidden size-9 rounded-full bg-zinc-900 text-white flex items-center justify-center shrink-0"
+            className="lg:hidden size-9 rounded-full bg-zinc-900 text-white flex items-center justify-center shrink-0"
             aria-label="Open menu"
           >
             <Menu className="size-5" />
@@ -123,7 +134,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
       <MobileNavSheet open={open} onClose={close}>
         <div className="flex items-center justify-between mb-6">
           <Link to="/" onClick={close} className="flex items-center gap-2">
-            <Clearance402Logo size={32} />
+            <Clearance402Logo size={30} />
             <span className="text-[15px] font-semibold tracking-tight text-zinc-900">Clearance402</span>
           </Link>
           <button
@@ -135,13 +146,13 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
             <X className="size-4" />
           </button>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
               onClick={close}
-              className="text-[22px] leading-[1.6] font-medium text-zinc-900"
+              className="text-[19px] leading-none font-medium text-zinc-900 py-3 border-b border-zinc-100 last:border-0"
             >
               {n.label}
             </Link>
@@ -149,30 +160,37 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
         </div>
         <div className="mt-6 flex flex-col gap-3">
           {!onConnectPage &&
-            (walletConnected ? (
-              <WalletConnect />
+            (isConnected ? (
+              <WalletConnect className="w-full justify-center py-3" />
             ) : (
-              <Link
-                to="/login"
-                search={{ redirect: "/dashboard" }}
-                onClick={close}
+              <button
+                type="button"
+                onClick={() => {
+                  close();
+                  setConnectOpen(true);
+                }}
                 className="inline-flex w-full justify-center rounded-full border border-zinc-200 text-zinc-900 text-[14px] font-medium px-4 py-3"
               >
                 Connect wallet
-              </Link>
+              </button>
             ))}
-          <Link
-            to="/dashboard"
-            onClick={close}
+          <button
+            type="button"
+            onClick={() => {
+              close();
+              openConsole();
+            }}
             className="inline-flex items-center justify-between bg-zinc-900 text-white rounded-full pl-5 pr-1.5 py-2.5"
           >
             <span className="text-[14px] font-medium">Open console</span>
             <span className="size-7 rounded-full bg-white text-zinc-900 flex items-center justify-center">
               <ArrowRight className="size-3.5" />
             </span>
-          </Link>
+          </button>
         </div>
       </MobileNavSheet>
+
+      <ConnectDialog open={connectOpen} onOpenChange={setConnectOpen} />
     </div>
   );
 }

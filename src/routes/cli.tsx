@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Code2, Boxes, Package, ArrowRight } from "lucide-react";
 import { DevPageShell, DevSection, DevCard } from "@/components/layout/DevPageShell";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
+import { GetStarted } from "@/components/onboarding/GetStarted";
 
 export const Route = createFileRoute("/cli")({
   head: () => ({
@@ -21,6 +22,8 @@ function Page() {
       intro="Run the whole trust layer from your terminal — onboard tools, run live clearance probes, check agent payments, and export an audit trail."
     >
       <div className="space-y-10">
+        <GetStarted intro="Pick your path, then run the trust layer from your terminal." />
+
         <DevSection step="01" title="Install &amp; sign in" description="Install globally, then set your API key.">
           <CodeBlock lang="bash" code={`npm install -g @clearance402/cli\nexport CLEARANCE402_API_KEY=sk_...\nclearance402 status`} />
         </DevSection>

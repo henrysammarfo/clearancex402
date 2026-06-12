@@ -1,241 +1,130 @@
-# Line Stack
+# Clearance402
 
-**Confidential data marketplace on [Story](https://story.foundation) Aeneid (chain 1315)** — sell licensed private files and licensed answers. Real CDR vaults, Story PIL licenses, on-chain audit, and agent tooling. No mock txs.
+**Before your agent pays, it gets clearance.**
 
-| Product | For | What buyers get |
-|---------|-----|-----------------|
-| **Vaultline** | Creators, analysts, research teams | Pay → mint license → **decrypt the file** (reports, CSVs, packs) |
-| **Queryline** | Data owners with sensitive datasets | Pay → request template → **unlock the answer only** (raw dataset never exposed) |
+Clearance402 is the live trust, testing, onboarding, and safety layer for **x402 / MCP agent payments**. x402 lets agents pay — Clearance402 tells them what is *safe* to pay for. It verifies paid tools in real time (live probes, price checks, output verification, risk scoring) before delegated wallet permissions are ever spent.
 
-**Live app:** https://linestack.vercel.app  
-**Architecture (visual):** https://linestack.vercel.app/architecture  
-**Author:** [henrysammarfo](https://github.com/henrysammarfo)  
-**Hackathon:** [CDR Hackathon](https://story.foundation) — form copy in [docs/HACKATHON-SUBMISSION.md](docs/HACKATHON-SUBMISSION.md)  
-**Fresh E2E test:** [docs/FRESH-E2E-TEST.md](docs/FRESH-E2E-TEST.md) · **Why CDR:** [docs/CDR-WHY-IT-MATTERS.md](docs/CDR-WHY-IT-MATTERS.md)
+| Surface | Who it's for | What they get |
+|---------|--------------|---------------|
+| **Console** (web) | Operators & users | Trust Cards, payment checks, audit log, spend-mandate controls |
+| **SDK** | Developers | Clear a payment in code: `ALLOW / WARN / BLOCK / RETEST / HUMAN_APPROVAL_REQUIRED` |
+| **CLI** | Developers | The same checks from your terminal, plus audit export |
+| **Agent tools (MCP)** | Cursor / Claude / any agent host | Verify tools and clear payments from inside the agent |
 
 ---
 
-## Problem → solution
-
-| Problem | Line Stack solution |
-|---------|---------------------|
-| Valuable data shared via Drive links and DMs — no license, easy leak | **Vaultline:** encrypt into CDR vaults, register as Story IP, **pay-to-unlock** with PIL |
-| Buyers must buy the whole dataset to get one insight | **Queryline:** **dataset vault** (publisher-only) + **result vault** (buyer gets answer only) |
-| Every Story/CDR app rebuilds vaults, conditions, unlock, audit | **SDK, CLI, MCP** — same registry and txs as the web app |
-
-**Who uses it:** **Publishers** monetize data · **Buyers** pay for access or answers · **Builders** embed the rails in new Story apps and agents.
-
-**How value flows:** listing/query fees and licenses on Story testnet today; roadmap = marketplace take rate + hosted console for teams (see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)).
-
----
-
-## Architecture diagrams
-
-**Visual (dark flow boxes):** https://linestack.vercel.app/architecture  
-**Deep dive:** [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-
-### Full stack
-
-```mermaid
-flowchart TB
-  subgraph L5["Users"]
-    P[Publisher]
-    BY[Buyer]
-    AG[Builder / AI agent]
-  end
-  subgraph L4["Web · Vercel"]
-    WEB[linestack.vercel.app]
-    VL[Vaultline · Queryline · Audit]
-  end
-  subgraph L3["Agents"]
-    MCP["@line-stack/mcp-server"]
-    CLI["@line-stack/cli"]
-    SDK["@line-stack/sdk"]
-  end
-  subgraph L2["Shared services · VPS"]
-    REG[Registry API]
-    IPFS[IPFS proxy]
-    API[Story-API upstream]
-  end
-  subgraph L1["Story Aeneid · 1315"]
-    CDR[CDR vaults]
-    PIL[PIL licenses]
-    LIN[LINESTACK registries]
-    AUT[Automata DCAP]
-  end
-  L5 --> L4
-  L4 --> L3
-  L3 --> L2
-  L2 --> L1
-  WEB -.->|HTTPS /api/story-api proxy| API
-```
-
----
-
-### Eight-step marketplace lifecycle
-
-```mermaid
-flowchart LR
-  subgraph phase1["Phase 1 — Creation"]
-    S1[1 Upload] --> S2[2 Protect] --> S3[3 Register] --> S4[4 Bundle]
-  end
-  subgraph phase2["Phase 2 — Transaction"]
-    S5[5 Purchase] --> S6[6 Verify] --> S7[7 Access] --> S8[8 Earn]
-  end
-  phase1 --> phase2
-```
-
-| Step | Vaultline | Queryline |
-|------|-----------|-----------|
-| 1–4 | File → CDR + IPFS → Story IP → listing | Dataset → templates |
-| 5–8 | Buy license → verify → unlock file | Request → fulfill → unlock answer |
-
----
-
-### Product split (shared CDR)
-
-```mermaid
-flowchart TB
-  CORE[Story Aeneid + CDR + shared registry]
-  CORE --> VL[Vaultline: encrypt → IP → license → decrypt file]
-  CORE --> QL[Queryline: dataset vault → fulfill → result vault → answer only]
-```
-
----
-
-### Vaultline access model
-
-```mermaid
-flowchart LR
-  subgraph publisher["Publisher"]
-    V[encrypt + CDR vault]
-    IP[Story IP + listing]
-  end
-  subgraph buyer["Buyer"]
-    LIC[mint license]
-    UN[unlock file]
-  end
-  V --> IP
-  IP --> LIC
-  LIC --> UN
-  V -.->|no license| buyer
-```
-
-**Try:** `/vaultline` → create vault → upload → register IP → listings → buy → unlock  
-
----
-
-### Queryline access model (honest)
-
-```mermaid
-flowchart LR
-  subgraph publisher["Publisher"]
-    DV[dataset vault]
-    F[fulfill: decrypt → template → write]
-  end
-  subgraph buyer["Buyer"]
-    RV[result vault]
-    U[unlock answer only]
-  end
-  DV --> F
-  F --> RV
-  RV --> U
-  DV -.->|no access| buyer
-```
-
-- Publisher-side fulfill until CDR `executeQuery`; **vault isolation is real**.  
-- EIP-712 + Automata DCAP on fulfill.  
-
-**Try:** `/queryline` → seed dataset → template → request → fulfill → unlock result  
-
-Details: [docs/QUERYLINE.md](docs/QUERYLINE.md) · [docs/ATTESTATION.md](docs/ATTESTATION.md)
-
----
-
-## Live stack
-
-| Layer | Where |
-|-------|--------|
-| Web UI | [Vercel](docs/VERCEL-ENV.md) — `linestack.vercel.app` |
-| Story-API (browser) | HTTPS proxy `/api/story-api` → VPS Story-API |
-| IPFS + registry | Vultr VPS ([docs/IPFS-VPS.md](docs/IPFS-VPS.md), [docs/REGISTRY-VPS.md](docs/REGISTRY-VPS.md)) |
-| Contracts | Dataset/template registries + conditions on Aeneid ([docs/CONTRACTS.md](docs/CONTRACTS.md), `contracts/deployed.aeneid.json`) |
-| Attestation | EIP-712 fulfill binding + [Automata DCAP](docs/ATTESTATION.md) on Aeneid |
-
----
-
-## Quick start (developers)
+## Quick start (clone & run)
 
 ```bash
-git clone https://github.com/henrysammarfo/linestack.git
-cd linestack
-cp .env.example .env.local   # fund wallet: https://faucet.story.foundation
+# 1. Clone
+git clone <your-repo-url> clearance402
+cd clearance402
+
+# 2. Configure environment
+cp .env.example .env.local      # then fill in the values you need
+
+# 3. Install dependencies (Node 22.x)
 npm install
-npm run build:core
-npm run dev                    # http://localhost:8080
+
+# 4. Start the app
+npm run dev                     # http://localhost:8080
 ```
 
-**Checks:**
+That's everything needed to run the **console** locally. The dev server hot-reloads on save.
 
-```bash
-npm run hackathon:check
-npm run test:beta-env
-npm run setup:agents
-```
-
-**Two-wallet E2E:** publisher wallet + buyer wallet (incognito) on **Aeneid 1315** — [docs/BETA-ONBOARDING.md](docs/BETA-ONBOARDING.md)
-
-**Agents (CLI / SDK / MCP):**
-
-| Doc | Purpose |
-|-----|---------|
-| [docs/AGENT-INTEGRATIONS.md](docs/AGENT-INTEGRATIONS.md) | Cursor, Claude, ChatGPT, Gemini |
-| [docs/SDK-CLI-MCP.md](docs/SDK-CLI-MCP.md) | Commands & MCP tools |
-| [.linestack.env.example](.linestack.env.example) | `~/.linestack/.env` template |
-| [AGENTS.md](AGENTS.md) | Short rules for coding agents |
-| [docs/config/cursor-mcp.json](docs/config/cursor-mcp.json) | MCP config snippet |
+> **Wallet modal:** set `VITE_WALLETCONNECT_PROJECT_ID` in `.env.local` (free from
+> [WalletConnect Cloud](https://cloud.walletconnect.com)) to enable the full wallet picker.
+> Without it, injected wallets (e.g. MetaMask) still work.
 
 ---
 
-## npm packages
+## Onboarding paths
 
-| Package | Description |
-|---------|-------------|
-| [`@line-stack/cdr-core`](packages/cdr-core) | CDR + Aeneid + registry + attestation |
-| [`@line-stack/sdk`](packages/sdk) | Node `LineStack` API |
-| [`@line-stack/cli`](packages/cli) | `linestack` terminal |
-| [`@line-stack/mcp-server`](packages/mcp-server) | 17 MCP tools (stdio) |
+The app ships a built-in **Get started** flow on the Docs, SDK, CLI, and Agent-tools pages with two calm tracks:
 
-```bash
-npm install -g @line-stack/cli @line-stack/mcp-server
-```
-
-Publish (maintainer): [docs/NPM-PUBLISH-COMMANDS.md](docs/NPM-PUBLISH-COMMANDS.md) · [docs/PUBLISHING.md](docs/PUBLISHING.md). **Never share npm tokens in chat.**
+- **New to this (web2)** — read the overview, browse verified tools, watch a guided run. No wallet required.
+- **Web3 builder** — connect a wallet, onboard your tool, wire the SDK/CLI/MCP into your agent.
 
 ---
 
-## Docs index
+## Environment variables
 
-Full index: **[docs/README.md](docs/README.md)**
+All variables live in [`.env.example`](.env.example) with inline notes. The essentials:
 
-| Doc | Audience |
-|-----|----------|
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | CDR + Story eight-step map + Queryline diagram |
-| [QUERYLINE.md](docs/QUERYLINE.md) | What works today, two-wallet test |
-| [HACKATHON-SUBMISSION.md](docs/HACKATHON-SUBMISSION.md) | Google form answers |
-| [DISCORD-SUBMISSION.md](docs/DISCORD-SUBMISSION.md) | Discord post copy |
-| [DEMO-VIDEO.md](docs/DEMO-VIDEO.md) | **2–3 min** video script |
-| [HACKATHON.md](docs/HACKATHON.md) | Pre-record checklist |
-| [BETA-ONBOARDING.md](docs/BETA-ONBOARDING.md) | Testers & devs |
+| Variable | Purpose |
+|----------|---------|
+| `VITE_STORY_RPC_URL` / `STORY_RPC_URL` | Network RPC endpoint |
+| `VITE_STORY_CHAIN_ID` / `STORY_CHAIN_ID` | Chain id used for operator access |
+| `VITE_STORY_API_URL` / `STORY_API_URL` | Verification API endpoint |
+| `VITE_WALLETCONNECT_PROJECT_ID` | Full wallet modal (recommended) |
+| `WALLET_PRIVATE_KEY` | **Server/CLI only** — never prefix with `VITE_`, never commit |
+
+> 🔐 Secrets (`WALLET_PRIVATE_KEY`, proofs, API secrets) must never be exposed to the
+> browser or committed. See [SECURITY.md](SECURITY.md).
+
+---
+
+## Project structure
+
+```
+src/
+  routes/            file-based routes (TanStack Start)
+    index.tsx        landing
+    docs.tsx         docs (with Get started)
+    sdk.tsx cli.tsx mcp.tsx   developer surfaces
+    dashboard.tsx    operator console
+    tools.*          tool registry + trust cards
+    agent-clearance.tsx  agent onboarding + clearance
+    audit.tsx settings.tsx ...
+  components/
+    layout/          SiteHeader, SiteFooter, shells
+    wallet/          WalletConnect, ConnectDialog
+    onboarding/      GetStarted (web2 / web3)
+    docs/            DocsPage
+    snippets/        CodeBlock
+  lib/               connection, clearance, env, registry helpers
+packages/            SDK / CLI / MCP / core workspaces
+```
+
+---
+
+## Scripts
+
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Start the console at `http://localhost:8080` |
+| `npm run build` | Production build |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Lint the project |
+| `npm run format` | Prettier format |
+
+---
+
+## Agent surfaces
+
+Add the connector to any compatible agent host:
+
+```json
+{
+  "mcpServers": {
+    "clearance402": {
+      "command": "npx",
+      "args": ["-y", "@clearance402/mcp-server"],
+      "env": { "CLEARANCE402_API_KEY": "sk_..." }
+    }
+  }
+}
+```
+
+Set `CLEARANCE402_API_KEY` from **Settings → API key** in the console. Full reference lives on the in-app **/mcp**, **/sdk**, and **/cli** pages.
 
 ---
 
 ## Security
 
-- Never put `WALLET_PRIVATE_KEY` on Vercel or in `VITE_*` vars.
+- Never put `WALLET_PRIVATE_KEY` or any secret in a `VITE_*` variable or in source control.
+- Wallet connection is required for operator actions; read-only browsing stays open.
 - See [SECURITY.md](SECURITY.md).
-
----
 
 ## License
 

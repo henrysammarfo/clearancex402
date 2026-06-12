@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { DevPageShell, DevSection, DevCard } from "@/components/layout/DevPageShell";
 import { CodeBlock } from "@/components/snippets/CodeBlock";
+import { GetStarted } from "@/components/onboarding/GetStarted";
 
 export const Route = createFileRoute("/mcp")({
   head: () => ({
@@ -85,6 +86,8 @@ function Page() {
       }
     >
       <div className="space-y-10">
+        <GetStarted intro="Pick your path, then connect Clearance402 to your agent host." />
+
         <DevSection step="01" title="Connect your agent host" description="Add this to your agent host config, then restart it.">
           <CodeBlock lang="json" code={MCP_CONFIG} />
           <p className="text-[13px] text-zinc-500 mt-3">
