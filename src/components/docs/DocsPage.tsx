@@ -127,7 +127,7 @@ export function DocsPage() {
             <section id="overview" className="scroll-mt-24 space-y-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#4f46e5]">Clearance402</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">One quiet checkpoint before an agent pays</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Clearance402 keeps the complex verification work behind the scenes. Agents send a tool, amount, and mandate;
                 Clearance402 returns a clear decision with the evidence needed to trust or block the payment.
               </p>
@@ -140,7 +140,7 @@ export function DocsPage() {
 
             <section id="tool-onboarding" className="scroll-mt-24 space-y-4">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Tool onboarding</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Developers register the endpoint, protocol, advertised price, output schema, and owner contact. Clearance402
                 immediately runs a probe and shows pending, passed, blocked, or retest states.
               </p>
@@ -161,7 +161,7 @@ export function DocsPage() {
             <section id="trust-cards" className="scroll-mt-24 space-y-3">
               <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Clearance402</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Trust cards</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Trust cards show protocol compliance, price integrity, output quality, reliability, permission safety,
                 relayer readiness, drift, and developer readiness.
               </p>
@@ -173,7 +173,7 @@ export function DocsPage() {
             <section id="agent-clearance" className="scroll-mt-24 space-y-3">
               <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Workflows</p>
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent clearance</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Agents register an identity and spend mandate, then ask Clearance402 before each payment. The response is short,
                 machine-readable, and safe for automated routing.
               </p>
@@ -184,7 +184,7 @@ export function DocsPage() {
 
             <section id="payment-checks" className="scroll-mt-24 space-y-3">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Payment checks</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Clearance402 checks the advertised price against the payment requirement, verifies the challenge/receipt,
                 and blocks payment when the tool or mandate is unsafe.
               </p>
@@ -192,7 +192,7 @@ export function DocsPage() {
 
             <section id="audit-export" className="scroll-mt-24 space-y-3">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Audit export</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Audit entries record probes, payments, blocks, approvals, evaluations, relays, revokes, and exports. Filter by
                 event type, search by actor or tool, then download CSV evidence.
               </p>
@@ -203,7 +203,7 @@ export function DocsPage() {
 
             <section id="permissions" className="scroll-mt-24 space-y-3">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Permissions</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 ERC-7715-style spend mandates and revocation checks are evaluated before delegated wallet spend. See{" "}
                 <Link to="/agent-demo" className="text-[#4f46e5] font-medium underline">
                   agent demo
@@ -214,7 +214,7 @@ export function DocsPage() {
 
             <section id="agent-tools" className="scroll-mt-24 space-y-4">
               <h2 className="text-2xl font-medium tracking-tight text-zinc-900">Agent tools</h2>
-              <p className="text-zinc-600 text-sm leading-relaxed">
+              <p className="text-zinc-600 text-[15px] leading-7">
                 Install the agent connector in Cursor, Claude, Gemini, or VS Code so agents can request clearance before payment.
               </p>
               <McpInstallPanel />
