@@ -123,7 +123,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           <button
             type="button"
             onClick={() => setOpen(true)}
-            className="md:hidden size-9 rounded-full bg-zinc-900 text-white flex items-center justify-center shrink-0"
+            className="lg:hidden size-9 rounded-full bg-zinc-900 text-white flex items-center justify-center shrink-0"
             aria-label="Open menu"
           >
             <Menu className="size-5" />
