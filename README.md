@@ -2,65 +2,81 @@
 
 **Before your agent pays, it gets clearance.**
 
-Clearance402 is the live trust, testing, onboarding, and safety layer for **x402 / MCP agent payments**. x402 lets agents pay — Clearance402 tells them what is *safe* to pay for. It verifies paid tools in real time (live probes, price checks, output verification, risk scoring) before delegated wallet permissions are ever spent.
+Clearance402 is the trust, testing, onboarding, and safety layer for **x402 / MCP agent payments** on **Base Sepolia**. x402 lets agents pay — Clearance402 tells them what is *safe* to pay for.
 
-| Surface | Who it's for | What they get |
-|---------|--------------|---------------|
-| **Console** (web) | Operators & users | Trust Cards, payment checks, audit log, spend-mandate controls |
-| **SDK** | Developers | Clear a payment in code: `ALLOW / WARN / BLOCK / RETEST / HUMAN_APPROVAL_REQUIRED` |
-| **CLI** | Developers | The same checks from your terminal, plus audit export |
-| **Agent tools (MCP)** | Cursor / Claude / any agent host | Verify tools and clear payments from inside the agent |
+Built for the [MetaMask Smart Accounts Kit × 1Shot × Venice AI Dev Cook Off](https://hackquest.io/hackathons/MetaMask-Smart-Accounts-Kit-x-1Shot-API-x-Venice-AI-Dev-Cook-Off).
 
 ---
 
-## Quick start (clone & run)
+## Quick start
 
 ```bash
-# 1. Clone
-git clone <your-repo-url> clearance402
-cd clearance402
-
-# 2. Configure environment
-cp .env.example .env.local      # then fill in the values you need
-
-# 3. Install dependencies (Node 22.x)
+cp .env.example .env.local   # add WALLET_PRIVATE_KEY + optional VENICE_API_KEY
 npm install
-
-# 4. Start the app
-npm run dev                     # http://localhost:8080
+npm run dev                  # http://localhost:8080
 ```
 
-That's everything needed to run the **console** locally. The dev server hot-reloads on save.
-
-> **Wallet modal:** set `VITE_WALLETCONNECT_PROJECT_ID` in `.env.local` (free from
-> [WalletConnect Cloud](https://cloud.walletconnect.com)) to enable the full wallet picker.
-> Without it, injected wallets (e.g. MetaMask) still work.
+Connect MetaMask on **Base Sepolia (84532)**. Fund the probe wallet with ETH + test USDC ([Circle faucet](https://faucet.circle.com/)).
 
 ---
 
-## Onboarding paths
-
-The app ships a built-in **Get started** flow on the Docs, SDK, CLI, and Agent-tools pages with two calm tracks:
-
-- **New to this (web2)** — read the overview, browse verified tools, watch a guided run. No wallet required.
-- **Web3 builder** — connect a wallet, onboard your tool, wire the SDK/CLI/MCP into your agent.
-
----
-
-## Environment variables
-
-All variables live in [`.env.example`](.env.example) with inline notes. The essentials:
+## Environment
 
 | Variable | Purpose |
 |----------|---------|
-| `VITE_STORY_RPC_URL` / `STORY_RPC_URL` | Network RPC endpoint |
-| `VITE_STORY_CHAIN_ID` / `STORY_CHAIN_ID` | Chain id used for operator access |
-| `VITE_STORY_API_URL` / `STORY_API_URL` | Verification API endpoint |
-| `VITE_WALLETCONNECT_PROJECT_ID` | Full wallet modal (recommended) |
-| `WALLET_PRIVATE_KEY` | **Server/CLI only** — never prefix with `VITE_`, never commit |
+| `VITE_BASE_SEPOLIA_RPC_URL` | Browser RPC (default: `https://sepolia.base.org`) |
+| `VITE_CLEARANCE_CHAIN_ID` | `84532` |
+| `VITE_WALLETCONNECT_PROJECT_ID` | WalletConnect modal (optional) |
+| `WALLET_PRIVATE_KEY` | **Server only** — x402 probe buyer wallet |
+| `VENICE_API_KEY` | **Server only** — output evaluation (heuristic fallback if unset) |
 
-> 🔐 Secrets (`WALLET_PRIVATE_KEY`, proofs, API secrets) must never be exposed to the
-> browser or committed. See [SECURITY.md](SECURITY.md).
+---
+
+## Demo flow (3 min)
+
+1. **Permissions** — Grant buyer-agent spend cap via MetaMask signature (ERC-7715-style)
+2. **Payment lab** — Live x402 probe on Venice Vision (`402 → pay → response`)
+3. **Venice eval** — Output quality + drift scoring
+4. **Agent clearance** — `ALLOW` / `BLOCK` before payment
+5. **A2A lab** — Scout → Verifier → Guardian redelegation → Buyer
+6. **Audit** — Real probe, payment, permission, and Venice events
+
+---
+
+## API routes
+
+| Route | Purpose |
+|-------|---------|
+| `POST /api/clearance/probe` | Live x402 probe |
+| `POST /api/clearance/check` | Agent clearance decision |
+| `POST /api/clearance/venice-eval` | Venice output eval |
+| `GET/POST/DELETE /api/clearance/permissions` | Spend mandates |
+| `POST /api/clearance/a2a` | Multi-agent coordination |
+| `GET /api/clearance/audit` | Audit log |
+
+---
+
+## MCP
+
+```bash
+npm run build:mcp
+CLEARANCE402_API_URL=http://localhost:8080 npm run mcp
+```
+
+Tools: `clearance402_probe_endpoint`, `clearance402_check_payment`, `clearance402_get_audit_log`
+
+See [AGENTS.md](./AGENTS.md).
+
+---
+
+## Hackathon tracks
+
+- Best x402 + ERC-7710
+- Best Agent
+- Best A2A Coordination
+- Best Venice AI
+
+**Note:** 1Shot Relayer prize requires mainnet — this build targets **Base Sepolia testnet only**.
 
 ---
 
@@ -68,64 +84,8 @@ All variables live in [`.env.example`](.env.example) with inline notes. The esse
 
 ```
 src/
-  routes/            file-based routes (TanStack Start)
-    index.tsx        landing
-    docs.tsx         docs (with Get started)
-    sdk.tsx cli.tsx mcp.tsx   developer surfaces
-    dashboard.tsx    operator console
-    tools.*          tool registry + trust cards
-    agent-clearance.tsx  agent onboarding + clearance
-    audit.tsx settings.tsx ...
-  components/
-    layout/          SiteHeader, SiteFooter, shells
-    wallet/          WalletConnect, ConnectDialog
-    onboarding/      GetStarted (web2 / web3)
-    docs/            DocsPage
-    snippets/        CodeBlock
-  lib/               connection, clearance, env, registry helpers
-packages/            SDK / CLI / MCP / core workspaces
+  routes/           Console + API routes
+  lib/clearance/    probe, check, venice, store, x402 client
+packages/
+  clearance402-mcp/ MCP server for agents
 ```
-
----
-
-## Scripts
-
-| Command | What it does |
-|---------|--------------|
-| `npm run dev` | Start the console at `http://localhost:8080` |
-| `npm run build` | Production build |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Lint the project |
-| `npm run format` | Prettier format |
-
----
-
-## Agent surfaces
-
-Add the connector to any compatible agent host:
-
-```json
-{
-  "mcpServers": {
-    "clearance402": {
-      "command": "npx",
-      "args": ["-y", "@clearance402/mcp-server"],
-      "env": { "CLEARANCE402_API_KEY": "sk_..." }
-    }
-  }
-}
-```
-
-Set `CLEARANCE402_API_KEY` from **Settings → API key** in the console. Full reference lives on the in-app **/mcp**, **/sdk**, and **/cli** pages.
-
----
-
-## Security
-
-- Never put `WALLET_PRIVATE_KEY` or any secret in a `VITE_*` variable or in source control.
-- Wallet connection is required for operator actions; read-only browsing stays open.
-- See [SECURITY.md](SECURITY.md).
-
-## License
-
-MIT — see [LICENSE](LICENSE).

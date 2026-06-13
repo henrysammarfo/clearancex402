@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { WalletConnect } from "@/components/wallet/WalletConnect";
+import { Clearance402Logo } from "@/components/brand/Clearance402Logo";
 import { useConnection } from "@/lib/connection";
 import { navigateToRedirect } from "@/lib/navigation/redirect-path";
 import { CLEARANCE_CHAIN_ID } from "@/lib/clearance/network";
@@ -34,6 +35,13 @@ function ConnectPage() {
       <SiteHeader />
       <section className="flex-1 mx-auto max-w-[460px] w-full px-5 sm:px-8 py-12">
         <div className="rounded-3xl border bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center gap-3 mb-6">
+            <Clearance402Logo size={40} title="Clearance402" />
+            <div>
+              <p className="text-[15px] font-semibold tracking-tight text-zinc-900">Clearance402</p>
+              <p className="text-[12px] text-zinc-500">Agent payment trust layer</p>
+            </div>
+          </div>
           <div className="flex items-center gap-2 text-[12px] font-medium text-zinc-500 mb-4">
             <Wallet className="size-3.5" /> Clearance402 access
           </div>
@@ -57,14 +65,19 @@ function ConnectPage() {
 
           <div className="mt-6 space-y-2 text-[12px] text-zinc-600">
             <p>
-              <strong className="text-zinc-900">First time?</strong> Add the Clearance402 network in MetaMask and fund with{" "}
-              <a href="https://faucet.story.foundation" target="_blank" rel="noreferrer" className="underline">
-                testnet IP
+              <strong className="text-zinc-900">First time?</strong> Switch MetaMask to{" "}
+              <strong>Base Sepolia</strong> and fund with{" "}
+              <a href="https://faucet.circle.com" target="_blank" rel="noreferrer" className="underline">
+                test USDC
+              </a>{" "}
+              and{" "}
+              <a href="https://www.alchemy.com/faucets/base-sepolia" target="_blank" rel="noreferrer" className="underline">
+                test ETH
               </a>
               .
             </p>
             <p>
-              RPC: {config?.rpcUrl ? "configured" : "using defaults"} ·{" "}
+              RPC from env ·{" "}
               <Link to="/settings" className="text-zinc-900 font-medium hover:underline">
                 Settings
               </Link>

@@ -1,15 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ClearanceBadge, type ClearanceState } from "@/components/clearance/ClearanceBadge";
-import { getTool, SCORE_LABELS, type ScoreKey, type Tool } from "@/lib/clearance/sample";
+import { ClearanceBadge } from "@/components/clearance/ClearanceBadge";
+import { SCORE_LABELS, type ScoreKey } from "@/lib/clearance/tools";
+import { clearanceApi } from "@/lib/clearance/clearance-api";
+import {
+  useClearanceTool,
+  useClearanceWallet,
+  useInvalidateClearanceAccount,
+} from "@/lib/clearance/use-clearance-account";
+import { ConnectWalletPrompt } from "@/components/clearance/ConnectWalletPrompt";
 
 export const Route = createFileRoute("/tools/$id")({
-  head: ({ params }) => ({
+  head: () => ({
     meta: [
-      { title: `${getTool(params.id)?.name ?? "Trust card"} · Clearance402` },
+      { title: "Trust card · Clearance402" },
       { name: "description", content: "Trust card: score, endpoint health, price integrity, output checks, and integration snippets." },
     ],
   }),
@@ -18,12 +27,43 @@ export const Route = createFileRoute("/tools/$id")({
 
 function Page() {
   const { id } = Route.useParams();
-  const tool = getTool(id);
+  const { wallet, isConnected } = useClearanceWallet();
+  const { data: tool, isLoading, refetch } = useClearanceTool(wallet, id);
+  const invalidate = useInvalidateClearanceAccount();
+  const [probing, setProbing] = useState(false);
+
+  const runProbe = async () => {
+    if (!tool || !wallet) return;
+    setProbing(true);
+    try {
+      await clearanceApi.probe(wallet, { toolId: tool.id, pay: true, runVenice: true });
+      invalidate(wallet);
+      await refetch();
+    } finally {
+      setProbing(false);
+    }
+  };
+
+  if (!isConnected || !wallet) {
+    return (
+      <ConsoleShell section="Trust card" title="Tool trust card" description="Connect wallet to view tool details.">
+        <ConnectWalletPrompt />
+      </ConsoleShell>
+    );
+  }
+
+  if (isLoading && !tool) {
+    return (
+      <ConsoleShell section="Trust card" title="Loading…">
+        <Loader2 className="size-6 animate-spin text-muted-foreground" />
+      </ConsoleShell>
+    );
+  }
 
   if (!tool) {
     return (
-      <ConsoleShell section="Trust card" title="Tool not found">
-        <p className="text-sm text-muted-foreground">No tool with id <span className="font-mono">{id}</span>.</p>
+      <ConsoleShell section="Trust card" title="Not found">
+        <p className="text-sm text-muted-foreground">Tool not found.</p>
         <Button asChild className="mt-4"><Link to="/tools">Back to registry</Link></Button>
       </ConsoleShell>
     );
@@ -39,6 +79,9 @@ function Page() {
       actions={
         <>
           <Button variant="outline" asChild><Link to="/tools">Back</Link></Button>
+          <Button variant="outline" onClick={runProbe} disabled={probing}>
+            {probing ? <Loader2 className="size-4 animate-spin" /> : "Re-probe"}
+          </Button>
           <Button asChild><Link to="/agent-clearance">Check before payment</Link></Button>
         </>
       }
@@ -87,7 +130,7 @@ function Page() {
           <Card>
             <CardHeader><CardTitle className="text-sm">Live status checks</CardTitle></CardHeader>
             <CardContent className="space-y-2.5">
-              {buildChecks(tool).map((c) => (
+              {(tool.checks ?? []).map((c) => (
                 <div key={c.label} className="flex items-start justify-between gap-3 rounded-lg border p-3">
                   <div className="min-w-0">
                     <p className="text-sm font-medium">{c.label}</p>
@@ -96,27 +139,6 @@ function Page() {
                   <ClearanceBadge state={c.state} className="shrink-0" />
                 </div>
               ))}
-            </CardContent>
-          </Card>
-
-
-
-          <Card>
-            <CardHeader><CardTitle className="text-sm">Integration snippet</CardTitle></CardHeader>
-            <CardContent>
-              <pre className="rounded-lg bg-muted/50 p-4 text-xs overflow-x-auto font-mono leading-relaxed">
-{`import { clearance402 } from "@clearance402/sdk";
-
-const decision = await clearance402.checkBeforePayment({
-  agentId: "buyer-agent",
-  toolId: "${tool.id}",
-  amount: "${tool.price}",
-});
-
-if (decision.state === "ALLOW") {
-  await clearance402.payIfCleared("${tool.id}", ctx);
-}`}
-              </pre>
             </CardContent>
           </Card>
         </div>
@@ -146,45 +168,3 @@ function Row({ label, value, mono }: { label: string; value: string; mono?: bool
     </div>
   );
 }
-
-function scoreState(score: number): ClearanceState {
-  if (score >= 90) return "ALLOW";
-  if (score >= 70) return "WARN";
-  return "BLOCK";
-}
-
-function buildChecks(tool: Tool): { label: string; detail: string; state: ClearanceState }[] {
-  return [
-    {
-      label: "Endpoint health",
-      detail: `${tool.uptime}% uptime · ${tool.latencyMs}ms median latency · last probe ${tool.lastProbe}`,
-      state: tool.uptime >= 99 ? "ALLOW" : tool.uptime >= 95 ? "WARN" : "BLOCK",
-    },
-    {
-      label: "Protocol compliance",
-      detail: `${tool.protocol} challenge + receipt verification`,
-      state: scoreState(tool.scores.protocol),
-    },
-    {
-      label: "Price integrity",
-      detail: "Advertised price matches the on-chain payment requirement",
-      state: scoreState(tool.scores.price),
-    },
-    {
-      label: "Output integrity",
-      detail: "Returned output matches the declared schema",
-      state: scoreState(tool.scores.output),
-    },
-    {
-      label: "Behavior drift",
-      detail: "Output shape is stable across recent probes",
-      state: tool.state === "RETEST" ? "RETEST" : scoreState(tool.scores.drift),
-    },
-    {
-      label: "Permission & mandate",
-      detail: "Requested spend stays within the agent mandate",
-      state: tool.state === "HUMAN_APPROVAL_REQUIRED" ? "HUMAN_APPROVAL_REQUIRED" : scoreState(tool.scores.permission),
-    },
-  ];
-}
-

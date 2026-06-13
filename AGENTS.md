@@ -1,42 +1,39 @@
-# Line Stack — agent instructions
+# Clearance402 — agent instructions
 
-Confidential marketplace on **Story Aeneid (1315)**. Real CDR txs; shared registry on VPS; web app at https://linestack.vercel.app.
+Trust layer for x402 / MCP agent payments on **Base Sepolia**. Before your agent pays, it gets clearance.
 
-## Tools you can use
+## API routes (local dev)
 
-| Surface | Install | Config |
-|---------|---------|--------|
-| **MCP** | `npx -y @line-stack/mcp-server` | `LINESTACK_ENV_FILE=~/.linestack/.env` |
-| **CLI** | `npm i -g @line-stack/cli` | same env file |
-| **SDK** | `npm i @line-stack/sdk` | `loadLineStackEnv()` |
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/clearance/status` | GET | Health + env flags |
+| `/api/clearance/probe` | POST | Live x402 probe (402 → pay → response) |
+| `/api/clearance/venice-eval` | POST | Venice output evaluation |
+| `/api/clearance/check` | POST | Agent clearance decision |
+| `/api/clearance/permissions` | GET/POST/DELETE | ERC-7715-style grants |
+| `/api/clearance/a2a` | POST | Scout → Verifier → Guardian → Buyer |
+| `/api/clearance/audit` | GET | Audit log |
 
-Setup: [docs/AGENT-INTEGRATIONS.md](docs/AGENT-INTEGRATIONS.md) · tool list: [/mcp](https://linestack.vercel.app/mcp).
+## Env (`~/.clearance402/.env` or `.env.local`)
 
-**Skills (invoke in Cursor/Codex):** `/linestack-agent-setup` then `/linestack-cdr-demo` · Demo video script: [docs/DEMO-VIDEO.md](docs/DEMO-VIDEO.md).
+```bash
+BASE_SEPOLIA_RPC_URL=https://sepolia.base.org
+WALLET_PRIVATE_KEY=0x...          # server probes only
+VENICE_API_KEY=...                 # optional; heuristic fallback if unset
+VITE_WALLETCONNECT_PROJECT_ID=...
+```
 
-## Workflows (MCP tool names)
+## MCP
 
-**Vaultline:** `vaultline_create_vault` → `vaultline_upload_file` → `vaultline_register_ip` → (buyer) `vaultline_buy_license` → `vaultline_unlock_file`.
+```bash
+npm run build:mcp
+npm run mcp
+```
 
-**Queryline:** `queryline_create_dataset` → `queryline_seed_dataset` → `queryline_add_template` → `queryline_request_query` → (publisher) `queryline_execute_query` → (buyer) `queryline_unlock_result`.
-
-**Platform:** `linestack_status`, `registry_refresh`, `vaultline_list`, `queryline_list`.
+Tools: `clearance402_probe_endpoint`, `clearance402_check_payment`, `clearance402_get_audit_log`.
 
 ## Rules
 
-- Never invent tx hashes or CDR UUIDs — call tools and use returned JSON.
-- `queryline_execute_query` = **publisher fulfill** (off-chain template + CDR + EIP-712 + Automata). Not enclave `executeQuery`.
-- `vaultline_register_ip` needs `STORACHA_PROOF` in env.
-- Queryline Automata needs `USE_AUTOMATA_DCAP_FIXTURE=1` or `AUTOMATA_DCAP_QUOTE_HEX` in env for MCP/CLI fulfill.
-- Two wallets for buyer vs publisher when testing end-to-end.
-- Never commit or log `WALLET_PRIVATE_KEY`.
-
-## Repo dev (monorepo)
-
-```bash
-npm run build:packages
-npm run linestack -- status
-npm run linestack:mcp
-```
-
-Publish: [docs/PUBLISHING.md](docs/PUBLISHING.md) — maintainer runs `npm publish` locally; **do not** accept npm tokens in chat.
+- No fake tx hashes or payment receipts in demos.
+- Never commit `WALLET_PRIVATE_KEY` or `VENICE_API_KEY`.
+- Target chain: **Base Sepolia (84532)** only.

@@ -28,7 +28,7 @@ export function snippetBodies(tool: McpTool): { sdk: string; cli: string; mcp: s
   const sdkPrefix =
     tool.name === "clearance402_status" || tool.name === "clearance402_registry_refresh"
       ? ""
-      : `import { Clearance402 } from "@clearance402/sdk";\nconst c402 = new Clearance402({ apiKey: process.env.CLEARANCE402_API_KEY });\n`;
+      : `import { createClearance402Client } from "@clearance402/sdk";\nconst c402 = createClearance402Client({ baseUrl: process.env.CLEARANCE402_API_URL });\n`;
 
   return {
     sdk: hit ? sdkPrefix + hit.sdk : `${sdkPrefix}// See /docs — ${tool.name}`,

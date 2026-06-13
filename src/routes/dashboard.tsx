@@ -1,9 +1,15 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import { Loader2 } from "lucide-react";
 import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ClearanceBadge } from "@/components/clearance/ClearanceBadge";
-import { TOOLS, AUDIT } from "@/lib/clearance/sample";
+import {
+  useClearanceDashboard,
+  useClearanceWallet,
+} from "@/lib/clearance/use-clearance-account";
+import { ConnectWalletPrompt } from "@/components/clearance/ConnectWalletPrompt";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
@@ -30,75 +36,96 @@ function Stat({ label, value, hint }: { label: string; value: string; hint?: str
 }
 
 function Page() {
-  const allow = TOOLS.filter((t) => t.state === "ALLOW").length;
-  const blocked = TOOLS.filter((t) => t.state === "BLOCK").length;
-  const avgTrust = Math.round(TOOLS.reduce((s, t) => s + t.trust, 0) / TOOLS.length);
+  const { wallet, isConnected } = useClearanceWallet();
+  const { data, isLoading, refetch, isFetching } = useClearanceDashboard(wallet);
+
+  if (!isConnected || !wallet) {
+    return (
+      <ConsoleShell section="Dashboard" title="Clearance dashboard" description="Connect wallet to load your account.">
+        <ConnectWalletPrompt />
+      </ConsoleShell>
+    );
+  }
+
+  const stats = data?.stats;
+  const loading = isLoading && !data;
 
   return (
     <ConsoleShell
       section="Dashboard"
       title="Clearance dashboard"
-      description="Before your agent pays, it gets clearance. Verified tools, blocked payments, active probes, and recent agent checks across x402 and MCP services."
+      description="Live stats from probes, payments, Venice evals, and agent checks on Base Sepolia."
       actions={
         <>
+          <Button variant="outline" size="sm" onClick={() => void refetch()} disabled={isFetching}>
+            {isFetching ? <Loader2 className="size-4 animate-spin" /> : "Refresh"}
+          </Button>
           <Button asChild variant="outline"><Link to="/tool-onboarding">Onboard tool</Link></Button>
           <Button asChild><Link to="/agent-clearance">Run agent check</Link></Button>
         </>
       }
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Stat label="Verified tools" value={String(allow)} hint="Currently cleared ALLOW" />
-        <Stat label="Blocked payments" value={String(blocked)} hint="Stopped before spend" />
-        <Stat label="Avg trust score" value={`${avgTrust}`} hint="Across registry" />
-        <Stat label="Active probes" value="3" hint="Live verification running" />
-      </div>
+      {loading ? (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Loader2 className="size-4 animate-spin" /> Loading account…
+        </div>
+      ) : (
+        <>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <Stat label="Verified tools" value={String(stats?.verifiedTools ?? 0)} hint="ALLOW state" />
+            <Stat label="Blocked payments" value={String(stats?.blockedPayments ?? 0)} hint="Audit BLOCK events" />
+            <Stat label="Avg trust" value={String(stats?.avgTrust ?? 0)} hint="Across registry" />
+            <Stat label="Active probes" value={String(stats?.activeProbes ?? 0)} hint="Cached per tool" />
+          </div>
 
-      <div className="grid lg:grid-cols-2 gap-6 mb-8">
-        <Card>
-          <CardHeader className="flex-row items-center justify-between">
-            <CardTitle className="text-sm">Recently checked tools</CardTitle>
-            <Link to="/tools" className="text-xs text-muted-foreground hover:text-foreground">View all</Link>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {TOOLS.slice(0, 5).map((t) => (
-                <li key={t.id} className="flex items-center justify-between gap-3 text-sm">
-                  <div className="min-w-0">
-                    <Link to="/tools/$id" params={{ id: t.id }} className="font-medium truncate hover:underline">
-                      {t.name}
-                    </Link>
-                    <p className="text-xs text-muted-foreground font-mono truncate">{t.endpoint}</p>
-                  </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    <span className="text-xs text-muted-foreground tabular-nums">{t.trust}</span>
+          <div className="grid lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Recent tools</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {(data?.recentTools ?? []).map((t) => (
+                  <Link
+                    key={t.id}
+                    to="/tools/$id"
+                    params={{ id: t.id }}
+                    className="flex items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors"
+                  >
+                    <div>
+                      <p className="font-medium text-sm">{t.name}</p>
+                      <p className="text-xs text-muted-foreground">{t.vendor} · {t.price}</p>
+                    </div>
                     <ClearanceBadge state={t.state} />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+                  </Link>
+                ))}
+                {(data?.recentTools ?? []).length === 0 && (
+                  <p className="text-sm text-muted-foreground">No tools yet — onboard one or run probes.</p>
+                )}
+              </CardContent>
+            </Card>
 
-        <Card>
-          <CardHeader className="flex-row items-center justify-between">
-            <CardTitle className="text-sm">Recent activity</CardTitle>
-            <Link to="/audit" className="text-xs text-muted-foreground hover:text-foreground">Audit log</Link>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {AUDIT.slice(0, 6).map((e) => (
-                <li key={e.id} className="text-sm">
-                  <p className="font-medium">
-                    <span className="text-muted-foreground font-mono text-[11px] mr-2">{e.kind}</span>
-                    {e.tool !== "—" ? e.tool : e.detail}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">{e.tool !== "—" ? e.detail : `by ${e.actor}`}</p>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-sm">Recent activity</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {(data?.recentActivity ?? []).map((e) => (
+                  <div key={e.id} className="text-xs border-b border-border/50 pb-2 last:border-0">
+                    <div className="flex justify-between gap-2">
+                      <span className="font-medium">{e.kind}</span>
+                      <span className="text-muted-foreground">{new Date(e.time).toLocaleString()}</span>
+                    </div>
+                    <p className="text-muted-foreground mt-0.5">{e.tool} · {e.detail}</p>
+                  </div>
+                ))}
+                {(data?.recentActivity ?? []).length === 0 && (
+                  <p className="text-sm text-muted-foreground">No activity yet.</p>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </>
+      )}
     </ConsoleShell>
   );
 }

@@ -1,11 +1,6 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$")({
-  beforeLoad: ({ location }) => {
-    if (location.pathname.startsWith("/vaultline") || location.pathname.startsWith("/queryline")) {
-      throw redirect({ to: "/dashboard", replace: true });
-    }
-  },
   component: NotFoundPage,
 });
 

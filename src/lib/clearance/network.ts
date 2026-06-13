@@ -1,11 +1,14 @@
-import { storyAeneid } from "viem/chains";
+import { baseSepolia } from "viem/chains";
 
-export const CLEARANCE_CHAIN_ID = 1315 as const;
+/** Clearance402 runs on Base Sepolia — fast x402 + USDC testnet. */
+export const CLEARANCE_CHAIN_ID = baseSepolia.id;
+export const CLEARANCE_CHAIN = baseSepolia;
+
 export const CLEARANCE_DEFAULTS = {
-  rpcUrl: "https://aeneid.storyrpc.io",
-  storyApiUrl: "http://172.192.41.96:1317",
-  explorerTxBaseUrl: "https://aeneid.storyscan.io/tx/",
-  networkName: "Story Aeneid Testnet",
+  rpcUrl: "https://sepolia.base.org",
+  explorerTxBaseUrl: "https://sepolia.basescan.org/tx/",
+  networkName: "Base Sepolia",
+  x402Network: "eip155:84532",
 } as const;
 
-export const clearanceStoryAeneid = storyAeneid;
+export const clearanceBaseSepolia = baseSepolia;

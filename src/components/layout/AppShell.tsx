@@ -31,7 +31,7 @@ export function AppShell({
     status === "failed" ? "bg-chain-failed" :
     config ? "bg-chain-unauthorized" : "bg-chain-pending";
   const label =
-    isConnected ? `${config?.network === "story-mainnet" ? "Mainnet" : "Testnet"} · connected` :
+    isConnected ? `${config?.network === "base-sepolia" ? "Base Sepolia" : "Testnet"} · connected` :
     status === "connecting" ? "Connecting…" :
     status === "failed" ? "Connection failed" :
     config ? "Configured · awaiting wallet" : "Wallet disconnected";

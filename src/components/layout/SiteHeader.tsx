@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useConnection } from "@/lib/connection";
 import { WalletConnect } from "@/components/wallet/WalletConnect";
 import { ConnectDialog } from "@/components/wallet/ConnectDialog";
-import { Clearance402Logo } from "@/components/brand/Clearance402Logo";
+import { Clearance402Brand } from "@/components/brand/Clearance402Logo";
 
 const NAV = [
   { to: "/tools", label: "Tools" },
@@ -74,8 +74,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           {/* Brand + primary nav */}
           <div className="flex items-center gap-7 min-w-0">
             <Link to="/" className="flex items-center gap-2 shrink-0">
-              <Clearance402Logo size={32} />
-              <span className="text-[15px] font-semibold tracking-tight text-zinc-900">Clearance402</span>
+              <Clearance402Brand logoSize={32} />
             </Link>
             <div className="hidden lg:flex items-center gap-6">
               {NAV.map((n) => (
@@ -134,8 +133,7 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
       <MobileNavSheet open={open} onClose={close}>
         <div className="flex items-center justify-between mb-6">
           <Link to="/" onClick={close} className="flex items-center gap-2">
-            <Clearance402Logo size={30} />
-            <span className="text-[15px] font-semibold tracking-tight text-zinc-900">Clearance402</span>
+            <Clearance402Brand logoSize={30} />
           </Link>
           <button
             type="button"

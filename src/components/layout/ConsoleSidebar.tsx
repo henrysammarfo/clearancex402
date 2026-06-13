@@ -85,7 +85,7 @@ export function ConsoleSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <Link to="/" className="flex items-center gap-2 px-2 py-2 min-w-0">
-          <Clearance402Logo size={32} className="shrink-0" />
+          <Clearance402Logo size={32} className="shrink-0" title="Clearance402" />
           <span className="font-semibold tracking-tight whitespace-nowrap group-data-[collapsible=icon]:hidden">
             Clearance402
           </span>

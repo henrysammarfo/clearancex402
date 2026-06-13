@@ -24,8 +24,10 @@ function Page() {
       <div className="space-y-10">
         <GetStarted intro="Pick your path, then run the trust layer from your terminal." />
 
-        <DevSection step="01" title="Install &amp; sign in" description="Install globally, then set your API key.">
-          <CodeBlock lang="bash" code={`npm install -g @clearance402/cli\nexport CLEARANCE402_API_KEY=sk_...\nclearance402 status`} />
+        <DevSection step="01" title="Install &amp; configure" description="Build from monorepo, set API URL.">
+          <CodeBlock lang="bash" code={`npm run build:cli
+export CLEARANCE402_API_URL=http://localhost:8080
+npm run cli -- status`} />
         </DevSection>
 
         <DevSection
@@ -35,28 +37,27 @@ function Page() {
         >
           <CodeBlock
             lang="bash"
-            code={`clearance402 tools onboard \\
+            code={`npm run cli -- tools onboard \\
   --name "Venice Vision API" \\
   --endpoint https://api.venice.ai/x402/vision \\
-  --protocol x402 --price "0.010 USDC"
+  --price "$0.010 USDC / call"
 
-clearance402 tools probe venice-vision      # run a live clearance probe
-clearance402 tools show venice-vision       # trust card: score + status checks`}
+npm run cli -- tools probe venice-vision
+npm run cli -- tools show venice-vision`}
           />
         </DevSection>
 
         <DevSection
           step="03"
           title="Agents &amp; clearance"
-          description="Register an agent mandate and clear payments before they happen."
+          description="Check clearance before payment; export audit trail."
         >
           <CodeBlock
             lang="bash"
-            code={`clearance402 agents register --id buyer-agent --mandate 5.00
-clearance402 clear --agent buyer-agent --tool venice-vision --amount "0.010 USDC"
+            code={`npm run cli -- clear --agent buyer-agent --tool venice-vision --amount 0.01
 # → ALLOW | WARN | BLOCK | RETEST | HUMAN_APPROVAL_REQUIRED
 
-clearance402 audit --kind PAYMENT --export audit.csv`}
+npm run cli -- audit --export audit.csv`}
           />
         </DevSection>
 

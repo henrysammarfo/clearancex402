@@ -1,0 +1,30 @@
+{
+  "name": "@clearance402/sdk",
+  "version": "0.1.0",
+  "description": "Clearance402 SDK — wallet-scoped trust layer API client for x402 agent payments",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henrysammarfo/clearancex402.git",
+    "directory": "packages/clearance402-sdk"
+  },
+  "keywords": ["x402", "clearance", "agents", "base", "payments"],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

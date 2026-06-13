@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
 import { Download, RotateCw } from "lucide-react";
 import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,15 +13,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { EmptyState, LoadingState, TxFailedState, UnauthorizedState } from "@/components/states";
-import { useConnection } from "@/lib/connection";
-import { AUDIT, type AuditEvent } from "@/lib/clearance/sample";
+import { EmptyState, LoadingState, UnauthorizedState } from "@/components/states";
+import {
+  useClearanceAudit,
+  useClearanceWallet,
+} from "@/lib/clearance/use-clearance-account";
+import type { AuditEvent } from "@/lib/clearance/store-types";
 
 export const Route = createFileRoute("/audit")({
   head: () => ({
     meta: [
       { title: "Audit log · Clearance402" },
-      { name: "description", content: "Every probe, payment, block, approval, relay, and Venice evaluation — filterable and exportable." },
+      {
+        name: "description",
+        content: "Every probe, payment, block, Venice eval, permission, and revocation.",
+      },
     ],
   }),
   component: Page,
@@ -36,170 +42,147 @@ const KIND_COLOR: Record<string, string> = {
   PERMISSION: "text-foreground",
   RELAY: "text-chain-pending",
   REVOKE: "text-chain-failed",
+  A2A: "text-brand",
 };
 
-const KINDS: AuditEvent["kind"][] = ["PROBE", "PAYMENT", "BLOCK", "APPROVAL", "VENICE", "PERMISSION", "RELAY", "REVOKE"];
+const KINDS: AuditEvent["kind"][] = [
+  "PROBE",
+  "PAYMENT",
+  "BLOCK",
+  "APPROVAL",
+  "VENICE",
+  "PERMISSION",
+  "RELAY",
+  "REVOKE",
+  "A2A",
+];
 
 type LoadState = "loading" | "ready" | "failed";
 
 function Page() {
-  const { isConnected } = useConnection();
-  const [loadState, setLoadState] = useState<LoadState>("loading");
-  const [rows, setRows] = useState<AuditEvent[]>([]);
+  const { wallet, isConnected } = useClearanceWallet();
+  const { data, isLoading, isError, refetch, isFetching } = useClearanceAudit(wallet);
   const [q, setQ] = useState("");
   const [kind, setKind] = useState<"ALL" | AuditEvent["kind"]>("ALL");
 
-  const load = () => {
-    setLoadState("loading");
-    const t = setTimeout(() => {
-      // Deterministic preview load — no fake network failures unless toggled.
-      setRows(AUDIT);
-      setLoadState("ready");
-    }, 600);
-    return () => clearTimeout(t);
-  };
+  const loadState: LoadState = !isConnected
+    ? "ready"
+    : isLoading && !data
+      ? "loading"
+      : isError
+        ? "failed"
+        : "ready";
 
-  useEffect(() => {
-    if (!isConnected) return;
-    return load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConnected]);
+  const rows = (data as { audit?: AuditEvent[] } | undefined)?.audit ?? [];
 
   const filtered = useMemo(
     () =>
       rows.filter((e) => {
         const matchesKind = kind === "ALL" || e.kind === kind;
         const text = `${e.tool} ${e.actor} ${e.detail} ${e.kind}`.toLowerCase();
-        const matchesText = text.includes(q.toLowerCase());
-        return matchesKind && matchesText;
+        return matchesKind && text.includes(q.toLowerCase());
       }),
     [rows, kind, q],
   );
 
   const exportCsv = () => {
     const header = ["time", "event", "tool", "actor", "detail"];
-    const escape = (v: string) => `"${v.replace(/"/g, '""')}"`;
-    const lines = [
-      header.join(","),
-      ...filtered.map((e) => [e.time, e.kind, e.tool, e.actor, e.detail].map(escape).join(",")),
-    ];
-    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const lines = filtered.map((e) =>
+      [e.time, e.kind, e.tool, e.actor, e.detail].map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","),
+    );
+    const blob = new Blob([[header.join(","), ...lines].join("\n")], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `clearance402-audit-${new Date().toISOString().slice(0, 10)}.csv`;
-    document.body.appendChild(a);
+    a.download = "clearance402-audit.csv";
     a.click();
-    a.remove();
     URL.revokeObjectURL(url);
   };
 
-  if (!isConnected) {
-    return (
-      <ConsoleShell section="Audit log" title="Audit log" description="Verifiable evidence for every clearance decision.">
-        <UnauthorizedState
-          title="Sign in to view the audit log"
-          reason="The audit log contains payment, block, and approval events scoped to your workspace. Connect an authorized wallet to access it."
-          action={
-            <Button size="sm" asChild>
-              <Link to="/login" search={{ redirect: "/audit" }}>Connect wallet</Link>
-            </Button>
-          }
-        />
-      </ConsoleShell>
-    );
-  }
-
   return (
     <ConsoleShell
-      section="Audit log"
+      section="Audit"
       title="Audit log"
-      description="Every probe, payment, block, approval, relay, and Venice evaluation with real evidence."
+      description="Real events from probes, payments, Venice evals, permissions, and agent flows."
       actions={
-        <Button variant="outline" size="sm" onClick={exportCsv} disabled={loadState !== "ready" || filtered.length === 0}>
-          <Download className="size-4" /> Export CSV
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => void refetch()}>
+            <RotateCw className="size-4 mr-1" /> Refresh
+          </Button>
+          <Button variant="outline" size="sm" onClick={exportCsv} disabled={!filtered.length}>
+            <Download className="size-4 mr-1" /> Export CSV
+          </Button>
+        </div>
       }
     >
-      <div className="flex flex-col sm:flex-row gap-3 mb-5">
-        <Input
-          placeholder="Search tool, actor, or detail…"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          className="sm:max-w-xs"
+      {!isConnected ? (
+        <UnauthorizedState
+          title="Connect wallet to view audit log"
+          reason="Operator access requires a wallet on Base Sepolia."
         />
-        <div className="flex flex-wrap gap-1.5">
-          {(["ALL", ...KINDS] as const).map((k) => (
-            <button
-              key={k}
-              type="button"
-              onClick={() => setKind(k)}
-              className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                kind === k ? "bg-foreground text-background border-foreground" : "bg-background hover:bg-accent"
-              }`}
-            >
-              {k}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {loadState === "loading" && <LoadingState title="Loading audit events…" />}
-
-      {loadState === "failed" && (
-        <TxFailedState
-          title="Could not load the audit log"
-          description="The registry did not respond. Check your connection and try again."
-          onRetry={load}
-        />
-      )}
-
-      {loadState === "ready" && filtered.length === 0 && (
-        <EmptyState
-          title="No matching events"
-          description="No audit events match your current filters. Adjust the search or event type."
-          action={
-            <Button variant="outline" size="sm" onClick={() => { setQ(""); setKind("ALL"); }}>
-              Clear filters
-            </Button>
-          }
-        />
-      )}
-
-      {loadState === "ready" && filtered.length > 0 && (
+      ) : loadState === "loading" ? (
+        <LoadingState title="Loading audit events" />
+      ) : loadState === "failed" ? (
+        <EmptyState title="Could not load audit log" description="Check server and retry." />
+      ) : (
         <>
-          <p className="text-xs text-muted-foreground mb-2">
-            Showing {filtered.length} of {rows.length} events
-          </p>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <Input
+              placeholder="Search tool, actor, detail…"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              className="max-w-xs"
+            />
+            <select
+              value={kind}
+              onChange={(e) => setKind(e.target.value as typeof kind)}
+              className="h-9 rounded-md border bg-background px-3 text-sm"
+            >
+              <option value="ALL">All events</option>
+              {KINDS.map((k) => (
+                <option key={k} value={k}>
+                  {k}
+                </option>
+              ))}
+            </select>
+          </div>
           <Card>
             <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[180px]">Time</TableHead>
-                    <TableHead className="w-[120px]">Event</TableHead>
-                    <TableHead className="w-[180px]">Tool</TableHead>
-                    <TableHead className="w-[140px]">Actor</TableHead>
-                    <TableHead>Detail</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filtered.map((e) => (
-                    <TableRow key={e.id}>
-                      <TableCell className="font-mono text-xs text-muted-foreground">{e.time}</TableCell>
-                      <TableCell className={`font-mono text-xs font-semibold ${KIND_COLOR[e.kind] ?? ""}`}>{e.kind}</TableCell>
-                      <TableCell className="text-sm">{e.tool}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">{e.actor}</TableCell>
-                      <TableCell className="text-sm">{e.detail}</TableCell>
+              {filtered.length === 0 ? (
+                <EmptyState
+                  title="No audit events yet"
+                  description="Run a probe on Payment lab or grant a permission to populate the log."
+                />
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Time</TableHead>
+                      <TableHead>Event</TableHead>
+                      <TableHead>Tool</TableHead>
+                      <TableHead>Actor</TableHead>
+                      <TableHead>Detail</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {filtered.map((e) => (
+                      <TableRow key={e.id}>
+                        <TableCell className="text-xs whitespace-nowrap">{e.time}</TableCell>
+                        <TableCell className={`text-xs font-semibold ${KIND_COLOR[e.kind] ?? ""}`}>
+                          {e.kind}
+                        </TableCell>
+                        <TableCell className="text-sm">{e.tool}</TableCell>
+                        <TableCell className="text-xs font-mono">{e.actor}</TableCell>
+                        <TableCell className="text-xs text-muted-foreground max-w-md truncate">
+                          {e.detail}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
             </CardContent>
           </Card>
-          <Button variant="ghost" size="sm" className="mt-3" onClick={load}>
-            <RotateCw className="size-4" /> Refresh
-          </Button>
         </>
       )}
     </ConsoleShell>

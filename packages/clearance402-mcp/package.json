@@ -1,0 +1,29 @@
+{
+  "name": "@clearance402/mcp-server",
+  "version": "0.1.0",
+  "description": "Clearance402 MCP server — 9 tools for agent payment trust on Base Sepolia",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "clearance402-mcp": "dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henrysammarfo/clearancex402.git",
+    "directory": "packages/clearance402-mcp"
+  },
+  "keywords": ["mcp", "x402", "clearance", "agents"],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

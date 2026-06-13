@@ -37,9 +37,16 @@ function Page() {
       <section className="mx-auto max-w-[1100px] px-5 sm:px-8 py-10">
         <h1 className="text-3xl sm:text-4xl font-medium tracking-tight">Agent demo</h1>
         <p className="text-zinc-600 mt-2 max-w-2xl">
-          A full run: onboard a paid tool, verify it, register an agent, and clear payments. Try the interactive version on the{" "}
-          <Link to="/agent-clearance" className="underline">Agent clearance</Link> page.
+          Live interactive demo — follow these pages in order on Base Sepolia:
         </p>
+
+        <ol className="list-decimal list-inside text-sm text-zinc-700 mt-4 space-y-1">
+          <li><Link to="/tool-onboarding" className="underline">Onboard tool</Link> — register + probe + Venice</li>
+          <li><Link to="/payment-lab" className="underline">Payment lab</Link> — x402 probe</li>
+          <li><Link to="/permissions" className="underline">Permissions</Link> — ERC-7715 via MetaMask</li>
+          <li><Link to="/agent-clearance" className="underline">Agent clearance</Link> — check + pay if cleared</li>
+          <li><Link to="/audit" className="underline">Audit log</Link> — proof trail</li>
+        </ol>
 
         <div className="rounded-2xl border bg-white p-6 mt-8">
           <h3 className="text-xl font-semibold tracking-tight mb-4">Clearance402 flow</h3>
@@ -65,17 +72,15 @@ function Page() {
           <h2 className="text-xl font-semibold mb-2">Same flow in code</h2>
           <CodeBlock
             lang="ts"
-            code={`import { Clearance402 } from "@clearance402/sdk";
+            code={`import { createClearance402Client } from "@clearance402/sdk";
 
-const c402 = new Clearance402({ apiKey: process.env.CLEARANCE402_API_KEY });
+const c402 = createClearance402Client({ baseUrl: "http://localhost:8080" });
 
-await c402.onboardTool({ name: "Venice Vision API", endpoint: "https://api.venice.ai/x402/vision", protocol: "x402", price: "0.010 USDC" });
-await c402.probe("venice-vision");
+await c402.onboardTool({ name: "Venice Vision API", endpoint: "https://api.venice.ai/x402/vision", price: "$0.010 USDC" });
+await c402.probeEndpoint({ toolId: "venice-vision", pay: true });
 
-const agent = await c402.registerAgent({ id: "buyer-agent", mandateUsd: 5 });
-const decision = await c402.checkBeforePayment({ agentId: agent.id, toolId: "venice-vision", amount: "0.010 USDC" });
-
-if (decision.state === "ALLOW") await c402.payIfCleared("venice-vision", ctx);`}
+const { decision } = await c402.checkBeforePayment({ agentId: "buyer-agent", toolId: "venice-vision", amountUsd: 0.01 });
+// Grant ERC-7715 on /permissions, then pay in browser and recordPayment()`}
           />
         </div>
 

@@ -30,17 +30,18 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsIdRouteImport } from './routes/tools.$id'
-import { Route as ApiRegistryRouteImport } from './routes/api.registry'
-import { Route as ApiStoryApiIndexRouteImport } from './routes/api.story-api.index'
-import { Route as ApiStoryApiStatusRouteImport } from './routes/api.story-api.status'
-import { Route as ApiStoryApiSplatRouteImport } from './routes/api.story-api.$'
-import { Route as ApiStorachaStatusRouteImport } from './routes/api.storacha.status'
-import { Route as ApiStorachaDelegationRouteImport } from './routes/api.storacha.delegation'
-import { Route as ApiRegistryStatusRouteImport } from './routes/api.registry.status'
-import { Route as ApiIpfsStatusRouteImport } from './routes/api.ipfs.status'
-import { Route as ApiIpfsPinRouteImport } from './routes/api.ipfs.pin'
-import { Route as ApiAutomataQuoteRouteImport } from './routes/api.automata.quote'
-import { Route as ApiIpfsGetCidRouteImport } from './routes/api.ipfs.get.$cid'
+import { Route as ApiDemoX402RouteImport } from './routes/api.demo.x402'
+import { Route as ApiClearanceVeniceEvalRouteImport } from './routes/api.clearance.venice-eval'
+import { Route as ApiClearanceToolsRouteImport } from './routes/api.clearance.tools'
+import { Route as ApiClearanceStatusRouteImport } from './routes/api.clearance.status'
+import { Route as ApiClearanceSessionRouteImport } from './routes/api.clearance.session'
+import { Route as ApiClearanceProbeRouteImport } from './routes/api.clearance.probe'
+import { Route as ApiClearancePermissionsRouteImport } from './routes/api.clearance.permissions'
+import { Route as ApiClearancePayRouteImport } from './routes/api.clearance.pay'
+import { Route as ApiClearanceCheckRouteImport } from './routes/api.clearance.check'
+import { Route as ApiClearanceAuditRouteImport } from './routes/api.clearance.audit'
+import { Route as ApiClearanceAccountRouteImport } from './routes/api.clearance.account'
+import { Route as ApiClearanceA2aRouteImport } from './routes/api.clearance.a2a'
 
 const VeniceEvalRoute = VeniceEvalRouteImport.update({
   id: '/venice-eval',
@@ -147,59 +148,64 @@ const ToolsIdRoute = ToolsIdRouteImport.update({
   path: '/tools/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRegistryRoute = ApiRegistryRouteImport.update({
-  id: '/api/registry',
-  path: '/api/registry',
+const ApiDemoX402Route = ApiDemoX402RouteImport.update({
+  id: '/api/demo/x402',
+  path: '/api/demo/x402',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStoryApiIndexRoute = ApiStoryApiIndexRouteImport.update({
-  id: '/api/story-api/',
-  path: '/api/story-api/',
+const ApiClearanceVeniceEvalRoute = ApiClearanceVeniceEvalRouteImport.update({
+  id: '/api/clearance/venice-eval',
+  path: '/api/clearance/venice-eval',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStoryApiStatusRoute = ApiStoryApiStatusRouteImport.update({
-  id: '/api/story-api/status',
-  path: '/api/story-api/status',
+const ApiClearanceToolsRoute = ApiClearanceToolsRouteImport.update({
+  id: '/api/clearance/tools',
+  path: '/api/clearance/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStoryApiSplatRoute = ApiStoryApiSplatRouteImport.update({
-  id: '/api/story-api/$',
-  path: '/api/story-api/$',
+const ApiClearanceStatusRoute = ApiClearanceStatusRouteImport.update({
+  id: '/api/clearance/status',
+  path: '/api/clearance/status',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStorachaStatusRoute = ApiStorachaStatusRouteImport.update({
-  id: '/api/storacha/status',
-  path: '/api/storacha/status',
+const ApiClearanceSessionRoute = ApiClearanceSessionRouteImport.update({
+  id: '/api/clearance/session',
+  path: '/api/clearance/session',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStorachaDelegationRoute = ApiStorachaDelegationRouteImport.update({
-  id: '/api/storacha/delegation',
-  path: '/api/storacha/delegation',
+const ApiClearanceProbeRoute = ApiClearanceProbeRouteImport.update({
+  id: '/api/clearance/probe',
+  path: '/api/clearance/probe',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRegistryStatusRoute = ApiRegistryStatusRouteImport.update({
-  id: '/status',
-  path: '/status',
-  getParentRoute: () => ApiRegistryRoute,
-} as any)
-const ApiIpfsStatusRoute = ApiIpfsStatusRouteImport.update({
-  id: '/api/ipfs/status',
-  path: '/api/ipfs/status',
+const ApiClearancePermissionsRoute = ApiClearancePermissionsRouteImport.update({
+  id: '/api/clearance/permissions',
+  path: '/api/clearance/permissions',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiIpfsPinRoute = ApiIpfsPinRouteImport.update({
-  id: '/api/ipfs/pin',
-  path: '/api/ipfs/pin',
+const ApiClearancePayRoute = ApiClearancePayRouteImport.update({
+  id: '/api/clearance/pay',
+  path: '/api/clearance/pay',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAutomataQuoteRoute = ApiAutomataQuoteRouteImport.update({
-  id: '/api/automata/quote',
-  path: '/api/automata/quote',
+const ApiClearanceCheckRoute = ApiClearanceCheckRouteImport.update({
+  id: '/api/clearance/check',
+  path: '/api/clearance/check',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiIpfsGetCidRoute = ApiIpfsGetCidRouteImport.update({
-  id: '/api/ipfs/get/$cid',
-  path: '/api/ipfs/get/$cid',
+const ApiClearanceAuditRoute = ApiClearanceAuditRouteImport.update({
+  id: '/api/clearance/audit',
+  path: '/api/clearance/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiClearanceAccountRoute = ApiClearanceAccountRouteImport.update({
+  id: '/api/clearance/account',
+  path: '/api/clearance/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiClearanceA2aRoute = ApiClearanceA2aRouteImport.update({
+  id: '/api/clearance/a2a',
+  path: '/api/clearance/a2a',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -223,19 +229,20 @@ export interface FileRoutesByFullPath {
   '/status': typeof StatusRoute
   '/tool-onboarding': typeof ToolOnboardingRoute
   '/venice-eval': typeof VeniceEvalRoute
-  '/api/registry': typeof ApiRegistryRouteWithChildren
   '/tools/$id': typeof ToolsIdRoute
   '/tools/': typeof ToolsIndexRoute
-  '/api/automata/quote': typeof ApiAutomataQuoteRoute
-  '/api/ipfs/pin': typeof ApiIpfsPinRoute
-  '/api/ipfs/status': typeof ApiIpfsStatusRoute
-  '/api/registry/status': typeof ApiRegistryStatusRoute
-  '/api/storacha/delegation': typeof ApiStorachaDelegationRoute
-  '/api/storacha/status': typeof ApiStorachaStatusRoute
-  '/api/story-api/$': typeof ApiStoryApiSplatRoute
-  '/api/story-api/status': typeof ApiStoryApiStatusRoute
-  '/api/story-api/': typeof ApiStoryApiIndexRoute
-  '/api/ipfs/get/$cid': typeof ApiIpfsGetCidRoute
+  '/api/clearance/a2a': typeof ApiClearanceA2aRoute
+  '/api/clearance/account': typeof ApiClearanceAccountRoute
+  '/api/clearance/audit': typeof ApiClearanceAuditRoute
+  '/api/clearance/check': typeof ApiClearanceCheckRoute
+  '/api/clearance/pay': typeof ApiClearancePayRoute
+  '/api/clearance/permissions': typeof ApiClearancePermissionsRoute
+  '/api/clearance/probe': typeof ApiClearanceProbeRoute
+  '/api/clearance/session': typeof ApiClearanceSessionRoute
+  '/api/clearance/status': typeof ApiClearanceStatusRoute
+  '/api/clearance/tools': typeof ApiClearanceToolsRoute
+  '/api/clearance/venice-eval': typeof ApiClearanceVeniceEvalRoute
+  '/api/demo/x402': typeof ApiDemoX402Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -257,19 +264,20 @@ export interface FileRoutesByTo {
   '/status': typeof StatusRoute
   '/tool-onboarding': typeof ToolOnboardingRoute
   '/venice-eval': typeof VeniceEvalRoute
-  '/api/registry': typeof ApiRegistryRouteWithChildren
   '/tools/$id': typeof ToolsIdRoute
   '/tools': typeof ToolsIndexRoute
-  '/api/automata/quote': typeof ApiAutomataQuoteRoute
-  '/api/ipfs/pin': typeof ApiIpfsPinRoute
-  '/api/ipfs/status': typeof ApiIpfsStatusRoute
-  '/api/registry/status': typeof ApiRegistryStatusRoute
-  '/api/storacha/delegation': typeof ApiStorachaDelegationRoute
-  '/api/storacha/status': typeof ApiStorachaStatusRoute
-  '/api/story-api/$': typeof ApiStoryApiSplatRoute
-  '/api/story-api/status': typeof ApiStoryApiStatusRoute
-  '/api/story-api': typeof ApiStoryApiIndexRoute
-  '/api/ipfs/get/$cid': typeof ApiIpfsGetCidRoute
+  '/api/clearance/a2a': typeof ApiClearanceA2aRoute
+  '/api/clearance/account': typeof ApiClearanceAccountRoute
+  '/api/clearance/audit': typeof ApiClearanceAuditRoute
+  '/api/clearance/check': typeof ApiClearanceCheckRoute
+  '/api/clearance/pay': typeof ApiClearancePayRoute
+  '/api/clearance/permissions': typeof ApiClearancePermissionsRoute
+  '/api/clearance/probe': typeof ApiClearanceProbeRoute
+  '/api/clearance/session': typeof ApiClearanceSessionRoute
+  '/api/clearance/status': typeof ApiClearanceStatusRoute
+  '/api/clearance/tools': typeof ApiClearanceToolsRoute
+  '/api/clearance/venice-eval': typeof ApiClearanceVeniceEvalRoute
+  '/api/demo/x402': typeof ApiDemoX402Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -292,19 +300,20 @@ export interface FileRoutesById {
   '/status': typeof StatusRoute
   '/tool-onboarding': typeof ToolOnboardingRoute
   '/venice-eval': typeof VeniceEvalRoute
-  '/api/registry': typeof ApiRegistryRouteWithChildren
   '/tools/$id': typeof ToolsIdRoute
   '/tools/': typeof ToolsIndexRoute
-  '/api/automata/quote': typeof ApiAutomataQuoteRoute
-  '/api/ipfs/pin': typeof ApiIpfsPinRoute
-  '/api/ipfs/status': typeof ApiIpfsStatusRoute
-  '/api/registry/status': typeof ApiRegistryStatusRoute
-  '/api/storacha/delegation': typeof ApiStorachaDelegationRoute
-  '/api/storacha/status': typeof ApiStorachaStatusRoute
-  '/api/story-api/$': typeof ApiStoryApiSplatRoute
-  '/api/story-api/status': typeof ApiStoryApiStatusRoute
-  '/api/story-api/': typeof ApiStoryApiIndexRoute
-  '/api/ipfs/get/$cid': typeof ApiIpfsGetCidRoute
+  '/api/clearance/a2a': typeof ApiClearanceA2aRoute
+  '/api/clearance/account': typeof ApiClearanceAccountRoute
+  '/api/clearance/audit': typeof ApiClearanceAuditRoute
+  '/api/clearance/check': typeof ApiClearanceCheckRoute
+  '/api/clearance/pay': typeof ApiClearancePayRoute
+  '/api/clearance/permissions': typeof ApiClearancePermissionsRoute
+  '/api/clearance/probe': typeof ApiClearanceProbeRoute
+  '/api/clearance/session': typeof ApiClearanceSessionRoute
+  '/api/clearance/status': typeof ApiClearanceStatusRoute
+  '/api/clearance/tools': typeof ApiClearanceToolsRoute
+  '/api/clearance/venice-eval': typeof ApiClearanceVeniceEvalRoute
+  '/api/demo/x402': typeof ApiDemoX402Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -328,19 +337,20 @@ export interface FileRouteTypes {
     | '/status'
     | '/tool-onboarding'
     | '/venice-eval'
-    | '/api/registry'
     | '/tools/$id'
     | '/tools/'
-    | '/api/automata/quote'
-    | '/api/ipfs/pin'
-    | '/api/ipfs/status'
-    | '/api/registry/status'
-    | '/api/storacha/delegation'
-    | '/api/storacha/status'
-    | '/api/story-api/$'
-    | '/api/story-api/status'
-    | '/api/story-api/'
-    | '/api/ipfs/get/$cid'
+    | '/api/clearance/a2a'
+    | '/api/clearance/account'
+    | '/api/clearance/audit'
+    | '/api/clearance/check'
+    | '/api/clearance/pay'
+    | '/api/clearance/permissions'
+    | '/api/clearance/probe'
+    | '/api/clearance/session'
+    | '/api/clearance/status'
+    | '/api/clearance/tools'
+    | '/api/clearance/venice-eval'
+    | '/api/demo/x402'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -362,19 +372,20 @@ export interface FileRouteTypes {
     | '/status'
     | '/tool-onboarding'
     | '/venice-eval'
-    | '/api/registry'
     | '/tools/$id'
     | '/tools'
-    | '/api/automata/quote'
-    | '/api/ipfs/pin'
-    | '/api/ipfs/status'
-    | '/api/registry/status'
-    | '/api/storacha/delegation'
-    | '/api/storacha/status'
-    | '/api/story-api/$'
-    | '/api/story-api/status'
-    | '/api/story-api'
-    | '/api/ipfs/get/$cid'
+    | '/api/clearance/a2a'
+    | '/api/clearance/account'
+    | '/api/clearance/audit'
+    | '/api/clearance/check'
+    | '/api/clearance/pay'
+    | '/api/clearance/permissions'
+    | '/api/clearance/probe'
+    | '/api/clearance/session'
+    | '/api/clearance/status'
+    | '/api/clearance/tools'
+    | '/api/clearance/venice-eval'
+    | '/api/demo/x402'
   id:
     | '__root__'
     | '/'
@@ -396,19 +407,20 @@ export interface FileRouteTypes {
     | '/status'
     | '/tool-onboarding'
     | '/venice-eval'
-    | '/api/registry'
     | '/tools/$id'
     | '/tools/'
-    | '/api/automata/quote'
-    | '/api/ipfs/pin'
-    | '/api/ipfs/status'
-    | '/api/registry/status'
-    | '/api/storacha/delegation'
-    | '/api/storacha/status'
-    | '/api/story-api/$'
-    | '/api/story-api/status'
-    | '/api/story-api/'
-    | '/api/ipfs/get/$cid'
+    | '/api/clearance/a2a'
+    | '/api/clearance/account'
+    | '/api/clearance/audit'
+    | '/api/clearance/check'
+    | '/api/clearance/pay'
+    | '/api/clearance/permissions'
+    | '/api/clearance/probe'
+    | '/api/clearance/session'
+    | '/api/clearance/status'
+    | '/api/clearance/tools'
+    | '/api/clearance/venice-eval'
+    | '/api/demo/x402'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -431,18 +443,20 @@ export interface RootRouteChildren {
   StatusRoute: typeof StatusRoute
   ToolOnboardingRoute: typeof ToolOnboardingRoute
   VeniceEvalRoute: typeof VeniceEvalRoute
-  ApiRegistryRoute: typeof ApiRegistryRouteWithChildren
   ToolsIdRoute: typeof ToolsIdRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
-  ApiAutomataQuoteRoute: typeof ApiAutomataQuoteRoute
-  ApiIpfsPinRoute: typeof ApiIpfsPinRoute
-  ApiIpfsStatusRoute: typeof ApiIpfsStatusRoute
-  ApiStorachaDelegationRoute: typeof ApiStorachaDelegationRoute
-  ApiStorachaStatusRoute: typeof ApiStorachaStatusRoute
-  ApiStoryApiSplatRoute: typeof ApiStoryApiSplatRoute
-  ApiStoryApiStatusRoute: typeof ApiStoryApiStatusRoute
-  ApiStoryApiIndexRoute: typeof ApiStoryApiIndexRoute
-  ApiIpfsGetCidRoute: typeof ApiIpfsGetCidRoute
+  ApiClearanceA2aRoute: typeof ApiClearanceA2aRoute
+  ApiClearanceAccountRoute: typeof ApiClearanceAccountRoute
+  ApiClearanceAuditRoute: typeof ApiClearanceAuditRoute
+  ApiClearanceCheckRoute: typeof ApiClearanceCheckRoute
+  ApiClearancePayRoute: typeof ApiClearancePayRoute
+  ApiClearancePermissionsRoute: typeof ApiClearancePermissionsRoute
+  ApiClearanceProbeRoute: typeof ApiClearanceProbeRoute
+  ApiClearanceSessionRoute: typeof ApiClearanceSessionRoute
+  ApiClearanceStatusRoute: typeof ApiClearanceStatusRoute
+  ApiClearanceToolsRoute: typeof ApiClearanceToolsRoute
+  ApiClearanceVeniceEvalRoute: typeof ApiClearanceVeniceEvalRoute
+  ApiDemoX402Route: typeof ApiDemoX402Route
 }
 
 declare module '@tanstack/react-router' {
@@ -594,97 +608,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/registry': {
-      id: '/api/registry'
-      path: '/api/registry'
-      fullPath: '/api/registry'
-      preLoaderRoute: typeof ApiRegistryRouteImport
+    '/api/demo/x402': {
+      id: '/api/demo/x402'
+      path: '/api/demo/x402'
+      fullPath: '/api/demo/x402'
+      preLoaderRoute: typeof ApiDemoX402RouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/story-api/': {
-      id: '/api/story-api/'
-      path: '/api/story-api'
-      fullPath: '/api/story-api/'
-      preLoaderRoute: typeof ApiStoryApiIndexRouteImport
+    '/api/clearance/venice-eval': {
+      id: '/api/clearance/venice-eval'
+      path: '/api/clearance/venice-eval'
+      fullPath: '/api/clearance/venice-eval'
+      preLoaderRoute: typeof ApiClearanceVeniceEvalRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/story-api/status': {
-      id: '/api/story-api/status'
-      path: '/api/story-api/status'
-      fullPath: '/api/story-api/status'
-      preLoaderRoute: typeof ApiStoryApiStatusRouteImport
+    '/api/clearance/tools': {
+      id: '/api/clearance/tools'
+      path: '/api/clearance/tools'
+      fullPath: '/api/clearance/tools'
+      preLoaderRoute: typeof ApiClearanceToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/story-api/$': {
-      id: '/api/story-api/$'
-      path: '/api/story-api/$'
-      fullPath: '/api/story-api/$'
-      preLoaderRoute: typeof ApiStoryApiSplatRouteImport
+    '/api/clearance/status': {
+      id: '/api/clearance/status'
+      path: '/api/clearance/status'
+      fullPath: '/api/clearance/status'
+      preLoaderRoute: typeof ApiClearanceStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/storacha/status': {
-      id: '/api/storacha/status'
-      path: '/api/storacha/status'
-      fullPath: '/api/storacha/status'
-      preLoaderRoute: typeof ApiStorachaStatusRouteImport
+    '/api/clearance/session': {
+      id: '/api/clearance/session'
+      path: '/api/clearance/session'
+      fullPath: '/api/clearance/session'
+      preLoaderRoute: typeof ApiClearanceSessionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/storacha/delegation': {
-      id: '/api/storacha/delegation'
-      path: '/api/storacha/delegation'
-      fullPath: '/api/storacha/delegation'
-      preLoaderRoute: typeof ApiStorachaDelegationRouteImport
+    '/api/clearance/probe': {
+      id: '/api/clearance/probe'
+      path: '/api/clearance/probe'
+      fullPath: '/api/clearance/probe'
+      preLoaderRoute: typeof ApiClearanceProbeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/registry/status': {
-      id: '/api/registry/status'
-      path: '/status'
-      fullPath: '/api/registry/status'
-      preLoaderRoute: typeof ApiRegistryStatusRouteImport
-      parentRoute: typeof ApiRegistryRoute
-    }
-    '/api/ipfs/status': {
-      id: '/api/ipfs/status'
-      path: '/api/ipfs/status'
-      fullPath: '/api/ipfs/status'
-      preLoaderRoute: typeof ApiIpfsStatusRouteImport
+    '/api/clearance/permissions': {
+      id: '/api/clearance/permissions'
+      path: '/api/clearance/permissions'
+      fullPath: '/api/clearance/permissions'
+      preLoaderRoute: typeof ApiClearancePermissionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/ipfs/pin': {
-      id: '/api/ipfs/pin'
-      path: '/api/ipfs/pin'
-      fullPath: '/api/ipfs/pin'
-      preLoaderRoute: typeof ApiIpfsPinRouteImport
+    '/api/clearance/pay': {
+      id: '/api/clearance/pay'
+      path: '/api/clearance/pay'
+      fullPath: '/api/clearance/pay'
+      preLoaderRoute: typeof ApiClearancePayRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/automata/quote': {
-      id: '/api/automata/quote'
-      path: '/api/automata/quote'
-      fullPath: '/api/automata/quote'
-      preLoaderRoute: typeof ApiAutomataQuoteRouteImport
+    '/api/clearance/check': {
+      id: '/api/clearance/check'
+      path: '/api/clearance/check'
+      fullPath: '/api/clearance/check'
+      preLoaderRoute: typeof ApiClearanceCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/ipfs/get/$cid': {
-      id: '/api/ipfs/get/$cid'
-      path: '/api/ipfs/get/$cid'
-      fullPath: '/api/ipfs/get/$cid'
-      preLoaderRoute: typeof ApiIpfsGetCidRouteImport
+    '/api/clearance/audit': {
+      id: '/api/clearance/audit'
+      path: '/api/clearance/audit'
+      fullPath: '/api/clearance/audit'
+      preLoaderRoute: typeof ApiClearanceAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/clearance/account': {
+      id: '/api/clearance/account'
+      path: '/api/clearance/account'
+      fullPath: '/api/clearance/account'
+      preLoaderRoute: typeof ApiClearanceAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/clearance/a2a': {
+      id: '/api/clearance/a2a'
+      path: '/api/clearance/a2a'
+      fullPath: '/api/clearance/a2a'
+      preLoaderRoute: typeof ApiClearanceA2aRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
-
-interface ApiRegistryRouteChildren {
-  ApiRegistryStatusRoute: typeof ApiRegistryStatusRoute
-}
-
-const ApiRegistryRouteChildren: ApiRegistryRouteChildren = {
-  ApiRegistryStatusRoute: ApiRegistryStatusRoute,
-}
-
-const ApiRegistryRouteWithChildren = ApiRegistryRoute._addFileChildren(
-  ApiRegistryRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -706,18 +715,20 @@ const rootRouteChildren: RootRouteChildren = {
   StatusRoute: StatusRoute,
   ToolOnboardingRoute: ToolOnboardingRoute,
   VeniceEvalRoute: VeniceEvalRoute,
-  ApiRegistryRoute: ApiRegistryRouteWithChildren,
   ToolsIdRoute: ToolsIdRoute,
   ToolsIndexRoute: ToolsIndexRoute,
-  ApiAutomataQuoteRoute: ApiAutomataQuoteRoute,
-  ApiIpfsPinRoute: ApiIpfsPinRoute,
-  ApiIpfsStatusRoute: ApiIpfsStatusRoute,
-  ApiStorachaDelegationRoute: ApiStorachaDelegationRoute,
-  ApiStorachaStatusRoute: ApiStorachaStatusRoute,
-  ApiStoryApiSplatRoute: ApiStoryApiSplatRoute,
-  ApiStoryApiStatusRoute: ApiStoryApiStatusRoute,
-  ApiStoryApiIndexRoute: ApiStoryApiIndexRoute,
-  ApiIpfsGetCidRoute: ApiIpfsGetCidRoute,
+  ApiClearanceA2aRoute: ApiClearanceA2aRoute,
+  ApiClearanceAccountRoute: ApiClearanceAccountRoute,
+  ApiClearanceAuditRoute: ApiClearanceAuditRoute,
+  ApiClearanceCheckRoute: ApiClearanceCheckRoute,
+  ApiClearancePayRoute: ApiClearancePayRoute,
+  ApiClearancePermissionsRoute: ApiClearancePermissionsRoute,
+  ApiClearanceProbeRoute: ApiClearanceProbeRoute,
+  ApiClearanceSessionRoute: ApiClearanceSessionRoute,
+  ApiClearanceStatusRoute: ApiClearanceStatusRoute,
+  ApiClearanceToolsRoute: ApiClearanceToolsRoute,
+  ApiClearanceVeniceEvalRoute: ApiClearanceVeniceEvalRoute,
+  ApiDemoX402Route: ApiDemoX402Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

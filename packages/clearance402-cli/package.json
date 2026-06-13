@@ -1,0 +1,28 @@
+{
+  "name": "@clearance402/cli",
+  "version": "0.1.0",
+  "description": "Clearance402 CLI — probe, check, pay-if-cleared against the production API",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "clearance402": "dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henrysammarfo/clearancex402.git",
+    "directory": "packages/clearance402-cli"
+  },
+  "keywords": ["x402", "clearance", "cli", "agents"],
+  "license": "MIT",
+  "dependencies": {
+    "@clearance402/sdk": "0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

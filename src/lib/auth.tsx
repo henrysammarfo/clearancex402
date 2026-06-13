@@ -3,56 +3,33 @@ import * as React from "react";
 export type Session = {
   workspace: string;
   email: string;
-  apiKeyHint: string;
   signedInAt: number;
 };
 
 type Ctx = {
   session: Session | null;
   isAuthenticated: boolean;
-  signIn: (input: { workspace: string; email: string; apiKey: string }) => Promise<void>;
+  signIn: (input: { workspace: string; email: string }) => Promise<void>;
   signOut: () => void;
 };
 
 const AuthContext = React.createContext<Ctx | null>(null);
-const STORAGE_KEY = "clearance402.session.v1";
 
+/** Wallet + env config only — no localStorage. Session resets on reload. */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = React.useState<Session | null>(null);
 
-  React.useEffect(() => {
-    try {
-      const raw = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
-      if (raw) setSession(JSON.parse(raw) as Session);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  const signIn: Ctx["signIn"] = async ({ workspace, email, apiKey }) => {
-    if (!workspace || !email || !apiKey) throw new Error("Workspace, email and API key are required.");
-    if (apiKey.length < 12) throw new Error("API key looks malformed.");
-    const next: Session = {
+  const signIn: Ctx["signIn"] = async ({ workspace, email }) => {
+    if (!workspace || !email) throw new Error("Workspace and email are required.");
+    setSession({
       workspace,
       email,
-      apiKeyHint: `${apiKey.slice(0, 4)}…${apiKey.slice(-4)}`,
       signedInAt: Date.now(),
-    };
-    setSession(next);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      /* ignore */
-    }
+    });
   };
 
   const signOut = () => {
     setSession(null);
-    try {
-      window.localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      /* ignore */
-    }
   };
 
   return (

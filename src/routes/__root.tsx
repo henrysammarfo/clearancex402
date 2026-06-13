@@ -12,6 +12,7 @@ import appCss from "../styles.css?url";
 import { ConnectionProvider } from "@/lib/connection";
 import { AuthProvider } from "@/lib/auth";
 import { Web3Provider } from "@/lib/wagmi/provider";
+import { ClearancePrefetch } from "@/components/clearance/ClearancePrefetch";
 import { Toaster } from "@/components/ui/sonner";
 
 function NotFoundComponent() {
@@ -78,14 +79,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Clearance402 — Agent payment trust layer" },
       { name: "description", content: "Verify x402 and MCP tools before agents pay with trust cards, clearance states, permission checks, and audit logs." },
-      { name: "author", content: "Clearance402" },
+      { name: "theme-color", content: "#4f46e5" },
+      { name: "application-name", content: "Clearance402" },
       { property: "og:title", content: "Clearance402 — Agent payment trust layer" },
       { property: "og:description", content: "Before your agent pays, it gets clearance." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/logo.svg" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:image", content: "/logo.svg" },
     ],
     links: [
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "shortcut icon", href: "/favicon.svg" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.svg", sizes: "180x180" },
+      { rel: "mask-icon", href: "/favicon.svg", color: "#4f46e5" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -123,6 +130,7 @@ function RootComponent() {
       <Web3Provider>
         <ConnectionProvider>
           <AuthProvider>
+            <ClearancePrefetch />
             <Outlet />
             <Toaster />
           </AuthProvider>

@@ -1,11 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ClearanceBadge, type ClearanceState } from "@/components/clearance/ClearanceBadge";
-import { TOOLS } from "@/lib/clearance/sample";
+import {
+  useClearanceTools,
+  useClearanceWallet,
+} from "@/lib/clearance/use-clearance-account";
+import { ConnectWalletPrompt } from "@/components/clearance/ConnectWalletPrompt";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
@@ -20,10 +25,20 @@ export const Route = createFileRoute("/tools/")({
 const FILTERS: ("ALL" | ClearanceState)[] = ["ALL", "ALLOW", "WARN", "BLOCK", "RETEST", "HUMAN_APPROVAL_REQUIRED"];
 
 function Page() {
+  const { wallet, isConnected } = useClearanceWallet();
+  const { data: tools = [], isLoading, refetch, isFetching } = useClearanceTools(wallet);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<"ALL" | ClearanceState>("ALL");
 
-  const tools = TOOLS.filter((t) => {
+  if (!isConnected || !wallet) {
+    return (
+      <ConsoleShell section="Tool registry" title="Verified tool registry" description="Connect wallet to view your registry.">
+        <ConnectWalletPrompt />
+      </ConsoleShell>
+    );
+  }
+
+  const filtered = tools.filter((t) => {
     const matchesText =
       t.name.toLowerCase().includes(q.toLowerCase()) ||
       t.vendor.toLowerCase().includes(q.toLowerCase()) ||
@@ -36,8 +51,15 @@ function Page() {
     <ConsoleShell
       section="Tool registry"
       title="Verified tool registry"
-      description="x402 and MCP services with live trust scores. Discovery already exists — Clearance402 adds live verification, output checks, and risk scoring."
-      actions={<Button asChild><Link to="/tool-onboarding">Onboard tool</Link></Button>}
+      description="Live trust scores from x402 probes and Venice evals on Base Sepolia."
+      actions={
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => void refetch()} disabled={isFetching}>
+            {isFetching ? <Loader2 className="size-4 animate-spin" /> : "Refresh"}
+          </Button>
+          <Button asChild><Link to="/tool-onboarding">Onboard tool</Link></Button>
+        </div>
+      }
     >
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <Input placeholder="Search by name, vendor, category…" value={q} onChange={(e) => setQ(e.target.value)} className="sm:max-w-xs" />
@@ -57,8 +79,10 @@ function Page() {
         </div>
       </div>
 
+      {isLoading && <p className="text-sm text-muted-foreground mb-4">Loading live registry…</p>}
+
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {tools.map((t) => (
+        {filtered.map((t) => (
           <Link key={t.id} to="/tools/$id" params={{ id: t.id }} className="block">
             <Card className="h-full transition-shadow hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
               <CardContent className="p-5">
@@ -76,17 +100,13 @@ function Page() {
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Trust</div>
                   </div>
                   <div>
-                    <div className="text-lg font-semibold tabular-nums">{t.latencyMs}ms</div>
+                    <div className="text-lg font-semibold tabular-nums">{t.latencyMs || "—"}{t.latencyMs ? "ms" : ""}</div>
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Latency</div>
                   </div>
                   <div>
-                    <div className="text-lg font-semibold tabular-nums">{t.uptime}%</div>
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Uptime</div>
+                    <div className="text-lg font-semibold tabular-nums">{t.probe ? "✓" : "—"}</div>
+                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Probed</div>
                   </div>
-                </div>
-                <div className="mt-4 flex items-center justify-between text-xs">
-                  <span className="rounded-full border px-2 py-0.5 font-medium">{t.protocol}</span>
-                  <span className="text-muted-foreground">{t.price}</span>
                 </div>
               </CardContent>
             </Card>
@@ -94,8 +114,8 @@ function Page() {
         ))}
       </div>
 
-      {tools.length === 0 && (
-        <p className="text-sm text-muted-foreground mt-8 text-center">No tools match your filters.</p>
+      {!isLoading && filtered.length === 0 && (
+        <p className="text-sm text-muted-foreground">No tools match — onboard one or run a probe.</p>
       )}
     </ConsoleShell>
   );

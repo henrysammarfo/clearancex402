@@ -1,165 +1,96 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useCallback, useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { ConsoleShell } from "@/components/layout/ConsoleShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { StatusChip } from "@/components/states";
-import { getClientEnv } from "@/lib/env/client";
-import { probeStoryRpc } from "@/lib/network/health";
-import { useConnection } from "@/lib/connection";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/status")({
-  head: () => ({ meta: [{ title: "Clearance402 · Status" }] }),
-  component: StatusPage,
+  head: () => ({
+    meta: [
+      { title: "Status · Clearance402" },
+      { name: "description", content: "Live health of Clearance402 APIs, chain, and integrations." },
+    ],
+  }),
+  component: Page,
 });
 
-function StatusPage() {
-  const env = getClientEnv();
-  const { config, isConnected, walletAddress, isWrongChain } = useConnection();
-  const rpcUrl = config?.rpcUrl ?? env.storyRpcUrl;
-  const apiUrl = config?.cdrUrl ?? env.storyApiUrl;
+type StatusResponse = {
+  ok: boolean;
+  chainId: number;
+  network: string;
+  x402Network: string;
+  probeWalletConfigured: boolean;
+  veniceConfigured: boolean;
+};
 
-  const rpc = useQuery({
-    queryKey: ["health", "rpc", rpcUrl],
-    queryFn: () => probeStoryRpc(rpcUrl),
-    refetchInterval: 30_000,
-  });
+function Page() {
+  const [status, setStatus] = useState<StatusResponse | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const storyApi = useQuery({
-    queryKey: ["health", "story-api"],
-    queryFn: async () => {
-      const res = await fetch("/api/story-api/status");
-      const json = (await res.json()) as {
-        ok?: boolean;
-        latencyMs?: number;
-        error?: string;
-        apiUrl?: string;
-      };
-      return {
-        ok: Boolean(json.ok),
-        latencyMs: json.latencyMs,
-        error: json.error,
-        apiUrl: json.apiUrl ?? apiUrl,
-      };
-    },
-    refetchInterval: 30_000,
-  });
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/clearance/status");
+      setStatus((await res.json()) as StatusResponse);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-  const registry = useQuery({
-    queryKey: ["health", "registry"],
-    queryFn: async () => {
-      const res = await fetch("/api/registry/status");
-      const json = (await res.json()) as { available?: boolean };
-      return { ok: res.ok && json.available === true };
-    },
-    refetchInterval: 30_000,
-  });
-
-  const ipfs = useQuery({
-    queryKey: ["health", "ipfs"],
-    queryFn: async () => {
-      const res = await fetch("/api/ipfs/status");
-      return { ok: res.ok };
-    },
-    refetchInterval: 30_000,
-  });
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   return (
-    <div className="min-h-screen bg-[#EFEFEF]">
-      <SiteHeader />
-      <section className="mx-auto max-w-[900px] px-5 sm:px-8 py-10">
-        <h1 className="text-3xl font-medium tracking-tight">Status</h1>
-        <p className="text-zinc-600 mt-2">Live probes for the Clearance402 network, verification API, registry, and agent tools.</p>
-        <div className="mt-8 grid sm:grid-cols-2 gap-4">
-          <HealthCard
-            title="Network RPC"
-            subtitle={rpcUrl}
-            loading={rpc.isLoading}
-            ok={rpc.data?.ok}
-            detail={
-              rpc.data?.ok
-                ? `Block ${rpc.data.blockNumber} · ${rpc.data.latencyMs}ms`
-                : rpc.data?.error ?? rpc.error?.message
-            }
-          />
-          <HealthCard
-            title="Verification API"
-            subtitle={apiUrl}
-            loading={storyApi.isLoading}
-            ok={storyApi.data?.ok}
-            detail={
-              storyApi.data?.ok
-                ? `Reachable · ${storyApi.data.latencyMs}ms`
-                : storyApi.data?.error ?? storyApi.error?.message
-            }
-          />
-          <HealthCard
-            title="Wallet"
-            subtitle="RainbowKit · WalletConnect"
-            loading={false}
-            ok={isConnected && !isWrongChain}
-            detail={
-              isConnected
-                ? isWrongChain
-                  ? "Connected — switch to the configured network"
-                  : walletAddress ?? "Connected"
-                : "Not connected — use header Connect wallet"
-            }
-          />
-          <HealthCard
-            title="Registry API"
-            subtitle="VPS · shared with app"
-            loading={registry.isLoading}
-            ok={registry.data?.ok}
-            detail={registry.data?.ok ? "available: true" : registry.error?.message ?? "unavailable"}
-          />
-          <HealthCard
-            title="Evidence storage"
-            subtitle="Proof and audit artifacts"
-            loading={ipfs.isLoading}
-            ok={ipfs.data?.ok}
-            detail={ipfs.data?.ok ? "Reachable" : ipfs.error?.message ?? "unavailable"}
-          />
-          <HealthCard
-            title="MCP server"
-            subtitle="@clearance402/mcp-server"
-            loading={false}
-            ok={undefined}
-            detail="Run locally through your MCP host — tools mirror SDK and CLI"
-          />
-        </div>
-      </section>
-      <SiteFooter />
-    </div>
+    <ConsoleShell
+      section="Status"
+      title="Platform status"
+      description="Live configuration checks for Base Sepolia x402 probes and Venice eval."
+      actions={
+        <Button variant="outline" size="sm" onClick={() => void load()} disabled={loading}>
+          {loading ? <Loader2 className="size-4 animate-spin" /> : "Refresh"}
+        </Button>
+      }
+    >
+      <Card className="max-w-xl">
+        <CardHeader>
+          <CardTitle className="text-sm">Runtime</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 text-sm">
+          {loading && <p className="text-muted-foreground">Checking…</p>}
+          {status && (
+            <>
+              <Row label="API" value={status.ok ? "OK" : "Degraded"} ok={status.ok} />
+              <Row label="Chain" value={`${status.network} (${status.chainId})`} ok />
+              <Row label="x402 network" value={status.x402Network} ok />
+              <Row
+                label="Probe wallet"
+                value={status.probeWalletConfigured ? "Configured" : "Missing WALLET_PRIVATE_KEY"}
+                ok={status.probeWalletConfigured}
+              />
+              <Row
+                label="Venice API"
+                value={status.veniceConfigured ? "Configured" : "Missing VENICE_API_KEY"}
+                ok={status.veniceConfigured}
+              />
+            </>
+          )}
+          <p className="text-xs text-muted-foreground pt-2">
+            Agent payments use the browser session account after ERC-7715 grant on{" "}
+            <Link to="/permissions" className="underline">Permissions</Link>.
+          </p>
+        </CardContent>
+      </Card>
+    </ConsoleShell>
   );
 }
 
-function HealthCard({
-  title,
-  subtitle,
-  loading,
-  ok,
-  detail,
-}: {
-  title: string;
-  subtitle: string;
-  loading: boolean;
-  ok?: boolean;
-  detail?: string;
-}) {
-  const chip =
-    loading ? "running" : ok === true ? "success" : ok === false ? "failed" : "idle";
-
+function Row({ label, value, ok }: { label: string; value: string; ok?: boolean }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-sm">{title}</CardTitle>
-        <p className="text-xs text-muted-foreground truncate">{subtitle}</p>
-      </CardHeader>
-      <CardContent className="flex items-center justify-between gap-3">
-        <span className="text-sm text-muted-foreground break-all">{detail ?? "—"}</span>
-        <StatusChip status={chip} />
-      </CardContent>
-    </Card>
+    <div className="flex justify-between gap-4">
+      <span className="text-muted-foreground">{label}</span>
+      <span className={ok === false ? "text-chain-failed font-medium" : "font-medium"}>{value}</span>
+    </div>
   );
 }

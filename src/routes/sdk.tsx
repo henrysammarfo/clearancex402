@@ -32,37 +32,42 @@ function Page() {
       <div className="space-y-10">
         <GetStarted intro="Pick your path, then drop the SDK into your agent." />
 
-        <DevSection step="01" title="Install" description="Add the package and set your API key from Settings.">
-          <CodeBlock lang="bash" code={`npm install @clearance402/sdk\n# CLEARANCE402_API_KEY comes from Settings → API key`} />
+        <DevSection step="01" title="Install" description="Workspace package — point at your running Clearance402 API.">
+          <CodeBlock lang="bash" code={`# from monorepo root after npm run build:sdk
+npm run build:sdk
+# in your agent project:
+npm install file:../clearance402/packages/clearance402-sdk
+
+export CLEARANCE402_API_URL=http://localhost:8080`} />
         </DevSection>
 
         <DevSection
           step="02"
           title="Clear a payment before paying"
-          description="Register an agent with a spend mandate, then ask Clearance402 before every payment."
+          description="Check clearance, then record payment after browser x402 settle."
         >
           <CodeBlock
             lang="ts"
-            code={`import { Clearance402 } from "@clearance402/sdk";
+            code={`import { createClearance402Client } from "@clearance402/sdk";
 
-const c402 = new Clearance402({ apiKey: process.env.CLEARANCE402_API_KEY });
+const c402 = createClearance402Client();
 
-// Register an agent identity + spend mandate
-const agent = await c402.registerAgent({ id: "buyer-agent", mandateUsd: 5 });
-
-// Ask before paying
-const decision = await c402.checkBeforePayment({
-  agentId: agent.id,
+const { decision, toolName } = await c402.checkBeforePayment({
+  agentId: "buyer-agent",
   toolId: "venice-vision",
-  amount: "0.010 USDC",
+  amountUsd: 0.01,
 });
 
-if (decision.state === "ALLOW") {
-  await c402.payIfCleared("venice-vision", ctx);
-} else if (decision.state === "HUMAN_APPROVAL_REQUIRED") {
-  await c402.requestApproval(decision);
+if (decision.state === "ALLOW" || decision.state === "WARN") {
+  // browser: payX402Endpoint() then:
+  await c402.recordPayment({
+    agentId: "buyer-agent",
+    toolId: "venice-vision",
+    paymentProof: proofFromHeaders,
+    httpStatus: 200,
+  });
 } else {
-  console.warn("Blocked:", decision.reasons);
+  console.warn(toolName, decision.state, decision.reasons);
 }`}
           />
         </DevSection>
@@ -70,19 +75,18 @@ if (decision.state === "ALLOW") {
         <DevSection
           step="03"
           title="Onboard your own tool"
-          description="Register an endpoint and get back a Trust Card with a score and live status."
+          description="Register an endpoint — runs live probe + Venice and returns a trust card."
         >
           <CodeBlock
             lang="ts"
-            code={`const card = await c402.onboardTool({
+            code={`const { tool, probe, veniceEval } = await c402.onboardTool({
   name: "Venice Vision API",
   endpoint: "https://api.venice.ai/x402/vision",
-  protocol: "x402",
-  price: "0.010 USDC",
-  schema: { label: "string", confidence: "number" },
+  price: "$0.010 USDC / call",
+  description: "Image understanding x402 endpoint",
 });
 
-console.log(card.trust, card.state); // 96 "ALLOW"`}
+console.log(tool.trust, tool.state, probe?.paymentValid);`}
           />
         </DevSection>
 

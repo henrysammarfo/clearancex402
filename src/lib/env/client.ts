@@ -1,42 +1,16 @@
 import { CLEARANCE_CHAIN_ID, CLEARANCE_DEFAULTS } from "@/lib/clearance/network";
 
-const HTTPS_STORY_API_PROXY_PATH = "/api/story-api";
-
-/**
- * On HTTPS pages, never call the upstream Story-API over plain HTTP (mixed content).
- * Rewrites http:// URLs and empty env to the same-origin Vercel proxy.
- */
-export function resolveBrowserStoryApiUrl(preferred?: string): string {
-  const raw =
-    preferred?.trim() ||
-    import.meta.env.VITE_STORY_API_URL?.trim() ||
-    CLEARANCE_DEFAULTS.storyApiUrl;
-
-  if (typeof window === "undefined") {
-    return raw.replace(/\/$/, "");
-  }
-
-  if (window.location.protocol === "https:") {
-    const normalized = raw.replace(/\/$/, "");
-    if (!normalized || normalized.startsWith("http://")) {
-      return `${window.location.origin}${HTTPS_STORY_API_PROXY_PATH}`.replace(/\/$/, "");
-    }
-    return normalized;
-  }
-
-  return raw.replace(/\/$/, "");
-}
-
-/** Browser-safe config from Vite env (Vercel: set in dashboard). */
+/** Browser-safe config from Vite env. */
 export function getClientEnv() {
-  const storyRpcUrl =
-    import.meta.env.VITE_STORY_RPC_URL?.trim() || CLEARANCE_DEFAULTS.rpcUrl;
-  const storyApiUrl = resolveBrowserStoryApiUrl();
-  const chainId = Number(import.meta.env.VITE_STORY_CHAIN_ID ?? CLEARANCE_CHAIN_ID);
+  const rpcUrl =
+    import.meta.env.VITE_BASE_SEPOLIA_RPC_URL?.trim() || CLEARANCE_DEFAULTS.rpcUrl;
+  const chainId = Number(import.meta.env.VITE_CLEARANCE_CHAIN_ID ?? CLEARANCE_CHAIN_ID);
   const explorerTxBaseUrl =
-    import.meta.env.VITE_STORY_EXPLORER_TX_URL?.trim() ||
-    CLEARANCE_DEFAULTS.explorerTxBaseUrl;
+    import.meta.env.VITE_EXPLORER_TX_URL?.trim() || CLEARANCE_DEFAULTS.explorerTxBaseUrl;
   const walletConnectProjectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID?.trim();
+  const clearanceApiUrl =
+    import.meta.env.VITE_CLEARANCE_API_URL?.trim() ||
+    (typeof window !== "undefined" ? window.location.origin : "");
   const isProduction =
     import.meta.env.PROD === true ||
     import.meta.env.VITE_APP_ENV?.trim() === "production";
@@ -49,15 +23,15 @@ export function getClientEnv() {
 
   if (chainId !== CLEARANCE_CHAIN_ID) {
     console.warn(
-      `[Clearance402] VITE_STORY_CHAIN_ID=${chainId} does not match Aeneid (${CLEARANCE_CHAIN_ID}).`,
+      `[Clearance402] VITE_CLEARANCE_CHAIN_ID=${chainId} does not match Base Sepolia (${CLEARANCE_CHAIN_ID}).`,
     );
   }
 
   return {
-    storyRpcUrl,
-    storyApiUrl,
+    rpcUrl,
     chainId,
     explorerTxBaseUrl,
+    clearanceApiUrl,
     walletConnectProjectId: walletConnectProjectId || undefined,
   };
 }

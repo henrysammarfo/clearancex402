@@ -53,16 +53,6 @@ const DEFAULT_STATE: PersistedState = {
   pageSize: 10,
 };
 
-function loadState(key: string): PersistedState {
-  if (typeof window === "undefined") return DEFAULT_STATE;
-  try {
-    const raw = window.localStorage.getItem(key);
-    if (!raw) return DEFAULT_STATE;
-    return { ...DEFAULT_STATE, ...(JSON.parse(raw) as Partial<PersistedState>) };
-  } catch {
-    return DEFAULT_STATE;
-  }
-}
 
 function csvEscape(v: string) {
   if (/[",\n\r]/.test(v)) return `"${v.replace(/"/g, '""')}"`;
@@ -111,7 +101,7 @@ export function AuditLogTable({
   product?: "clearance";
 }) {
   const key = storageKey ?? `clearance402.audit.${scope.toLowerCase()}.v1`;
-  const initial = useMemo(() => loadState(key), [key]);
+  const initial = DEFAULT_STATE;
 
   const { config } = useConnection();
   const explorerBase = (config?.explorerBaseUrl ?? DEFAULT_EXPLORER_BASE_URL).replace(/\/?$/, "/");
@@ -124,18 +114,6 @@ export function AuditLogTable({
   const [sortDir, setSortDir] = useState<SortDir>(initial.sortDir);
   const [page, setPage] = useState(initial.page);
   const [pageSize, setPageSize] = useState(initial.pageSize);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      window.localStorage.setItem(
-        key,
-        JSON.stringify({ q, action, target, status, sortKey, sortDir, page, pageSize } satisfies PersistedState),
-      );
-    } catch {
-      /* ignore */
-    }
-  }, [key, q, action, target, status, sortKey, sortDir, page, pageSize]);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -186,7 +164,6 @@ export function AuditLogTable({
     setSortDir(DEFAULT_STATE.sortDir);
     setPage(DEFAULT_STATE.page);
     setPageSize(DEFAULT_STATE.pageSize);
-    try { window.localStorage.removeItem(key); } catch { /* ignore */ }
   };
 
   const isDirty =

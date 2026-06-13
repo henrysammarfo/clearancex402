@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Clearance402Logo } from "@/components/brand/Clearance402Logo";
 
 const COLS = [
   {
@@ -72,9 +73,7 @@ export function SiteFooter() {
             />
           </video>
           <div className="relative z-10 flex items-center gap-2.5">
-            <div className="size-8 rounded-lg bg-white/15 border-[1.5px] border-white/85 flex items-center justify-center text-white text-[16px] font-bold tracking-tight">
-              C
-            </div>
+            <Clearance402Logo size={32} variant="light" title="Clearance402" />
             <span className="text-[22px] font-bold text-white tracking-tight">Clearance402</span>
           </div>
           <div className="relative z-10 mt-auto mb-7">
