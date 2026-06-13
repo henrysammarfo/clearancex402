@@ -1,9 +1,10 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import { Pool } from "pg";
+import { neon } from "@neondatabase/serverless";
 import type { ClearanceStore } from "@/lib/clearance/store-types";
 import { GLOBAL_ACCOUNT, normalizeWallet } from "@/lib/clearance/account-wallet";
 import { getPostgresUrl } from "@/lib/env/server";
+
 export type PlatformStore = {
   version: 1;
   accounts: Record<string, ClearanceStore>;
@@ -17,6 +18,7 @@ const LEGACY_PATH = join(process.cwd(), ".data", "clearance-store.json");
 
 let fileLoaded = false;
 let pgReady = false;
+let sqlClient: ReturnType<typeof neon> | null = null;
 
 export function emptyAccountStore(): ClearanceStore {
   return {
@@ -71,41 +73,37 @@ async function saveFilePlatform(platform: PlatformStore): Promise<void> {
   fileLoaded = true;
 }
 
-let pgPool: Pool | null = null;
-
-function getPgPool(): Pool | null {
+function getSql(): ReturnType<typeof neon> | null {
   const url = getPostgresUrl();
   if (!url) return null;
-  if (!pgPool) {
-    pgPool = new Pool({
-      connectionString: url,
-      ssl: url.includes("localhost") ? undefined : { rejectUnauthorized: false },
-      max: 5,
-    });
-  }
-  return pgPool;
+  if (!sqlClient) sqlClient = neon(url);
+  return sqlClient;
 }
 
-async function ensurePgSchema(pool: Pool): Promise<void> {  if (pgReady) return;
-  await pool.query(`
+async function ensurePgSchema(sql: ReturnType<typeof neon>): Promise<void> {
+  if (pgReady) return;
+  await sql`
     CREATE TABLE IF NOT EXISTS clearance_accounts (
       wallet TEXT PRIMARY KEY,
       data JSONB NOT NULL DEFAULT '{}',
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    );
-  `);
+    )
+  `;
   pgReady = true;
 }
 
 export async function loadAccountStore(wallet: string): Promise<ClearanceStore> {
   const key = normalizeWallet(wallet);
-  const pool = getPgPool();
+  const sql = getSql();
 
-  if (pool) {
-    await ensurePgSchema(pool);
-    const res = await pool.query(`SELECT data FROM clearance_accounts WHERE wallet = $1`, [key]);
-    if (res.rows[0]?.data) {
-      return normalizeStore(res.rows[0].data as ClearanceStore);
+  if (sql) {
+    await ensurePgSchema(sql);
+    const rows = (await sql`SELECT data FROM clearance_accounts WHERE wallet = ${key}`) as {
+      data?: ClearanceStore;
+    }[];
+    const row = rows[0];
+    if (row?.data) {
+      return normalizeStore(row.data);
     }
     return emptyAccountStore();
   }
@@ -122,16 +120,17 @@ let fileCache: PlatformStore = { version: 1, accounts: {} };
 
 export async function saveAccountStore(wallet: string, store: ClearanceStore): Promise<void> {
   const key = normalizeWallet(wallet);
-  const pool = getPgPool();
+  const sql = getSql();
 
-  if (pool) {
-    await ensurePgSchema(pool);
-    await pool.query(
-      `INSERT INTO clearance_accounts (wallet, data, updated_at)
-       VALUES ($1, $2::jsonb, NOW())
-       ON CONFLICT (wallet) DO UPDATE SET data = EXCLUDED.data, updated_at = NOW()`,
-      [key, JSON.stringify(store)],
-    );
+  if (sql) {
+    await ensurePgSchema(sql);
+    const payload = JSON.stringify(store);
+    await sql`
+      INSERT INTO clearance_accounts (wallet, data, updated_at)
+      VALUES (${key}, ${payload}::jsonb, NOW())
+      ON CONFLICT (wallet) DO UPDATE
+      SET data = ${payload}::jsonb, updated_at = NOW()
+    `;
     return;
   }
 
