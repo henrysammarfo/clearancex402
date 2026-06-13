@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { getServerEnv } from "@/lib/env/server";
+import { getServerEnv, getPostgresUrl } from "@/lib/env/server";
 import { CLEARANCE_CHAIN_ID, CLEARANCE_DEFAULTS } from "@/lib/clearance/network";
 import { resolveDemoEndpoint } from "@/lib/clearance/x402-demo-handler";
 
@@ -17,11 +17,7 @@ export const Route = createFileRoute("/api/clearance/status")({
           veniceConfigured: Boolean(env.veniceApiKey),
           veniceEvalMode: env.veniceApiKey ? "api-key-with-heuristic-fallback" : "heuristic-only",
           demoX402Endpoint: resolveDemoEndpoint(),
-          databaseConfigured: Boolean(
-            process.env.DATABASE_URL?.trim() ||
-              process.env.POSTGRES_URL?.trim() ||
-              process.env.POSTGRES_PRISMA_URL?.trim(),
-          ),
+          databaseConfigured: Boolean(getPostgresUrl()),
           sessionEncryptionConfigured: Boolean(process.env.SESSION_ENCRYPTION_SECRET?.trim()),
         });
       },

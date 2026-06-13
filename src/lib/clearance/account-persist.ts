@@ -1,8 +1,9 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
+import { Pool } from "pg";
 import type { ClearanceStore } from "@/lib/clearance/store-types";
 import { GLOBAL_ACCOUNT, normalizeWallet } from "@/lib/clearance/account-wallet";
-
+import { getPostgresUrl } from "@/lib/env/server";
 export type PlatformStore = {
   version: 1;
   accounts: Record<string, ClearanceStore>;
@@ -70,22 +71,22 @@ async function saveFilePlatform(platform: PlatformStore): Promise<void> {
   fileLoaded = true;
 }
 
-async function getPgPool() {
-  const url =
-    process.env.DATABASE_URL?.trim() ||
-    process.env.POSTGRES_URL?.trim() ||
-    process.env.POSTGRES_PRISMA_URL?.trim();
+let pgPool: Pool | null = null;
+
+function getPgPool(): Pool | null {
+  const url = getPostgresUrl();
   if (!url) return null;
-  const { Pool } = await import("pg");
-  return new Pool({
-    connectionString: url,
-    ssl: url.includes("localhost") ? undefined : { rejectUnauthorized: false },
-    max: 5,
-  });
+  if (!pgPool) {
+    pgPool = new Pool({
+      connectionString: url,
+      ssl: url.includes("localhost") ? undefined : { rejectUnauthorized: false },
+      max: 5,
+    });
+  }
+  return pgPool;
 }
 
-async function ensurePgSchema(pool: import("pg").Pool): Promise<void> {
-  if (pgReady) return;
+async function ensurePgSchema(pool: Pool): Promise<void> {  if (pgReady) return;
   await pool.query(`
     CREATE TABLE IF NOT EXISTS clearance_accounts (
       wallet TEXT PRIMARY KEY,
@@ -98,7 +99,7 @@ async function ensurePgSchema(pool: import("pg").Pool): Promise<void> {
 
 export async function loadAccountStore(wallet: string): Promise<ClearanceStore> {
   const key = normalizeWallet(wallet);
-  const pool = await getPgPool();
+  const pool = getPgPool();
 
   if (pool) {
     await ensurePgSchema(pool);
@@ -121,7 +122,7 @@ let fileCache: PlatformStore = { version: 1, accounts: {} };
 
 export async function saveAccountStore(wallet: string, store: ClearanceStore): Promise<void> {
   const key = normalizeWallet(wallet);
-  const pool = await getPgPool();
+  const pool = getPgPool();
 
   if (pool) {
     await ensurePgSchema(pool);
