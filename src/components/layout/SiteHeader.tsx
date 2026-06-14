@@ -5,7 +5,6 @@ import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { useConnection } from "@/lib/connection";
 import { WalletConnect } from "@/components/wallet/WalletConnect";
-import { ConnectDialog } from "@/components/wallet/ConnectDialog";
 import { Clearance402Brand } from "@/components/brand/Clearance402Logo";
 
 const NAV = [
@@ -51,7 +50,6 @@ function MobileNavSheet({
 
 export function SiteHeader({ variant = "light" }: { variant?: "light" | "transparent" }) {
   const [open, setOpen] = useState(false);
-  const [connectOpen, setConnectOpen] = useState(false);
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isConnected } = useConnection();
@@ -62,9 +60,9 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
   const openConsole = () => {
     if (isConnected) {
       navigate({ to: "/dashboard" });
-    } else {
-      setConnectOpen(true);
+      return;
     }
+    navigate({ to: "/login", search: { redirect: "/dashboard" } });
   };
 
   return (
@@ -92,20 +90,11 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
             </div>
           </div>
 
-          {/* Right actions */}
+          {/* Right actions — WalletConnect opens RainbowKit directly (no Radix dialog trap) */}
           <div className="hidden lg:flex items-center gap-2 shrink-0">
-            {!onConnectPage &&
-              (isConnected ? (
-                <WalletConnect />
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setConnectOpen(true)}
-                  className="text-[13px] font-medium text-zinc-600 hover:text-zinc-900 px-3 py-2 rounded-full transition-colors"
-                >
-                  Connect wallet
-                </button>
-              ))}
+            {!onConnectPage && (
+              <WalletConnect variant={isConnected ? "solid" : "ghost"} />
+            )}
             <button
               type="button"
               onClick={openConsole}
@@ -157,21 +146,9 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           ))}
         </div>
         <div className="mt-6 flex flex-col gap-3">
-          {!onConnectPage &&
-            (isConnected ? (
-              <WalletConnect className="w-full justify-center py-3" />
-            ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  close();
-                  setConnectOpen(true);
-                }}
-                className="inline-flex w-full justify-center rounded-full border border-zinc-200 text-zinc-900 text-[14px] font-medium px-4 py-3"
-              >
-                Connect wallet
-              </button>
-            ))}
+          {!onConnectPage && (
+            <WalletConnect className="w-full justify-center py-3" onBeforeConnect={close} />
+          )}
           <button
             type="button"
             onClick={() => {
@@ -187,8 +164,6 @@ export function SiteHeader({ variant = "light" }: { variant?: "light" | "transpa
           </button>
         </div>
       </MobileNavSheet>
-
-      <ConnectDialog open={connectOpen} onOpenChange={setConnectOpen} />
     </div>
   );
 }

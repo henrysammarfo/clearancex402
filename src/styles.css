@@ -166,3 +166,8 @@
     display: none;
   }
 }
+
+/* RainbowKit connect modal must stay clickable above app overlays */
+[data-rk] {
+  pointer-events: auto !important;
+}

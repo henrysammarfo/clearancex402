@@ -32,6 +32,12 @@ export function ConnectDialog({
   const { isConnected, isWrongChain, status } = useConnection();
   const connecting = status === "connecting";
 
+  /** Radix Dialog blocks pointer events on portaled siblings (RainbowKit). Close first. */
+  const openWalletModal = (openModal: () => void) => {
+    onOpenChange(false);
+    window.setTimeout(() => openModal(), 100);
+  };
+
   // When the wallet finishes connecting on the right chain, move along.
   useEffect(() => {
     if (open && isConnected) {
@@ -68,7 +74,7 @@ export function ConnectDialog({
           </div>
         )}
 
-        {/* Primary action — RainbowKit modal */}
+        {/* Primary action — close dialog before RainbowKit opens */}
         <div className="mt-1">
           <ConnectButton.Custom>
             {({ openConnectModal, openChainModal, account, chain, mounted }) => {
@@ -77,7 +83,7 @@ export function ConnectDialog({
                 return (
                   <button
                     type="button"
-                    onClick={openChainModal}
+                    onClick={() => openWalletModal(openChainModal)}
                     className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-red-600 text-white px-4 py-3 text-[14px] font-medium hover:bg-red-700"
                   >
                     <AlertTriangle className="size-4" /> Switch network
@@ -102,7 +108,7 @@ export function ConnectDialog({
               return (
                 <button
                   type="button"
-                  onClick={openConnectModal}
+                  onClick={() => openWalletModal(openConnectModal)}
                   disabled={!ready}
                   className={cn(
                     "w-full inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 text-white px-4 py-3 text-[14px] font-medium hover:bg-zinc-800",
