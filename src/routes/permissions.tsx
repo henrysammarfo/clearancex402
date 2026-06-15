@@ -20,6 +20,7 @@ import {
 } from "@/lib/clearance/use-clearance-account";
 import { defaultAllowedDomains } from "@/lib/clearance/permission-domains";
 import { toJsonSafe } from "@/lib/json-safe";
+import { AgentSessionFundingCard } from "@/components/clearance/AgentSessionFundingCard";
 
 export const Route = createFileRoute("/permissions")({
   head: () => ({
@@ -74,7 +75,7 @@ function Page() {
       const expiry = parseInt(expiryHours, 10);
       const domainList = domains.split(",").map((d) => d.trim()).filter(Boolean);
 
-      const { smartAccount } = await getOrCreateSessionSmartAccount();
+      const { smartAccount, sessionOwner } = await getOrCreateSessionSmartAccount();
       setSessionAccount(smartAccount.address);
 
       const granted = await requestAgentSpendPermission({
@@ -83,7 +84,7 @@ function Page() {
       });
       const parsed = parseGrantedPermission(granted);
 
-      const res = await clearanceApi.savePermission(wallet, {
+      await clearanceApi.savePermission(wallet, {
           userWallet: wallet,
           agentId,
           maxPerCallUsd,
@@ -102,6 +103,7 @@ function Page() {
           userWallet: wallet,
           agentId,
           smartAccount: smartAccount.address,
+          buyerEoa: sessionOwner.address,
           privateKey,
         });
       }
@@ -136,7 +138,7 @@ function Page() {
         </p>
       )}
 
-      <div className="grid lg:grid-cols-[1fr_1.3fr] gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="text-sm">Grant ERC-7715 permission</CardTitle>
@@ -212,6 +214,12 @@ function Page() {
               ))}
           </CardContent>
         </Card>
+      </div>
+
+      <div className="mt-6">
+        <AgentSessionFundingCard
+          permissionsAgentIds={grants.filter((g) => !g.revokedAt).map((g) => g.agentId)}
+        />
       </div>
     </ConsoleShell>
   );

@@ -94,6 +94,8 @@ export type RegisteredTool = {
 export type AgentSessionRecord = {
   agentId: string;
   smartAccount: string;
+  /** EOA that signs x402 payments for this agent (fund with ETH + USDC on Base Sepolia) */
+  buyerEoa?: string;
   encryptedPrivateKey: string;
   updatedAt: string;
 };

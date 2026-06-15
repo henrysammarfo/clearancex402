@@ -63,7 +63,7 @@ export type AccountSnapshot = {
   veniceEvals: import("@/lib/clearance/store-types").VeniceEvalResult[];
   redelegations: import("@/lib/clearance/store-types").RedelegationRecord[];
   customTools: import("@/lib/clearance/store-types").RegisteredTool[];
-  agentSessions: { agentId: string; smartAccount: string; updatedAt: string }[];
+  agentSessions: { agentId: string; smartAccount: string; buyerEoa?: string; updatedAt: string }[];
 };
 
 export type DashboardPayload = {

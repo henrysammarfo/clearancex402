@@ -212,6 +212,7 @@ export async function saveAgentSession(
   params: {
     agentId: string;
     smartAccount: string;
+    buyerEoa?: string;
     encryptedPrivateKey: string;
   },
 ) {
@@ -219,6 +220,7 @@ export async function saveAgentSession(
     store.agentSessions[params.agentId] = {
       agentId: params.agentId,
       smartAccount: params.smartAccount,
+      buyerEoa: params.buyerEoa,
       encryptedPrivateKey: params.encryptedPrivateKey,
       updatedAt: new Date().toISOString(),
     };

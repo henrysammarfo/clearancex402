@@ -156,6 +156,7 @@ export async function loadFullAccountSnapshot(wallet: string) {
     agentSessions: Object.values(store.agentSessions).map((s) => ({
       agentId: s.agentId,
       smartAccount: s.smartAccount,
+      buyerEoa: s.buyerEoa,
       updatedAt: s.updatedAt,
     })),
   };

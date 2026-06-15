@@ -24,6 +24,7 @@ export const Route = createFileRoute("/api/clearance/session")({
             session: {
               agentId: session.agentId,
               smartAccount: session.smartAccount,
+              buyerEoa: session.buyerEoa,
               updatedAt: session.updatedAt,
             },
           });
@@ -38,6 +39,7 @@ export const Route = createFileRoute("/api/clearance/session")({
             userWallet?: string;
             agentId: string;
             smartAccount: string;
+            buyerEoa?: string;
             privateKey: Hex;
           };
           const wallet = requireWallet(walletFromRequest(request, body));
@@ -48,6 +50,7 @@ export const Route = createFileRoute("/api/clearance/session")({
           await saveAgentSession(wallet, {
             agentId: body.agentId,
             smartAccount: body.smartAccount,
+            buyerEoa: body.buyerEoa,
             encryptedPrivateKey,
           });
           return Response.json({
