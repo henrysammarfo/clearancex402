@@ -1,41 +1,47 @@
 # Hackathon demo runbook
 
-**Goal:** Real Story CDR + IP + Queryline in **2–3 minutes** for the submission video. No fake txs.
+**Goal:** Live x402 probe + clearance flow in **2–3 minutes** for the submission video.
 
 **Shot-by-shot script:** [DEMO-VIDEO.md](./DEMO-VIDEO.md)  
+**Images + pitch video:** [MEDIA-PRODUCTION.md](./MEDIA-PRODUCTION.md)  
 **Form answers:** [HACKATHON-SUBMISSION.md](./HACKATHON-SUBMISSION.md)  
-**A2A required?** [A2A.md](./A2A.md) — **no**
+**Gamma deck input:** [GAMMA-PITCH.md](./GAMMA-PITCH.md)
 
 ## Before you record
 
-```bash
-npm run hackathon:check
-npm run setup:agents    # ~/.linestack/.env + .cursor/mcp.json from examples
+```powershell
+node scripts/smoke-clearance402.mjs https://clearancex402.vercel.app
 ```
 
-Production: https://linestack.vercel.app/status — RPC, registry, IPFS green.
+Production must show **22/22** and `/api/clearance/status` → `databaseConfigured: true`.
 
-Two wallets: publisher + buyer on Aeneid (1315).
+Wallet: MetaMask on **Base Sepolia (84532)**.
 
 ## Web demo (video — follow DEMO-VIDEO.md)
 
 | Act | Time | Route |
 |-----|------|--------|
-| Hook + status | 0:00–0:25 | `/` → `/status` |
-| Vaultline | 0:25–1:15 | create → upload → register IP → buy → unlock |
-| Queryline | 1:15–2:30 | dataset → seed → template → request → fulfill → unlock |
-| Agents | 2:30–2:45 | `/mcp` (17 tools) |
+| Hook + status | 0:00–0:22 | `/` → `/status` |
+| x402 probe | 0:35–1:15 | `/payment-lab` → x402 demo |
+| Venice eval | 1:20–1:40 | `/venice-eval` |
+| Permissions + clearance | 1:40–2:15 | `/permissions` → `/agent-clearance` |
+| Audit + agents | 2:15–2:55 | `/audit` → CLI → `/mcp` |
 
 ## Agent demo (Cursor / MCP)
 
-1. `/linestack-agent-setup` then `/linestack-cdr-demo` in Agent chat.
-2. Or CLI: `linestack status` → full flow in [SDK-CLI-MCP.md](./SDK-CLI-MCP.md).
+```bash
+npm run build:packages
+CLEARANCE402_API_URL=https://clearancex402.vercel.app npx -y @clearance402/mcp-server
+```
+
+Or CLI: `npm run cli -- status` → `tools list` → probe.
 
 ## Talking points
 
-- Story **CDR** encrypts data; **PIL licenses** gate decrypt.
-- **Queryline** = dataset vault vs result vault; publisher fulfill + **Automata** on-chain.
-- **Agents:** MCP + CLI + SDK — same registry as web ([AGENT-INTEGRATIONS.md](./AGENT-INTEGRATIONS.md)).
+- **x402** — real 402 challenge and USDC on Sepolia (not mocked)
+- **Venice** — API scoring + heuristic fallback for judge-friendly demos
+- **ERC-7715** — spend caps and allowlists before pay-if-cleared
+- **Agents** — SDK + CLI + MCP parity with web app
 
 ## npm publish (maintainer)
 
@@ -43,6 +49,8 @@ Two wallets: publisher + buyer on Aeneid (1315).
 
 ## If live fails
 
-- `/status` for RPC/API/IPFS/registry.
-- Wrong chain → switch to **1315**.
-- Fulfill → publisher wallet + `USE_AUTOMATA_DCAP_FIXTURE=1` on server (Vercel) and in `~/.linestack/.env` for CLI/MCP.
+```powershell
+node scripts/smoke-clearance402.mjs https://clearancex402.vercel.app
+```
+
+Check Vercel env: Postgres (`STORAGE_*` or `POSTGRES_URL`), `WALLET_PRIVATE_KEY`, `SESSION_ENCRYPTION_SECRET`.

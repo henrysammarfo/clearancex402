@@ -1,6 +1,6 @@
-# CDR Hackathon — submission copy (June 3, 2026)
+# MetaMask × 1Shot × Venice — submission copy
 
-Use this when filling the Google form. **Do not** paste secrets or npm tokens anywhere.
+Use when filling the hackathon Google form. **Do not** paste secrets or private keys.
 
 ---
 
@@ -10,44 +10,43 @@ Use this when filling the Google form. **Do not** paste secrets or npm tokens an
 
 Henry Sam Marfo
 
-*(Adjust if submitting under a different legal name.)*
-
 ### Title of your project
 
-**Line Stack** — Vaultline & Queryline on Story Aeneid
+**Clearance402** — Agent payment trust layer for x402 & MCP
 
 ### Describe what your project is (important!)
 
-Line Stack is a **confidential data marketplace** on Story testnet (Aeneid, chain 1315) with two products:
+Clearance402 is the **trust layer for agent payments** on **Base Sepolia**. Before an autonomous agent pays for an x402 or MCP tool, it gets a machine-readable clearance decision — ALLOW, WARN, or BLOCK — with reasons.
 
-- **Vaultline** — creators encrypt files into CDR vaults, register them as Story IP assets, list them for sale, and buyers mint a license to decrypt (real PIL + CDR, no mock txs).
-- **Queryline** — publishers keep datasets in a CDR vault; buyers request an **allow-listed** query template and receive only the **answer** in a per-buyer result vault. Raw dataset rows are never exposed to buyers.
+The live app is at **https://clearancex402.vercel.app**. Operators connect a MetaMask wallet, run **live x402 probes** (real HTTP 402 → USDC settlement → response), evaluate output with **Venice AI** (or a **heuristic fallback** when API credits are exhausted), grant **ERC-7715-style spend permissions**, and let agents **pay only if cleared**. Every probe, payment, block, and permission event is written to an **audit log** backed by **Postgres on Vercel**.
 
-The web app is live at **https://linestack.vercel.app**. Developers can drive the same flows via **CLI, SDK, and MCP** (17 tools) against a shared registry and VPS IPFS stack.
+Developers integrate via **SDK, CLI, and MCP** (`@clearance402/sdk`, `@clearance402/cli`, `@clearance402/mcp-server`). A **free built-in x402 demo** (`/api/demo/x402`) lets judges verify end-to-end without Venice credits.
 
-We are honest that Queryline **fulfill** runs on the publisher side today (CDR decrypt → template → write result) because `cdr-sdk@0.2.1` does not yet expose enclave `executeQuery`. We add **EIP-712 fulfill binding** and **Automata DCAP on-chain attestation** on every fulfill for stronger verifiability.
+### Describe how your project uses the hackathon stack
 
-### Describe how your project uses CDR
-
-1. **Vault allocation & secrets** — `allocate` / `write` / `accessCDR` on Aeneid for vaults, dataset vaults, and per-buyer result vaults.
-2. **Dynamic access control** — owner read/write, Story **license** read conditions for buyers, custom Line Stack publisher-write / buyer-read conditions on dataset and result vaults (`LINESTACK_*` contracts in `contracts/deployed.aeneid.json`).
-3. **Data marketplace (Idea 02)** — Vaultline: encrypt → IPFS pin → register IP → listing → license mint → license-gated decrypt.
-4. **Confidential query marketplace (Idea 03)** — Queryline: dataset vault (buyer cannot decrypt) + result vault (buyer can decrypt answer only); allow-listed templates in app registry + on-chain template registry.
-5. **Composable vault layout** — same registry/API for web, CLI, SDK, and MCP; audit log rows tied to real tx hashes.
-6. **Attestation layer** — EIP-712 signed fulfill payload + Automata `verifyAndAttestOnChain` on Story Aeneid (Intel DCAP quote verified on-chain).
+1. **x402** — Live probe flow on Base Sepolia using `@x402/fetch` and x402.org facilitator; built-in demo endpoint for judges.
+2. **MetaMask Smart Accounts / ERC-7715** — Permission mandates with per-call and daily caps, domain allowlists, revocation; checked before pay-if-cleared.
+3. **Venice AI** — Output quality scoring via `api.venice.ai/api/v1/chat/completions`; heuristic fallback ensures demos work without credits.
+4. **Agent surfaces** — MCP server, CLI, and SDK for autonomous clearance checks; A2A lab coordinates Scout/Buyer/Verifier/Guardian roles.
+5. **Production** — Vercel deploy + Neon Postgres; **22 automated smoke tests** (API, SDK, CLI, MCP).
 
 ### Demo video
 
-*(Upload to YouTube — **2–3 minutes** per hackathon form.)*
+*(Upload to YouTube — **2–3 minutes**.)*
 
-**Full shot list:** [DEMO-VIDEO.md](./DEMO-VIDEO.md)
+**Shot list:** [DEMO-VIDEO.md](./DEMO-VIDEO.md)
 
 Suggested flow:
 
-1. `/status` — RPC + registry green  
-2. Vaultline: create vault → upload → register IP → (wallet B) buy license → unlock  
-3. Queryline: seed dataset → request query → fulfill → unlock result → show attestation + Automata tx on explorer  
-4. Optional: `/mcp` tool list or Cursor calling `linestack_status`
+1. Landing + `/status` — production green  
+2. Connect wallet → Payment Lab → **x402 demo probe** (`paid: true`)  
+3. Venice eval (or heuristic fallback)  
+4. Permissions → Agent clearance → **Check** → **Pay if cleared**  
+5. Audit log → CLI `tools list` → MCP page  
+
+### Pitch video (if separate field)
+
+**~90 seconds** — script in [GAMMA-PITCH.md](./GAMMA-PITCH.md) and [MEDIA-PRODUCTION.md](./MEDIA-PRODUCTION.md)
 
 ### Your email
 
@@ -55,7 +54,7 @@ jasonneil4040@gmail.com
 
 ### Discord handle (optional)
 
-*(Your Story hackathon Discord username — then post using [DISCORD-SUBMISSION.md](./DISCORD-SUBMISSION.md).)*
+*(Your cook-off Discord username — post using [DISCORD-SUBMISSION.md](./DISCORD-SUBMISSION.md).)*
 
 ### Teammates (optional)
 
@@ -63,44 +62,42 @@ jasonneil4040@gmail.com
 
 ### GitHub link
 
-https://github.com/henrysammarfo/linestack
+https://github.com/henrysammarfo/clearancex402
 
-**Required:** Add GitHub user **`jacob-tucker`** as collaborator (read access is enough if repo is private).
+### Live demo URL
 
-### Which track?
+https://clearancex402.vercel.app
 
-Select: **Technical Implementation Track**  
-*(You can note in Discord that the project also fits Best CDR App — judges may move it.)*
+### Which track(s)?
 
-Suggested primary: **Technical Implementation** (conditions, multi-vault Queryline, on-chain registries, Automata).  
-Strong secondary: **Best CDR App** (polish, two-product UX, live URL).
+- x402 + ERC-7710  
+- Best Agent  
+- A2A  
+- Venice AI  
 
 ### Rate your experience (1–5)
 
-Suggest: **4** — CDR vault/condition APIs are clear; Queryline “where does compute run?” needed reading SDK limits; Story IP + Storacha setup has moving parts.
+Suggest: **4** — x402 + Smart Accounts integration is powerful; Venice x402 is mainnet-only so we use API key + heuristic fallback for Sepolia demos.
 
 ### Was anything confusing?
 
 *(Example — edit to your voice:)*
 
-CDR vault/allocate/write/access was straightforward. The main nuance was that **query execution is not inside a CDR enclave yet** in the SDK — we documented publisher-side fulfill clearly. Storacha proof for `registerIp` and aligning registry env between Vercel and VPS took the most setup time.
+Venice’s x402 payment path targets Base mainnet; for Sepolia demos we use the REST API with `VENICE_API_KEY` and a local heuristic when credits run out. Postgres on Vercel required the Neon serverless driver instead of `pg`.
 
-### Feedback for Story / CDR
+### Feedback
 
-*(Example:)*
-
-A single “fulfill query” example in the SDK docs (dataset vault + result vault pattern) would help hackathon teams. On-chain template registry examples alongside IP licensing would be great. Automata + Aeneid worked well for attestation demos.
+A single “agent pay-if-cleared” reference implementation tying x402 + ERC-7715 + audit would help future hackathon teams.
 
 ---
 
 ## Pre-submit checklist
 
-- [ ] Repo: add **jacob-tucker** on GitHub  
 - [ ] Demo video on YouTube, link in form  
-- [ ] `https://linestack.vercel.app` loads; `/api/registry/status` → `available: true`  
-- [ ] `npm run hackathon:check` passes locally  
-- [ ] `npm publish` for `@line-stack/*` — [NPM-PUBLISH-COMMANDS.md](./NPM-PUBLISH-COMMANDS.md)  
-- [ ] Discord: post using [DISCORD-SUBMISSION.md](./DISCORD-SUBMISSION.md)  
+- [ ] Pitch video / Gamma deck (if required)  
+- [ ] `https://clearancex402.vercel.app` — smoke **22/22**  
+- [ ] Discord post: [DISCORD-SUBMISSION.md](./DISCORD-SUBMISSION.md)  
+- [ ] npm publish (optional): [NPM-PUBLISH-COMMANDS.md](./NPM-PUBLISH-COMMANDS.md)  
 
 ---
 
@@ -108,9 +105,9 @@ A single “fulfill query” example in the SDK docs (dataset vault + result vau
 
 | Resource | URL |
 |----------|-----|
-| Live app | https://linestack.vercel.app |
-| Architecture map | https://linestack.vercel.app/architecture |
-| MCP tools | https://linestack.vercel.app/mcp |
-| Agent runbook | https://linestack.vercel.app/agent-runbook |
-| Queryline honesty | https://github.com/henrysammarfo/linestack/blob/main/docs/QUERYLINE.md |
-| Agent integrations | https://github.com/henrysammarfo/linestack/blob/main/docs/AGENT-INTEGRATIONS.md |
+| Live app | https://clearancex402.vercel.app |
+| Status API | https://clearancex402.vercel.app/api/clearance/status |
+| Free x402 demo | https://clearancex402.vercel.app/api/demo/x402 |
+| MCP / agents | https://clearancex402.vercel.app/mcp |
+| Media guide | https://github.com/henrysammarfo/clearancex402/blob/main/docs/MEDIA-PRODUCTION.md |
+| Smoke script | `node scripts/smoke-clearance402.mjs https://clearancex402.vercel.app` |

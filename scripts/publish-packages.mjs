@@ -9,12 +9,7 @@ function npmWhoami() {
   }
 }
 
-const ORDER = [
-  "@line-stack/cdr-core",
-  "@line-stack/sdk",
-  "@line-stack/cli",
-  "@line-stack/mcp-server",
-];
+const ORDER = ["@clearance402/sdk", "@clearance402/cli", "@clearance402/mcp-server"];
 
 const dryRun = process.argv.includes("--dry-run");
 
@@ -22,7 +17,7 @@ console.log("Building packages…");
 execSync("npm run build:packages", { stdio: "inherit" });
 
 console.log("Verifying packages…");
-for (const dir of ["cdr-core", "sdk", "cli", "mcp-server"]) {
+for (const dir of ["clearance402-sdk", "clearance402-cli", "clearance402-mcp"]) {
   execSync(`node scripts/verify-npm-package.mjs packages/${dir}`, { stdio: "inherit" });
 }
 
@@ -32,8 +27,8 @@ if (!dryRun) {
     console.error(
       "\nFAIL  Not logged in to npm (npm whoami failed).\n" +
         "  Run: npm login\n" +
-        "  Then confirm you are an owner of org @line-stack (https://www.npmjs.com/settings/line-stack/packages).\n" +
-        "  Scoped publish without auth often returns 404 Not Found.\n",
+        "  Or set NODE_AUTH_TOKEN for CI / one-shot publish.\n" +
+        "  Confirm you own org @clearance402 (https://www.npmjs.com/settings/clearance402/packages).\n",
     );
     process.exit(1);
   }

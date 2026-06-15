@@ -84,9 +84,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Clearance402 — Agent payment trust layer" },
       { property: "og:description", content: "Before your agent pays, it gets clearance." },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/logo.svg" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:image", content: "/logo.svg" },
+      { property: "og:image", content: "/media/og-banner.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/media/og-banner.png" },
     ],
     links: [
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },

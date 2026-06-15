@@ -18,7 +18,7 @@ function fail(msg) {
 }
 
 if (pkg.private) fail("package must not be private");
-if (!pkg.name?.startsWith("@line-stack/")) fail("name must be @line-stack/*");
+if (!pkg.name?.startsWith("@clearance402/")) fail("name must be @clearance402/*");
 
 const deps = { ...pkg.dependencies, ...pkg.optionalDependencies };
 for (const [name, spec] of Object.entries(deps ?? {})) {

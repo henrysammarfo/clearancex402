@@ -2,6 +2,9 @@
 
 Use this file when building your deck in [Gamma](https://gamma.app). Paste sections into Gamma’s “Add script” / speaker notes fields.
 
+**Pre-made images:** `public/media/pitch-slide-title.png`, `architecture.svg`, `og-banner.png`  
+**Full media guide:** [MEDIA-PRODUCTION.md](./MEDIA-PRODUCTION.md)
+
 ---
 
 ## One-liner

@@ -24,6 +24,9 @@
   },
   "keywords": ["x402", "clearance", "agents", "base", "payments"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "typescript": "^5.8.3"
   }

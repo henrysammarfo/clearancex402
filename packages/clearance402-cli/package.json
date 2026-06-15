@@ -19,6 +19,9 @@
   },
   "keywords": ["x402", "clearance", "cli", "agents"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@clearance402/sdk": "0.1.0"
   },

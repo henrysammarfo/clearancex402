@@ -21,6 +21,7 @@ dist-ssr
 .env.*.local
 .env.vercel.import
 .data/
+.npmrc.publish
 .buyer-wallet.generated.json
 .automata-demo-last.json
 .tmp-automata/

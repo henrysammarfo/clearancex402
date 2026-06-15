@@ -1,0 +1,81 @@
+<svg width="1200" height="680" viewBox="0 0 1200 680" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="680" fill="#EFEFEF"/>
+  <text x="60" y="56" fill="#18181b" font-family="system-ui,sans-serif" font-size="28" font-weight="600">Clearance402  How it works</text>
+  <text x="60" y="88" fill="#52525b" font-family="system-ui,sans-serif" font-size="16">Trust layer between agents and paid x402 / MCP tools � Base Sepolia</text>
+
+  <!-- User wallet -->
+  <rect x="60" y="140" width="220" height="88" rx="12" fill="#fff" stroke="#d4d4d8" stroke-width="2"/>
+  <text x="170" y="178" text-anchor="middle" fill="#18181b" font-family="system-ui,sans-serif" font-size="16" font-weight="600">User wallet</text>
+  <text x="170" y="204" text-anchor="middle" fill="#71717a" font-family="system-ui,sans-serif" font-size="13">MetaMask � ERC-7715</text>
+
+  <!-- Arrow -->
+  <path d="M290 184h80" stroke="#4f46e5" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <!-- Clearance402 core -->
+  <rect x="380" y="110" width="440" height="148" rx="16" fill="#4f46e5"/>
+  <text x="600" y="152" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="20" font-weight="600">Clearance402 APIs + Dashboard</text>
+  <text x="600" y="182" text-anchor="middle" fill="#e0e7ff" font-family="system-ui,sans-serif" font-size="14">Probe � Evaluate � Check � Pay-if-cleared � Audit</text>
+  <text x="600" y="210" text-anchor="middle" fill="#c7d2fe" font-family="system-ui,sans-serif" font-size="13">SDK � CLI � MCP for autonomous agents</text>
+  <text x="600" y="236" text-anchor="middle" fill="#a5b4fc" font-family="system-ui,sans-serif" font-size="12">clearancex402.vercel.app</text>
+
+  <!-- Arrow to tools -->
+  <path d="M830 184h80" stroke="#4f46e5" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <!-- Paid tools -->
+  <rect x="920" y="120" width="220" height="68" rx="12" fill="#fff" stroke="#d4d4d8" stroke-width="2"/>
+  <text x="1030" y="152" text-anchor="middle" fill="#18181b" font-family="system-ui,sans-serif" font-size="15" font-weight="600">x402 paid tools</text>
+  <text x="1030" y="174" text-anchor="middle" fill="#71717a" font-family="system-ui,sans-serif" font-size="12">402 � USDC � response</text>
+
+  <rect x="920" y="208" width="220" height="68" rx="12" fill="#fff" stroke="#d4d4d8" stroke-width="2"/>
+  <text x="1030" y="240" text-anchor="middle" fill="#18181b" font-family="system-ui,sans-serif" font-size="15" font-weight="600">Venice / custom APIs</text>
+  <text x="1030" y="262" text-anchor="middle" fill="#71717a" font-family="system-ui,sans-serif" font-size="12">Output quality scoring</text>
+
+  <!-- Flow steps -->
+  <rect x="60" y="320" width="200" height="120" rx="12" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="160" y="352" text-anchor="middle" fill="#4f46e5" font-family="system-ui,sans-serif" font-size="13" font-weight="700">1. PROBE</text>
+  <text x="160" y="378" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">HTTP 402 challenge</text>
+  <text x="160" y="398" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">USDC settle on Sepolia</text>
+  <text x="160" y="418" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Real JSON response</text>
+
+  <rect x="290" y="320" width="200" height="120" rx="12" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="390" y="352" text-anchor="middle" fill="#4f46e5" font-family="system-ui,sans-serif" font-size="13" font-weight="700">2. EVALUATE</text>
+  <text x="390" y="378" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Venice API when credits</text>
+  <text x="390" y="398" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Heuristic fallback</text>
+  <text x="390" y="418" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Trust score 0100</text>
+
+  <rect x="520" y="320" width="200" height="120" rx="12" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="620" y="352" text-anchor="middle" fill="#4f46e5" font-family="system-ui,sans-serif" font-size="13" font-weight="700">3. CHECK</text>
+  <text x="620" y="378" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">ALLOW / WARN / BLOCK</text>
+  <text x="620" y="398" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">ERC-7715 permission caps</text>
+  <text x="620" y="418" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Domain allowlists</text>
+
+  <rect x="750" y="320" width="200" height="120" rx="12" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="850" y="352" text-anchor="middle" fill="#4f46e5" font-family="system-ui,sans-serif" font-size="13" font-weight="700">4. PAY</text>
+  <text x="850" y="378" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Pay-if-cleared only</text>
+  <text x="850" y="398" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Session key + x402</text>
+  <text x="850" y="418" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Server-side execution</text>
+
+  <rect x="980" y="320" width="160" height="120" rx="12" fill="#fff" stroke="#4f46e5" stroke-width="2"/>
+  <text x="1060" y="352" text-anchor="middle" fill="#4f46e5" font-family="system-ui,sans-serif" font-size="13" font-weight="700">5. AUDIT</text>
+  <text x="1060" y="378" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Every probe</text>
+  <text x="1060" y="398" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Payment + block</text>
+  <text x="1060" y="418" text-anchor="middle" fill="#52525b" font-family="system-ui,sans-serif" font-size="12">Postgres persist</text>
+
+  <!-- Free demo callout -->
+  <rect x="60" y="500" width="520" height="120" rx="12" fill="#eef2ff" stroke="#818cf8" stroke-width="2"/>
+  <text x="90" y="536" fill="#312e81" font-family="system-ui,sans-serif" font-size="16" font-weight="600">Free built-in demo (no Venice credits)</text>
+  <text x="90" y="564" fill="#4338ca" font-family="system-ui,sans-serif" font-size="13">GET /api/demo/x402  real 402 � USDC � JSON on Base Sepolia</text>
+  <text x="90" y="590" fill="#6366f1" font-family="system-ui,sans-serif" font-size="13">Payment Lab � Clearance402 x402 Demo � Run probe</text>
+
+  <!-- Venice callout -->
+  <rect x="620" y="500" width="520" height="120" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="650" y="536" fill="#14532d" font-family="system-ui,sans-serif" font-size="16" font-weight="600">Venice path (judges add VENICE_API_KEY)</text>
+  <text x="650" y="564" fill="#166534" font-family="system-ui,sans-serif" font-size="13">POST api.venice.ai/api/v1/chat/completions</text>
+  <text x="650" y="590" fill="#15803d" font-family="system-ui,sans-serif" font-size="13">Heuristic fallback when credits exhausted  demo always works</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#4f46e5"/>
+    </marker>
+  </defs>
+</svg>

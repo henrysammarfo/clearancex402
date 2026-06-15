@@ -1,68 +1,87 @@
 # Demo video — 2–3 minutes (submission)
 
-**Target length:** 2:00–2:45 · **Format:** screen recording + voiceover · **URL:** YouTube unlisted → paste in Google form
+**Target length:** 2:30–3:00 · **Format:** screen recording + voiceover · **Upload:** YouTube (unlisted) → paste link in hackathon form
 
-**Live app:** https://linestack.vercel.app
+**Live app:** https://clearancex402.vercel.app
 
----
-
-## Pre-flight (before you hit Record)
-
-- [ ] Production: `/status` green (RPC, registry, IPFS)
-- [ ] Wallet A (publisher) + Wallet B (buyer) on **Aeneid 1315**, funded
-- [ ] Incognito = buyer, normal window = publisher (or two profiles)
-- [ ] Close extra tabs; zoom browser 110%; hide bookmarks bar
-- [ ] Prepare a small file `demo-pack.zip` or `.json` (>1KB) for upload
-- [ ] Script this tab order: Status → Vaultline flow → Queryline flow → MCP page → (optional) explorer tx
+**Pitch script (90s, separate video):** [GAMMA-PITCH.md](./GAMMA-PITCH.md#pitch-video-script-90-seconds)
 
 ---
 
-## Shot list (wow pacing)
+## Pre-flight (before Record)
 
-| Time | Visual | Narration (say this) |
-|------|--------|----------------------|
-| **0:00–0:12** | **/architecture** — quick pan Status Quo → 8 steps → comparison table | “We turn data into programmable IP on CDR — not a one-time black box. Here’s the eight-step model.” |
-| **0:12–0:22** | Landing → **Vaultline** | “Line Stack: Vaultline for licensed files, Queryline for licensed answers — real Story Aeneid txs.” |
-| **0:15–0:25** | **/status** — all green chips | “Everything hits live Story RPC, our registry, and IPFS — no mocked success states.” |
-| **0:25–0:55** | **Publisher:** Create vault → Upload file → Register IP + listing. **Show tx hash / explorer link** on success. | “Vaultline: encrypt into a CDR vault, register as Story IP, list it. Real on-chain allocate and license terms.” |
-| **0:55–1:15** | **Buyer** (incognito): Listings → Buy license → Unlock → file downloads or preview. **Explorer link.** | “Buyer mints a PIL license — only then does CDR decrypt. Atomic pay-to-unlock.” |
-| **1:15–1:25** | Switch to publisher — **Queryline** dashboard | “Queryline is the confidential **query marketplace**: datasets stay in a vault buyers never see.” |
-| **1:25–1:45** | Create dataset → Seed sample rows → Add template `avg_value_by_region` | “Publisher seeds encrypted rows and registers an allow-listed template — on-chain registries when deployed.” |
-| **1:45–2:00** | **Buyer:** Request query `{ "region": "EU" }` | “Buyer only gets a **result vault** allocated — not the dataset.” |
-| **2:00–2:20** | **Publisher:** Dashboard → **Fulfill** → wait for txs. Open result → show **Attestation** + **Automata tx** link. | “Fulfill decrypts on the publisher, runs the template, writes the answer, signs EIP-712, and submits **Automata DCAP** on Story — verifiable on-chain.” |
-| **2:20–2:30** | **Buyer:** Results → Unlock → show JSON answer `avg_value: 42` (or your seed) | “Buyer unlocks **only the answer** — never the full dataset.” |
-| **2:30–2:45** | **/mcp** tool grid → quick scroll → optional 3s Cursor MCP settings green | “Same flows for agents: seventeen MCP tools, CLI, and SDK — one shared registry as the web app. Built for the CDR hackathon on Story Aeneid.” |
+- [ ] Production healthy: `node scripts/smoke-clearance402.mjs https://clearancex402.vercel.app` → **22/22**
+- [ ] MetaMask on **Base Sepolia (84532)** with a little ETH + USDC (for live probe if shown)
+- [ ] Browser zoom **110%**; hide bookmarks bar; close extra tabs
+- [ ] Optional second window: terminal for CLI (`npm run cli -- status`)
+- [ ] Mic test; use OBS, Loom, or Windows Game Bar (Win+G)
 
-**End card (2s):** full URL `https://linestack.vercel.app` + `github.com/henrysammarfo/linestack`
+**Wallet note:** Connect the same wallet you used in smoke tests. Data persists in Postgres per wallet.
 
 ---
 
-## B-roll cuts (if something is slow)
+## Shot list (demo video — show, don't tell)
 
-- While tx pending: cut to **explorer** tab with confirmed tx
-- While fulfill runs: split-screen **dashboard** + **network tab** (optional, only if it helps)
+| Time | Route / screen | Action | Say (voiceover) |
+|------|----------------|--------|----------------|
+| **0:00–0:12** | `/` landing | Pan hero + tagline | “Clearance402 is the trust layer for x402 agent payments on Base Sepolia. Before your agent pays, it gets clearance.” |
+| **0:12–0:22** | `/status` | Show green chips: chain, db, venice, probe | “Production is live — Postgres persistence, probe wallet, and Venice eval configured.” |
+| **0:22–0:35** | Connect wallet | MetaMask → Base Sepolia | “Your wallet is your account ID. Probes, permissions, and audit events persist across devices.” |
+| **0:35–0:45** | `/dashboard` | Trust stats overview | “Built-in tools include a free x402 demo and Venice chat — no mocks.” |
+| **0:45–1:15** | `/payment-lab` | Select **Clearance402 x402 Demo** → **Run probe** | “Watch a real HTTP 402 challenge, USDC settlement, and JSON response. This uses our free `/api/demo/x402` endpoint — no Venice credits needed.” |
+| **1:15–1:20** | Probe result panel | Highlight `paid: true`, latency, trust score | “Probe wallet pays on Sepolia; trust score and ALLOW state update immediately.” |
+| **1:20–1:40** | `/venice-eval` or Payment Lab | Select **Venice Chat** → Run eval | “With `VENICE_API_KEY`, Venice scores output quality. Without credits, our heuristic fallback still runs — demos always work.” |
+| **1:40–1:55** | `/permissions` | Grant mandate (cap + domain) | “Operators set ERC-7715-style spend caps and domain allowlists before agents can pay.” |
+| **1:55–2:15** | `/agent-clearance` | Run **Check** → **Pay if cleared** | “Agents call check first — ALLOW, WARN, or BLOCK with reasons. Only cleared payments execute server-side via x402.” |
+| **2:15–2:30** | `/audit` | Scroll recent events | “Every probe, payment, permission grant, and block is auditable.” |
+| **2:30–2:45** | Terminal | `npm run cli -- tools list` | “Same APIs ship as SDK, CLI, and MCP — agents can clear payments autonomously.” |
+| **2:45–2:55** | `/mcp` or `/sdk` | Quick scroll tool grid | “Drop `@clearance402/mcp-server` into Cursor or Claude Desktop.” |
+| **2:55–3:00** | End card | Logo + URLs | “clearancex402.vercel.app · github.com/henrysammarfo/clearancex402” |
 
 ---
 
-## Do not say
+## Screenshots for pitch deck (capture yourself)
 
-- “Queries run inside Story’s enclave” (not in SDK yet)
-- “Fully trustless compute” (say **trustless access** + **on-chain attestation**)
+Save PNGs to `docs/media/` (or drag into Gamma):
+
+| File | Page | What to show |
+|------|------|----------------|
+| `01-landing.png` | `/` | Hero headline |
+| `02-dashboard.png` | `/dashboard` | Stats + recent activity |
+| `03-payment-lab-probe.png` | `/payment-lab` | x402 demo probe result (`paid: true`) |
+| `04-venice-eval.png` | `/venice-eval` | Eval result + `source: heuristic` or `venice` |
+| `05-permissions.png` | `/permissions` | Active mandate |
+| `06-agent-clearance.png` | `/agent-clearance` | ALLOW decision |
+| `07-audit.png` | `/audit` | Event list |
+| `08-architecture.png` | — | Use `public/media/architecture.svg` export |
+
+**Pre-made graphics:** `public/media/og-banner.png`, `pitch-slide-title.png`, `demo-thumbnail.png`, `architecture.svg`
+
+---
+
+## B-roll (if something is slow)
+
+- While probe runs: cut to **Base Sepolia explorer** with USDC transfer
+- While check runs: split **Agent clearance** + **Network tab** showing `/api/clearance/check` JSON
+
+---
 
 ## Do say
 
-- “Real CDR txs on chain 1315”
-- “Publisher-side fulfill with vault isolation — honest about SDK limits”
-- “Automata attestation tx on every fulfill”
+- “Real x402 on Base Sepolia — 402 challenge, USDC payment, verified response”
+- “Venice when you have credits; heuristic fallback when you don’t”
+- “ERC-7715 permissions with spend caps before pay-if-cleared”
+- “22 automated smoke checks — API, SDK, CLI, MCP”
 
----
+## Do not say
 
-## MCP-only appendix (if judges care — record separately or last 20s)
-
-In Cursor Agent: “Call `linestack_status`” → one Vaultline tool → show JSON with txHash. Not required for the 2–3 min form video if web E2E is tight.
+- “Fully trustless” (say **auditable** + **permission-gated**)
+- “Mock payment” (everything is live on Sepolia for the demo tool)
 
 ---
 
 ## After upload
 
-Paste YouTube link in [HACKATHON-SUBMISSION.md](./HACKATHON-SUBMISSION.md) form section.
+1. Paste YouTube URL in [HACKATHON-SUBMISSION.md](./HACKATHON-SUBMISSION.md)
+2. Post Discord copy from [DISCORD-SUBMISSION.md](./DISCORD-SUBMISSION.md)
+3. Attach Gamma deck link if the form asks for slides

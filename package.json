@@ -19,6 +19,9 @@
     "build:sdk": "npm run build --workspace=@clearance402/sdk",
     "build:cli": "npm run build --workspace=@clearance402/cli",
     "build:packages": "npm run build:sdk && npm run build:cli && npm run build:mcp",
+    "verify:publish": "node scripts/verify-npm-package.mjs packages/clearance402-sdk && node scripts/verify-npm-package.mjs packages/clearance402-cli && node scripts/verify-npm-package.mjs packages/clearance402-mcp",
+    "publish:packages:dry-run": "node scripts/publish-packages.mjs --dry-run",
+    "publish:packages": "node scripts/publish-packages.mjs",
     "cli": "node packages/clearance402-cli/dist/index.js",
     "smoke": "node scripts/smoke-clearance402.mjs"
   },

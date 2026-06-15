@@ -20,6 +20,9 @@
   },
   "keywords": ["mcp", "x402", "clearance", "agents"],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1"
   },
