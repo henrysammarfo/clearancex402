@@ -1,4 +1,5 @@
 import { getClientEnv } from "@/lib/env/client";
+import { jsonStringify } from "@/lib/json-safe";
 
 export type ClearanceFetchInit = RequestInit & {
   wallet?: string | null;
@@ -34,7 +35,7 @@ export async function clearanceFetch<T = unknown>(
   const res = await fetch(`${apiBase()}${path}`, {
     ...rest,
     headers,
-    body: json !== undefined ? JSON.stringify(json) : rest.body,
+    body: json !== undefined ? jsonStringify(json) : rest.body,
   });
   const data = (await res.json().catch(() => ({}))) as T & {
     error?: string;

@@ -4,6 +4,7 @@ import { neon } from "@neondatabase/serverless";
 import type { ClearanceStore } from "@/lib/clearance/store-types";
 import { GLOBAL_ACCOUNT, normalizeWallet } from "@/lib/clearance/account-wallet";
 import { getPostgresUrl } from "@/lib/env/server";
+import { jsonStringify } from "@/lib/json-safe";
 
 export type PlatformStore = {
   version: 1;
@@ -69,7 +70,7 @@ async function loadFilePlatform(): Promise<PlatformStore> {
 
 async function saveFilePlatform(platform: PlatformStore): Promise<void> {
   await mkdir(dirname(FILE_PATH), { recursive: true });
-  await writeFile(FILE_PATH, JSON.stringify(platform, null, 2), "utf8");
+  await writeFile(FILE_PATH, jsonStringify(platform, 2), "utf8");
   fileLoaded = true;
 }
 
@@ -124,7 +125,7 @@ export async function saveAccountStore(wallet: string, store: ClearanceStore): P
 
   if (sql) {
     await ensurePgSchema(sql);
-    const payload = JSON.stringify(store);
+    const payload = jsonStringify(store);
     await sql`
       INSERT INTO clearance_accounts (wallet, data, updated_at)
       VALUES (${key}, ${payload}::jsonb, NOW())

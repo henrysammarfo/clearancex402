@@ -19,6 +19,7 @@ import {
   useInvalidateClearanceAccount,
 } from "@/lib/clearance/use-clearance-account";
 import { defaultAllowedDomains } from "@/lib/clearance/permission-domains";
+import { toJsonSafe } from "@/lib/json-safe";
 
 export const Route = createFileRoute("/permissions")({
   head: () => ({
@@ -92,7 +93,7 @@ function Page() {
           permissionContext: parsed.permissionContext,
           delegationManager: parsed.delegationManager,
           sessionSmartAccount: smartAccount.address,
-          grantedPayload: parsed.grantedPayload,
+          grantedPayload: toJsonSafe(parsed.grantedPayload),
         });
 
       const privateKey = getAgentSessionPrivateKey();
