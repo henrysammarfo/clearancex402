@@ -36,9 +36,17 @@ export async function clearanceFetch<T = unknown>(
     headers,
     body: json !== undefined ? JSON.stringify(json) : rest.body,
   });
-  const data = (await res.json().catch(() => ({}))) as T & { error?: string };
+  const data = (await res.json().catch(() => ({}))) as T & {
+    error?: string;
+    decision?: { reasons?: string[]; state?: string };
+  };
   if (!res.ok) {
-    throw new Error((data as { error?: string }).error ?? `Request failed (${res.status})`);
+    const reasons = data.decision?.reasons?.filter(Boolean);
+    const message =
+      (reasons && reasons.length > 0 ? reasons.join(" · ") : null) ??
+      data.error ??
+      `Request failed (${res.status})`;
+    throw new Error(message);
   }
   return data;
 }

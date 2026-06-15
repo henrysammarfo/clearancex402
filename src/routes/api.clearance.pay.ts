@@ -44,7 +44,11 @@ export const Route = createFileRoute("/api/clearance/pay")({
           });
 
           if (decision.state !== "ALLOW" && decision.state !== "WARN") {
-            return Response.json({ error: "Not cleared", decision }, { status: 403 });
+            const detail =
+              decision.reasons?.length > 0
+                ? decision.reasons.join(" · ")
+                : `Clearance state: ${decision.state}`;
+            return Response.json({ error: detail, decision }, { status: 403 });
           }
 
           const perms = listPermissions(wallet);

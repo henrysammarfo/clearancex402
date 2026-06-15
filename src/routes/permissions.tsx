@@ -18,6 +18,7 @@ import {
   useClearanceWallet,
   useInvalidateClearanceAccount,
 } from "@/lib/clearance/use-clearance-account";
+import { defaultAllowedDomains } from "@/lib/clearance/permission-domains";
 
 export const Route = createFileRoute("/permissions")({
   head: () => ({
@@ -54,7 +55,7 @@ function Page() {
   const grants = permData ?? [];
   const [agentId, setAgentId] = useState("buyer-agent");
   const [cap, setCap] = useState("5.00");
-  const [domains, setDomains] = useState("venice.ai, api.venice.ai");
+  const [domains, setDomains] = useState(defaultAllowedDomains);
   const [expiryHours, setExpiryHours] = useState("24");
   const [sessionAccount, setSessionAccount] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -159,7 +160,10 @@ function Page() {
               <Input value={domains} onChange={(e) => setDomains(e.target.value)} />
             </div>
             <p className="text-xs text-muted-foreground">
-              MetaMask will prompt for <code className="text-[11px]">wallet_requestExecutionPermissions</code> — USDC allowance on Base Sepolia for the session smart account.
+              Include <strong className="text-foreground">clearancex402.vercel.app</strong> (or your app host) for the
+              built-in x402 demo. MetaMask will prompt for{" "}
+              <code className="text-[11px]">wallet_requestExecutionPermissions</code> — USDC allowance on Base Sepolia for
+              the session smart account.
             </p>
             <Button className="w-full" onClick={grant} disabled={loading || !isConnected}>
               {loading ? (
