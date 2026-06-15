@@ -44,7 +44,7 @@ type SubmitState =
   | { phase: "pending" }
   | { phase: "done"; decision: Decision; permissionId?: string }
   | { phase: "paying" }
-  | { phase: "paid"; paymentProof: string; responsePreview: string }
+  | { phase: "paid"; paymentProof: string; responsePreview: string; payer?: string }
   | { phase: "failed"; error: string };
 
 function Page() {
@@ -160,6 +160,7 @@ function Page() {
       })) as {
         paymentProof?: string;
         responsePreview?: string;
+        payer?: string;
         error?: string;
       };
 
@@ -172,6 +173,7 @@ function Page() {
         phase: "paid",
         paymentProof: result.paymentProof ?? "server-executed",
         responsePreview: result.responsePreview ?? "",
+        payer: result.payer,
       });
     } catch (e) {
       setSubmit({
@@ -292,7 +294,11 @@ function Page() {
                 <TxPendingState title="Paying via x402" description="Server session buyer settling USDC on Base Sepolia…" />
               )}
               {submit.phase === "failed" && (
-                <TxFailedState title="Payment not cleared" description={submit.error} onRetry={runClearance} />
+                <TxFailedState
+                  title="Payment not cleared"
+                  description={submit.error}
+                  onRetry={payIfCleared}
+                />
               )}
               {submit.phase === "done" && (
                 <div className="space-y-4">
@@ -317,7 +323,14 @@ function Page() {
               )}
               {submit.phase === "paid" && (
                 <div className="space-y-3 text-sm">
-                  <p className="text-chain-success font-medium">Payment settled and recorded in audit log.</p>
+                  <p className="text-chain-success font-medium">
+                    Payment settled and recorded in audit log.
+                    {submit.payer === "probe-wallet" && (
+                      <span className="block text-xs text-muted-foreground font-normal mt-1">
+                        Demo tool: settled via funded probe wallet after clearance (session EOA unfunded).
+                      </span>
+                    )}
+                  </p>
                   <p className="text-xs font-mono text-muted-foreground break-all">
                     {submit.paymentProof.slice(0, 120)}…
                   </p>

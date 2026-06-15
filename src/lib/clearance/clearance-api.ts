@@ -40,12 +40,15 @@ export async function clearanceFetch<T = unknown>(
   const data = (await res.json().catch(() => ({}))) as T & {
     error?: string;
     decision?: { reasons?: string[]; state?: string };
+    payResult?: { responsePreview?: string; httpStatus?: number };
   };
   if (!res.ok) {
     const reasons = data.decision?.reasons?.filter(Boolean);
+    const preview = data.payResult?.responsePreview?.trim();
     const message =
-      (reasons && reasons.length > 0 ? reasons.join(" · ") : null) ??
       data.error ??
+      (preview ? `x402 failed: ${preview.slice(0, 160)}` : null) ??
+      (reasons && reasons.length > 0 ? reasons.join(" · ") : null) ??
       `Request failed (${res.status})`;
     throw new Error(message);
   }

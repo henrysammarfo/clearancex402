@@ -8,7 +8,7 @@ import {
 import { checkBeforePayment } from "@/lib/clearance/check";
 import { getToolDefinition, parseUsd } from "@/lib/clearance/registry";
 import { requireWallet, walletFromRequest } from "@/lib/clearance/account-wallet";
-import { payX402WithAgentSession } from "@/lib/clearance/x402-server";
+import { payFailureMessage, executePayIfCleared } from "@/lib/clearance/x402-server";
 
 export const Route = createFileRoute("/api/clearance/pay")({
   server: {
@@ -63,10 +63,19 @@ export const Route = createFileRoute("/api/clearance/pay")({
                 )) ?? null;
 
           if (body.execute) {
-            const payResult = await payX402WithAgentSession(wallet, body.agentId, tool.endpoint);
+            const payResult = await executePayIfCleared(
+              wallet,
+              body.agentId,
+              body.toolId,
+              tool.endpoint,
+            );
             if (!payResult.paymentValid) {
               return Response.json(
-                { error: "x402 payment failed", decision, payResult },
+                {
+                  error: payFailureMessage(payResult),
+                  decision,
+                  payResult,
+                },
                 { status: 402 },
               );
             }
@@ -75,7 +84,7 @@ export const Route = createFileRoute("/api/clearance/pay")({
               kind: "PAYMENT",
               tool: tool.name,
               actor: body.agentId,
-              detail: `Server pay-if-cleared · HTTP ${payResult.httpStatus}`,
+              detail: `Server pay-if-cleared · ${payResult.payer} · HTTP ${payResult.httpStatus}`,
             });
             return Response.json({
               ok: true,
